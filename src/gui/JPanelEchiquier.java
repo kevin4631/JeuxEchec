@@ -81,7 +81,6 @@ public class JPanelEchiquier extends JPanel {
 						actionEnCours = false;
 					}
 				} else {
-					System.out.println("tes");
 					actionEnCours = false;
 
 					JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleur());
