@@ -6,27 +6,27 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import utils.Coordonnees;
+import echiquier.Echiquier;
 
 public abstract class Piece {
 
 	private Couleur couleur;
 	private NomPiece nomPiece;
 	private String path;
-	private Coordonnees coordonnees;
 
-	protected Piece(Couleur couleur, NomPiece nomPiece, Coordonnees coordonnees) {
+	protected Piece(Couleur couleur, NomPiece nomPiece) {
 		super();
 		this.couleur = couleur;
 		this.nomPiece = nomPiece;
-		this.coordonnees = coordonnees;
 		path = "src/piece/img/" + nomPiece + "_" + couleur + ".png";
 	}
+
+	public abstract DeplacementPosible getDeplacement(Echiquier echiquier, int x, int y);
 
 	public BufferedImage getImage() {
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File(getPath()));
+			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -41,19 +41,8 @@ public abstract class Piece {
 		return nomPiece;
 	}
 
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
 	public String toString() {
 		return getNomPiece().toString();
 	}
 
-	public Coordonnees getCoordonnees() {
-		return coordonnees;
-	}
 }

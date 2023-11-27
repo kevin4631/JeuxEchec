@@ -1,14 +1,21 @@
 package piece.pieceSpeciale;
 
+import echiquier.Echiquier;
 import piece.Couleur;
+import piece.DeplacementPosible;
 import piece.NomPiece;
 import piece.Piece;
-import utils.Coordonnees;
 
 public class Tour extends Piece {
 
-	public Tour(Couleur couleur, Coordonnees coordonnees) {
-		super(couleur, NomPiece.TOUR, coordonnees);
+	public Tour(Couleur couleur) {
+		super(couleur, NomPiece.TOUR);
+	}
+
+	@Override
+	public DeplacementPosible getDeplacement(Echiquier echiquier, int x, int y) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

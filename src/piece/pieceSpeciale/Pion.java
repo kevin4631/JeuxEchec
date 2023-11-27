@@ -1,37 +1,39 @@
 package piece.pieceSpeciale;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import echiquier.Echiquier;
 import piece.Couleur;
+import piece.DeplacementPosible;
 import piece.NomPiece;
 import piece.Piece;
-import utils.Coordonnees;
 
 public class Pion extends Piece {
 
 	private boolean premierTour = true;
+	private DeplacementPosible deplacements;
 
-	public Pion(Couleur couleur, Coordonnees coordonnees) {
-		super(couleur, NomPiece.PION, coordonnees);
+	public Pion(Couleur couleur) {
+		super(couleur, NomPiece.PION);
 	}
 
-	public List<Coordonnees> deplacementPossible(int x, int y, Echiquier echiquier) {
-		List<Coordonnees> listCoordonnees = new ArrayList<>();
+	public DeplacementPosible getDeplacement(Echiquier echiquier, int x, int y) {
+		int vecteurY = this.getCouleur() == Couleur.BLANC ? +1 : -1;
 
-		listCoordonnees.add(new Coordonnees(x, y + 1));
+		deplacements = new DeplacementPosible();
+
+		if (echiquier.getCase(x, y + vecteurY).caseVide())
+			deplacements.addDeplacement(0, vecteurY);
 
 		if (premierTour)
-			listCoordonnees.add(new Coordonnees(x, y + 2));
+			deplacements.addDeplacement(0, vecteurY * 2);
 
-		if (!echiquier.getCase(x + 1, y + 1).caseVide())
-			listCoordonnees.add(new Coordonnees(x + 1, y + 1));
+		if (echiquier.getCase(x - 1, y + vecteurY) != null && !echiquier.getCase(x - 1, y + vecteurY).caseVide())
+			deplacements.addDeplacement(-1, vecteurY);
 
-		if (!echiquier.getCase(x - 1, y + 1).caseVide())
-			listCoordonnees.add(new Coordonnees(x - 1, y + 1));
+		if (echiquier.getCase(x + 1, y + vecteurY) != null && !echiquier.getCase(x + 1, y + vecteurY).caseVide())
+			deplacements.addDeplacement(1, vecteurY);
 
-		return listCoordonnees;
+		return deplacements;
+
 	}
 
 }
