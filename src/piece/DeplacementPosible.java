@@ -19,10 +19,6 @@ public class DeplacementPosible {
 		return listDeplacement.iterator();
 	}
 
-	public List<Vecteur> getListDeplacement() {
-		return listDeplacement;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder string = new StringBuilder();

@@ -15,12 +15,12 @@ import piece.pieceSpeciale.Tour;
 
 public class Echiquier {
 
-	private List<List<Case>> tableuCase = new ArrayList<>();
+	private List<List<Case>> tableuCase;
 	private Joueur joueurBlanc;
 	private Joueur joueurNoir;
 
 	public Echiquier() {
-		// TODO Auto-generated constructor stub
+		this.tableuCase = new ArrayList<>();
 	}
 
 	public void initialiserEchiquier() {

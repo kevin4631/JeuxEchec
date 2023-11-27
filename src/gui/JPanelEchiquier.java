@@ -55,7 +55,7 @@ public class JPanelEchiquier extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				if (actionEnCours == false) {
+				if (!actionEnCours) {
 					actionEnCours = true;
 
 					int x = e.getX() / (getHeight() / 8);
@@ -81,6 +81,7 @@ public class JPanelEchiquier extends JPanel {
 						actionEnCours = false;
 					}
 				} else {
+					System.out.println("tes");
 					actionEnCours = false;
 
 					JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleur());
