@@ -21,7 +21,6 @@ public class JPanelCase extends JPanel {
 		this.couleur = couleur;
 		this.couleurSelection = couleurSelection;
 		setBackground(couleur);
-
 	}
 
 	protected void paintComponent(Graphics g) {
