@@ -101,7 +101,7 @@ public class Echiquier {
 	}
 
 	public Case getCase(int x, int y) {
-		if (x < 0 || x > 7 || y < 0 || y > 7)
+		if (!inEchiquier(x, y))
 			return null;
 		return tableuCase.get(y).get(x);
 	}
@@ -113,14 +113,27 @@ public class Echiquier {
 	public Joueur getJoueurNoir() {
 		return joueurNoir;
 	}
-	
+
 	public void move(Case c, Case destination) {
+		if (c.getPiece().getClass() == Pion.class) {
+			Pion p = (Pion) c.getPiece();
+			p.premierTourFalse();
+		}
+
 		destination.assignerPiece(c.popPiece());
 	}
-	
-	
-	
-	
-	
+
+	public Boolean inEchiquier(int x, int y) {
+		return !(x < 0 || x > 7 || y < 0 || y > 7);
+
+	}
+
+	public Boolean isCaseVide(int x, int y) {
+		return getCase(x, y).caseVide();
+	}
+
+	public Couleur getCouleurPiece(int x, int y) {
+		return getCase(x, y).getCouleurPiece();
+	}
 
 }

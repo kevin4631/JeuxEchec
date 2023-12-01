@@ -8,7 +8,6 @@ public class Main {
 	static int nbCaseLongeur = 8; 
 	
 	public static void main(String[] args) {
-		
 		echiquier.initialiserEchiquier();
 
 		JFrameFenetre gui = new JFrameFenetre();

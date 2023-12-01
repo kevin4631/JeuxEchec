@@ -1,5 +1,6 @@
 package echiquier;
 
+import piece.Couleur;
 import piece.Piece;
 
 public class Case {
@@ -29,7 +30,7 @@ public class Case {
 	public void setPiece(Piece piece) {
 		this.piece = piece;
 	}
-	
+
 	public Piece popPiece() {
 		Piece p = piece;
 		piece = null;
@@ -44,6 +45,13 @@ public class Case {
 		return possitionY;
 	}
 
+	public Couleur getCouleurPiece() {
+		if (caseVide())
+			return null;
+		return piece.getCouleur();
+	}
+
+	@Override
 	public String toString() {
 		return "x: " + getPossitionX() + "  y: " + getPossitionY() + "   " + getPiece();
 	}

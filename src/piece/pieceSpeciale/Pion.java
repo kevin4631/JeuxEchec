@@ -2,38 +2,46 @@ package piece.pieceSpeciale;
 
 import echiquier.Echiquier;
 import piece.Couleur;
-import piece.DeplacementPosible;
+import piece.Deplacement;
 import piece.NomPiece;
 import piece.Piece;
 
 public class Pion extends Piece {
-
 	private boolean premierTour = true;
-	private DeplacementPosible deplacements;
+	private Deplacement deplacements;
 
 	public Pion(Couleur couleur) {
 		super(couleur, NomPiece.PION);
 	}
 
-	public DeplacementPosible getDeplacement(Echiquier echiquier, int x, int y) {
+	@Override
+	public Deplacement getDeplacement(Echiquier echiquier, int x, int y) {
 		int vecteurY = this.getCouleur() == Couleur.BLANC ? +1 : -1;
 
-		deplacements = new DeplacementPosible();
-
-		if (echiquier.getCase(x, y + vecteurY).caseVide())
+		deplacements = new Deplacement();
+		if (echiquier.inEchiquier(x, y + vecteurY) && echiquier.isCaseVide(x, y + vecteurY))
 			deplacements.addDeplacement(0, vecteurY);
 
 		if (premierTour)
 			deplacements.addDeplacement(0, vecteurY * 2);
 
-		if (echiquier.getCase(x - 1, y + vecteurY) != null && !echiquier.getCase(x - 1, y + vecteurY).caseVide())
+		if (echiquier.inEchiquier(x - 1, y + vecteurY) && !echiquier.isCaseVide(x - 1, y + vecteurY)
+				&& echiquier.getCouleurPiece(x - 1, y + vecteurY) != this.getCouleur())
 			deplacements.addDeplacement(-1, vecteurY);
 
-		if (echiquier.getCase(x + 1, y + vecteurY) != null && !echiquier.getCase(x + 1, y + vecteurY).caseVide())
+		if (echiquier.inEchiquier(x + 1, y + vecteurY) && !echiquier.isCaseVide(x + 1, y + vecteurY)
+				&& echiquier.getCouleurPiece(x + 1, y + vecteurY) != this.getCouleur())
 			deplacements.addDeplacement(1, vecteurY);
 
 		return deplacements;
+	}
 
+	public void premierTourFalse() {
+		premierTour = false;
+	}
+
+	public boolean getPremierTour() {
+		return premierTour;
 	}
 
 }

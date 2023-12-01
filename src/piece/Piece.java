@@ -28,7 +28,7 @@ public abstract class Piece {
 		}
 	}
 
-	public abstract DeplacementPosible getDeplacement(Echiquier echiquier, int x, int y);
+	public abstract Deplacement getDeplacement(Echiquier echiquier, int x, int y);
 
 	public BufferedImage getImage() {
 		return image;
