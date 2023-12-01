@@ -29,6 +29,12 @@ public class Case {
 	public void setPiece(Piece piece) {
 		this.piece = piece;
 	}
+	
+	public Piece popPiece() {
+		Piece p = piece;
+		piece = null;
+		return p;
+	}
 
 	public int getPossitionX() {
 		return possitionX;

@@ -113,5 +113,14 @@ public class Echiquier {
 	public Joueur getJoueurNoir() {
 		return joueurNoir;
 	}
+	
+	public void move(Case c, Case destination) {
+		destination.assignerPiece(c.popPiece());
+	}
+	
+	
+	
+	
+	
 
 }

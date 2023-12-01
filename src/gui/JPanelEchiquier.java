@@ -28,10 +28,16 @@ public class JPanelEchiquier extends JPanel {
 	private DeplacementPosible deplacementEnCours;
 
 	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase) {
+		
 		this.listJPanelCase = listJPanelCase;
-
+		
 		setLayout(new GridLayout(8, 8));
-
+		
+		initialisationJPanelCase();
+		addMouseListener();
+	}
+	
+	private void initialisationJPanelCase() {
 		Boolean couleur = true;
 
 		for (int y = 0; y < 8; y++) {
@@ -44,74 +50,82 @@ public class JPanelEchiquier extends JPanel {
 				add(listJPanelCase.get(y).get(x));
 			}
 		}
+	}
+	
+	
+	 private void addMouseListener() {
+		 
+		 addMouseListener(new MouseListener() {
 
-		addMouseListener(new MouseListener() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
+				}
 
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-				if (!actionEnCours) {
-					actionEnCours = true;
-
+				@Override
+				public void mousePressed(MouseEvent e) {
+					
 					int x = e.getX() / (getHeight() / 8);
 					int y = e.getY() / (getHeight() / 8);
 
-					Case caseSelection = JFrameFenetre.echiquier.getCase(x, y);
+					Case caseSelection = Main.echiquier.getCase(x, y);
+					
+					if (!actionEnCours) {
+						actionEnCours = true;
 
-					if (!caseSelection.caseVide()) {
+						if (!caseSelection.caseVide()) {
 
-						deplacementEnCours = caseSelection.getPiece().getDeplacement(JFrameFenetre.echiquier, x, y);
+							deplacementEnCours = caseSelection.getPiece().getDeplacement(Main.echiquier, x, y);
+
+							Iterator<Vecteur> iterator = deplacementEnCours.iterator();
+
+							while (iterator.hasNext()) {
+								Vecteur v = iterator.next();
+								JPanelCase c = listJPanelCase.get(y + v.getY()).get(x + v.getX());
+								c.setBackground(c.getCouleurSelection());
+							}
+
+							JPanelcaseSelection = listJPanelCase.get(y).get(x);
+							JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleurSelection());
+						} else {
+							actionEnCours = false;
+						}
+					} else {
+						
+						Main.echiquier.move(Main.echiquier.getCase(JPanelcaseSelection.getJPanelCaseX(), 
+																					JPanelcaseSelection.getJPanelCaseY())
+																					, caseSelection);
+						
+						JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleur());
 
 						Iterator<Vecteur> iterator = deplacementEnCours.iterator();
-
 						while (iterator.hasNext()) {
 							Vecteur v = iterator.next();
-							JPanelCase c = listJPanelCase.get(y + v.getY()).get(x + v.getX());
-							c.setBackground(c.getCouleurSelection());
-						}
+							JPanelCase c = listJPanelCase.get(JPanelcaseSelection.getJPanelCaseY() + v.getY())
+									.get(JPanelcaseSelection.getJPanelCaseX() + v.getX());
+							c.setBackground(c.getCouleur());
 
-						JPanelcaseSelection = listJPanelCase.get(y).get(x);
-						JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleurSelection());
-					} else {
+						}
+						
 						actionEnCours = false;
 					}
-				} else {
-					actionEnCours = false;
+				}
 
-					JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleur());
-
-					Iterator<Vecteur> iterator = deplacementEnCours.iterator();
-					while (iterator.hasNext()) {
-						Vecteur v = iterator.next();
-						JPanelCase c = listJPanelCase.get(JPanelcaseSelection.getJPanelCaseY() + v.getY())
-								.get(JPanelcaseSelection.getJPanelCaseX() + v.getX());
-						c.setBackground(c.getCouleur());
-
-					}
+				@Override
+				public void mouseExited(MouseEvent e) {
 
 				}
-			}
 
-			@Override
-			public void mouseExited(MouseEvent e) {
+				@Override
+				public void mouseEntered(MouseEvent e) {
 
-			}
+				}
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
+				@Override
+				public void mouseClicked(MouseEvent e) {
 
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
-
-	}
+				}
+			});
+		 
+	 }
 }

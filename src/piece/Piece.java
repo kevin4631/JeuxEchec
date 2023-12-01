@@ -13,23 +13,24 @@ public abstract class Piece {
 	private Couleur couleur;
 	private NomPiece nomPiece;
 	private String path;
+	BufferedImage image = null;
 
 	protected Piece(Couleur couleur, NomPiece nomPiece) {
 		super();
 		this.couleur = couleur;
 		this.nomPiece = nomPiece;
 		path = "src/piece/img/" + nomPiece + "_" + couleur + ".png";
-	}
-
-	public abstract DeplacementPosible getDeplacement(Echiquier echiquier, int x, int y);
-
-	public BufferedImage getImage() {
-		BufferedImage image = null;
+		
 		try {
 			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public abstract DeplacementPosible getDeplacement(Echiquier echiquier, int x, int y);
+
+	public BufferedImage getImage() {
 		return image;
 	}
 
