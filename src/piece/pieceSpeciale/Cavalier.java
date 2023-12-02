@@ -3,11 +3,11 @@ package piece.pieceSpeciale;
 import java.util.Iterator;
 
 import echiquier.Echiquier;
-import piece.Couleur;
 import piece.Deplacement;
-import piece.NomPiece;
 import piece.Piece;
 import piece.Vecteur;
+import piece.enumPackges.Couleur;
+import piece.enumPackges.NomPiece;
 
 public class Cavalier extends Piece {
 	Deplacement deplacements;
@@ -20,20 +20,19 @@ public class Cavalier extends Piece {
 	public Deplacement getDeplacement(Echiquier echiquier, int x, int y) {
 
 		deplacements = new Deplacement();
-
 		Deplacement d = new Deplacement();
 
 		d.addDeplacement(+2, +1);
 		d.addDeplacement(+2, -1);
+
+		d.addDeplacement(-2, +1);
+		d.addDeplacement(-2, -1);
 
 		d.addDeplacement(+1, +2);
 		d.addDeplacement(+1, -2);
 
 		d.addDeplacement(-1, +2);
 		d.addDeplacement(-1, -2);
-
-		d.addDeplacement(-2, +1);
-		d.addDeplacement(-2, -1);
 
 		Iterator<Vecteur> iterator = d.iterator();
 		while (iterator.hasNext()) {

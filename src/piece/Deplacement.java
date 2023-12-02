@@ -14,8 +14,22 @@ public class Deplacement {
 		System.out.println();
 	}
 
+	public void addDeplacement(Vecteur v) {
+		listDeplacement.add(v);
+	}
+
 	public void addDeplacement(int x, int y) {
-		listDeplacement.add(new Vecteur(x, y));
+		addDeplacement(new Vecteur(x, y));
+	}
+
+	// uniquement pour vecteur type
+	public void addDeplacement(Deplacement deplacement) {
+		Iterator<Vecteur> iterator = deplacement.iterator();
+
+		while (iterator.hasNext()) {
+			Vecteur v = iterator.next();
+			addDeplacement(v.getX(), v.getY());
+		}
 	}
 
 	public Iterator<Vecteur> iterator() {

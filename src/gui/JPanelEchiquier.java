@@ -70,7 +70,7 @@ public class JPanelEchiquier extends JPanel {
 				if (!actionEnCours) {
 					actionEnCours = true;
 					Case caseSelection = Main.echiquier.getCase(x, y);
-					if (!caseSelection.caseVide()) {
+					if (!caseSelection.isVide()) {
 						JPanelcaseSelection = listJPanelCase.get(y).get(x);
 
 						deplacementPossible = caseSelection.getPiece().getDeplacement(Main.echiquier, x, y);

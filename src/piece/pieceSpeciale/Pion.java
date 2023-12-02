@@ -1,10 +1,10 @@
 package piece.pieceSpeciale;
 
 import echiquier.Echiquier;
-import piece.Couleur;
 import piece.Deplacement;
-import piece.NomPiece;
 import piece.Piece;
+import piece.enumPackges.Couleur;
+import piece.enumPackges.NomPiece;
 
 public class Pion extends Piece {
 	private boolean premierTour = true;

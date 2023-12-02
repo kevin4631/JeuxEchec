@@ -7,6 +7,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import echiquier.Echiquier;
+import piece.enumPackges.Couleur;
+import piece.enumPackges.NomPiece;
 
 public abstract class Piece {
 

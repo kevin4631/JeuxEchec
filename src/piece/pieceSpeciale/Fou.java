@@ -1,14 +1,16 @@
 package piece.pieceSpeciale;
 
+import java.util.Iterator;
+
 import echiquier.Echiquier;
-import piece.Couleur;
 import piece.Deplacement;
-import piece.NomPiece;
 import piece.Piece;
+import piece.Vecteur;
+import piece.enumPackges.Couleur;
+import piece.enumPackges.Direction;
+import piece.enumPackges.NomPiece;
 
 public class Fou extends Piece {
-
-	private Deplacement deplacements;
 
 	public Fou(Couleur couleur) {
 		super(couleur, NomPiece.FOU);
@@ -16,8 +18,21 @@ public class Fou extends Piece {
 
 	@Override
 	public Deplacement getDeplacement(Echiquier echiquier, int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
+		Deplacement deplacements = new Deplacement();
+		Deplacement dDirection = new Deplacement();
+
+		dDirection.addDeplacement(Direction.LEFT_UP.getVecteur());
+		dDirection.addDeplacement(Direction.LEFT_DOWN.getVecteur());
+		dDirection.addDeplacement(Direction.RIGHT_UP.getVecteur());
+		dDirection.addDeplacement(Direction.RIGHT_DOWN.getVecteur());
+
+		Iterator<Vecteur> iterator = dDirection.iterator();
+		while (iterator.hasNext()) {
+			Deplacement d = echiquier.getDeplacementsInDirection(echiquier.getCase(x, y), iterator.next());
+			deplacements.addDeplacement(d);
+		}
+
+		return deplacements;
 	}
 
 }

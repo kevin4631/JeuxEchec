@@ -1,11 +1,12 @@
 package joueur;
 
-import piece.Couleur;
+import echiquier.Echiquier;
+import piece.enumPackges.Couleur;
 
 public class JoueurBlanc extends Joueur {
 
-	public JoueurBlanc() {
-		super(Couleur.BLANC);
+	public JoueurBlanc(Echiquier echiquier) {
+		super(Couleur.BLANC, echiquier);
 	}
 
 }

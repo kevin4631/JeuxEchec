@@ -1,7 +1,7 @@
 package echiquier;
 
-import piece.Couleur;
 import piece.Piece;
+import piece.enumPackges.Couleur;
 
 public class Case {
 
@@ -19,7 +19,7 @@ public class Case {
 		this.piece = piece;
 	}
 
-	public Boolean caseVide() {
+	public Boolean isVide() {
 		return piece == null;
 	}
 
@@ -46,7 +46,7 @@ public class Case {
 	}
 
 	public Couleur getCouleurPiece() {
-		if (caseVide())
+		if (isVide())
 			return null;
 		return piece.getCouleur();
 	}

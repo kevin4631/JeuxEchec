@@ -3,47 +3,19 @@ package echiquier;
 import java.util.ArrayList;
 import java.util.List;
 
-import joueur.Joueur;
-import piece.Couleur;
+import piece.Deplacement;
 import piece.Piece;
-import piece.pieceSpeciale.Cavalier;
-import piece.pieceSpeciale.Damme;
-import piece.pieceSpeciale.Fou;
+import piece.Vecteur;
+import piece.enumPackges.Couleur;
 import piece.pieceSpeciale.Pion;
-import piece.pieceSpeciale.Roi;
-import piece.pieceSpeciale.Tour;
 
 public class Echiquier {
 
 	private List<List<Case>> tableuCase;
-	private Joueur joueurBlanc;
-	private Joueur joueurNoir;
 
 	public Echiquier() {
 		this.tableuCase = new ArrayList<>();
-	}
-
-	public void initialiserEchiquier() {
-
 		initialiserCase();
-
-		initialiserPion(Couleur.BLANC);
-		initialiserPion(Couleur.NOIR);
-
-		initialiserTour(Couleur.BLANC);
-		initialiserTour(Couleur.NOIR);
-
-		initialiserCavalier(Couleur.BLANC);
-		initialiserCavalier(Couleur.NOIR);
-
-		initialiserFou(Couleur.BLANC);
-		initialiserFou(Couleur.NOIR);
-
-		initialiserDamme(Couleur.BLANC);
-		initialiserDamme(Couleur.NOIR);
-
-		initialiserRoi(Couleur.BLANC);
-		initialiserRoi(Couleur.NOIR);
 	}
 
 	private void initialiserCase() {
@@ -55,48 +27,7 @@ public class Echiquier {
 		}
 	}
 
-	private void initialiserPion(Couleur couleur) {
-		int y = couleur == Couleur.BLANC ? 1 : 6;
-
-		for (int x = 0; x < 8; x++) {
-			ajouterPiece(x, y, new Pion(couleur));
-		}
-	}
-
-	private void initialiserTour(Couleur couleur) {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
-
-		ajouterPiece(0, y, new Tour(couleur));
-		ajouterPiece(7, y, new Tour(couleur));
-	}
-
-	private void initialiserCavalier(Couleur couleur) {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
-
-		ajouterPiece(1, y, new Cavalier(couleur));
-		ajouterPiece(6, y, new Cavalier(couleur));
-	}
-
-	private void initialiserFou(Couleur couleur) {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
-
-		ajouterPiece(2, y, new Fou(couleur));
-		ajouterPiece(5, y, new Fou(couleur));
-	}
-
-	private void initialiserDamme(Couleur couleur) {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
-
-		ajouterPiece(4, y, new Damme(couleur));
-	}
-
-	private void initialiserRoi(Couleur couleur) {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
-
-		ajouterPiece(3, y, new Roi(couleur));
-	}
-
-	private void ajouterPiece(int x, int y, Piece piece) {
+	public void ajouterPiece(int x, int y, Piece piece) {
 		tableuCase.get(y).get(x).assignerPiece(piece);
 	}
 
@@ -104,14 +35,6 @@ public class Echiquier {
 		if (!inEchiquier(x, y))
 			return null;
 		return tableuCase.get(y).get(x);
-	}
-
-	public Joueur getJoueurBlanc() {
-		return joueurBlanc;
-	}
-
-	public Joueur getJoueurNoir() {
-		return joueurNoir;
 	}
 
 	public void move(Case c, Case destination) {
@@ -129,11 +52,33 @@ public class Echiquier {
 	}
 
 	public Boolean isCaseVide(int x, int y) {
-		return getCase(x, y).caseVide();
+		return getCase(x, y).isVide();
 	}
 
 	public Couleur getCouleurPiece(int x, int y) {
 		return getCase(x, y).getCouleurPiece();
+	}
+
+	public Deplacement getDeplacementsInDirection(Case casePiece, Vecteur vecteur) {
+		Deplacement deplacements = new Deplacement();
+
+		int x = casePiece.getPossitionX();
+		int y = casePiece.getPossitionY();
+
+		int vx = vecteur.getX();
+		int vy = vecteur.getY();
+
+		while (inEchiquier(x + vx, y + vy) && isCaseVide(x + vx, y + vy)) {
+			deplacements.addDeplacement(vx, vy);
+			vy += vecteur.getY();
+			vx += vecteur.getX();
+		}
+
+		if (inEchiquier(x + vx, y + vy) && getCouleurPiece(x + vx, y + vy) != casePiece.getCouleurPiece()) {
+			deplacements.addDeplacement(vx, vy);
+		}
+
+		return deplacements;
 	}
 
 }
