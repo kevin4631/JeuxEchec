@@ -22,7 +22,7 @@ public class Pion extends Piece {
 		if (echiquier.inEchiquier(x, y + vecteurY) && echiquier.isCaseVide(x, y + vecteurY))
 			deplacements.addDeplacement(0, vecteurY);
 
-		if (premierTour)
+		if (premierTour && echiquier.isCaseVide(x, y + vecteurY))
 			deplacements.addDeplacement(0, vecteurY * 2);
 
 		if (echiquier.inEchiquier(x - 1, y + vecteurY) && !echiquier.isCaseVide(x - 1, y + vecteurY)
