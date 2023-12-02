@@ -1,9 +1,7 @@
 package piece.pieceSpeciale;
 
-import java.util.Iterator;
-
 import echiquier.Echiquier;
-import piece.Deplacement;
+import piece.ListDeplacement;
 import piece.Piece;
 import piece.Vecteur;
 import piece.enumPackges.Couleur;
@@ -17,11 +15,9 @@ public class Roi extends Piece {
 	}
 
 	@Override
-	public Deplacement getDeplacement(Echiquier echiquier, int x, int y) {
-
-		Deplacement deplacements = new Deplacement();
-
-		Deplacement dDirection = new Deplacement();
+	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
+		ListDeplacement deplacements = new ListDeplacement();
+		ListDeplacement dDirection = new ListDeplacement();
 
 		dDirection.addDeplacement(Direction.UP.getVecteur());
 		dDirection.addDeplacement(Direction.DOWN.getVecteur());
@@ -32,12 +28,10 @@ public class Roi extends Piece {
 		dDirection.addDeplacement(Direction.RIGHT_UP.getVecteur());
 		dDirection.addDeplacement(Direction.RIGHT_DOWN.getVecteur());
 
-		Iterator<Vecteur> iterator = dDirection.iterator();
-		while (iterator.hasNext()) {
-			Vecteur v = iterator.next();
-			if (echiquier.inEchiquier(x + v.getX(), y + v.getY())
-					&& echiquier.getCouleurPiece(x + v.getX(), y + v.getY()) != this.getCouleur())
-				deplacements.addDeplacement(v.getX(), v.getY());
+		for (Vecteur vecteur : dDirection.getListDeplacement()) {
+			if (echiquier.inEchiquier(x + vecteur.getX(), y + vecteur.getY())
+					&& echiquier.getCouleurPiece(x + vecteur.getX(), y + vecteur.getY()) != this.getCouleur())
+				deplacements.addDeplacement(vecteur.getX(), vecteur.getY());
 		}
 
 		return deplacements;

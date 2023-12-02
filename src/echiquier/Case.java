@@ -1,19 +1,19 @@
 package echiquier;
 
-import piece.Deplacement;
+import piece.ListDeplacement;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 
 public class Case {
 
-	private int possitionX;
-	private int possitionY;
+	private int x;
+	private int y;
 	private Piece piece = null;
 
 	public Case(int possitionX, int possitionY) {
 		super();
-		this.possitionX = possitionX;
-		this.possitionY = possitionY;
+		this.x = possitionX;
+		this.y = possitionY;
 	}
 
 	public void assignerPiece(Piece piece) {
@@ -38,12 +38,12 @@ public class Case {
 		return p;
 	}
 
-	public int getPossitionX() {
-		return possitionX;
+	public int getX() {
+		return x;
 	}
 
-	public int getPossitionY() {
-		return possitionY;
+	public int getY() {
+		return y;
 	}
 
 	public Couleur getCouleurPiece() {
@@ -54,11 +54,11 @@ public class Case {
 
 	@Override
 	public String toString() {
-		return "x: " + getPossitionX() + "  y: " + getPossitionY() + "   " + getPiece();
+		return "x: " + x + "  y: " + y + "   " + getPiece();
 	}
 
-	public Deplacement getDeplacementPiece(Echiquier echiquier) {
-		return piece.getDeplacement(echiquier, possitionX, possitionY);
+	public ListDeplacement getDeplacementPiece(Echiquier echiquier) {
+		return piece.getDeplacement(echiquier, x, y);
 	}
 
 }

@@ -3,7 +3,7 @@ package echiquier;
 import java.util.ArrayList;
 import java.util.List;
 
-import piece.Deplacement;
+import piece.ListDeplacement;
 import piece.Piece;
 import piece.Vecteur;
 import piece.enumPackges.Couleur;
@@ -59,11 +59,11 @@ public class Echiquier {
 		return getCase(x, y).getCouleurPiece();
 	}
 
-	public Deplacement getDeplacementsInDirection(Case casePiece, Vecteur vecteur) {
-		Deplacement deplacements = new Deplacement();
+	public ListDeplacement getDeplacementsInDirection(Case casePiece, Vecteur vecteur) {
+		ListDeplacement deplacements = new ListDeplacement();
 
-		int x = casePiece.getPossitionX();
-		int y = casePiece.getPossitionY();
+		int x = casePiece.getX();
+		int y = casePiece.getY();
 
 		int vx = vecteur.getX();
 		int vy = vecteur.getY();

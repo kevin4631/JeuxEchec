@@ -5,13 +5,12 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JPanel;
 
 import echiquier.Case;
-import piece.Deplacement;
+import piece.ListDeplacement;
 import piece.Vecteur;
 
 public class JPanelEchiquier extends JPanel {
@@ -25,7 +24,7 @@ public class JPanelEchiquier extends JPanel {
 
 	private boolean actionEnCours = false;
 	private JPanelCase JPanelcaseSelection;
-	private Deplacement deplacementPossible;
+	private ListDeplacement deplacementPossible;
 
 	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase) {
 
@@ -46,9 +45,7 @@ public class JPanelEchiquier extends JPanel {
 			for (int x = 0; x < 8; x++) {
 				couleur = !couleur;
 				listJPanelCase.get(y).add(new JPanelCase(couleur ? couleurBlanc : couleurNoir,
-														 couleur ? couleurSelectionBlanc : couleurSelectionNoir,
-														 x,
-														 y));
+						couleur ? couleurSelectionBlanc : couleurSelectionNoir, x, y));
 				add(listJPanelCase.get(y).get(x));
 			}
 		}
@@ -126,15 +123,12 @@ public class JPanelEchiquier extends JPanel {
 		deplacementPossible = null;
 	}
 
-	private void paintBackgroundCases(Deplacement deplacementPossible, int x, int y, Boolean paint) {
-		Iterator<Vecteur> iterator = deplacementPossible.iterator();
+	private void paintBackgroundCases(ListDeplacement deplacementPossible, int x, int y, Boolean paint) {
 
 		JPanelcaseSelection.paintBackground(paint);
 
-		while (iterator.hasNext()) {
-			Vecteur v = iterator.next();
-
-			JPanelCase c = listJPanelCase.get(y + v.getY()).get(x + v.getX());
+		for (Vecteur vecteur : deplacementPossible.getListDeplacement()) {
+			JPanelCase c = listJPanelCase.get(y + vecteur.getY()).get(x + vecteur.getX());
 			c.paintBackground(paint);
 		}
 

@@ -1,24 +1,24 @@
 package piece.pieceSpeciale;
 
 import echiquier.Echiquier;
-import piece.Deplacement;
+import piece.ListDeplacement;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.NomPiece;
 
 public class Pion extends Piece {
 	private boolean premierTour = true;
-	private Deplacement deplacements;
+	private ListDeplacement deplacements;
 
 	public Pion(Couleur couleur) {
 		super(couleur, NomPiece.PION);
 	}
 
 	@Override
-	public Deplacement getDeplacement(Echiquier echiquier, int x, int y) {
+	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
 		int vecteurY = this.getCouleur() == Couleur.BLANC ? +1 : -1;
 
-		deplacements = new Deplacement();
+		deplacements = new ListDeplacement();
 		if (echiquier.inEchiquier(x, y + vecteurY) && echiquier.isCaseVide(x, y + vecteurY))
 			deplacements.addDeplacement(0, vecteurY);
 

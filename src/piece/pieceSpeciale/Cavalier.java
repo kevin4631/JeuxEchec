@@ -1,45 +1,39 @@
 package piece.pieceSpeciale;
 
-import java.util.Iterator;
-
 import echiquier.Echiquier;
-import piece.Deplacement;
+import piece.ListDeplacement;
 import piece.Piece;
 import piece.Vecteur;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.NomPiece;
 
 public class Cavalier extends Piece {
-	Deplacement deplacements;
 
 	public Cavalier(Couleur couleur) {
 		super(couleur, NomPiece.CAVALIER);
 	}
 
 	@Override
-	public Deplacement getDeplacement(Echiquier echiquier, int x, int y) {
+	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
+		ListDeplacement deplacements = new ListDeplacement();
+		ListDeplacement dDirection = new ListDeplacement();
 
-		deplacements = new Deplacement();
-		Deplacement d = new Deplacement();
+		dDirection.addDeplacement(+2, +1);
+		dDirection.addDeplacement(+2, -1);
 
-		d.addDeplacement(+2, +1);
-		d.addDeplacement(+2, -1);
+		dDirection.addDeplacement(-2, +1);
+		dDirection.addDeplacement(-2, -1);
 
-		d.addDeplacement(-2, +1);
-		d.addDeplacement(-2, -1);
+		dDirection.addDeplacement(+1, +2);
+		dDirection.addDeplacement(+1, -2);
 
-		d.addDeplacement(+1, +2);
-		d.addDeplacement(+1, -2);
+		dDirection.addDeplacement(-1, +2);
+		dDirection.addDeplacement(-1, -2);
 
-		d.addDeplacement(-1, +2);
-		d.addDeplacement(-1, -2);
-
-		Iterator<Vecteur> iterator = d.iterator();
-		while (iterator.hasNext()) {
-			Vecteur v = iterator.next();
-			if (echiquier.inEchiquier(x + v.getX(), y + v.getY())
-					&& echiquier.getCouleurPiece(x + v.getX(), y + v.getY()) != this.getCouleur())
-				deplacements.addDeplacement(v.getX(), v.getY());
+		for (Vecteur vecteur : dDirection.getListDeplacement()) {
+			if (echiquier.inEchiquier(x + vecteur.getX(), y + vecteur.getY())
+					&& echiquier.getCouleurPiece(x + vecteur.getX(), y + vecteur.getY()) != this.getCouleur())
+				deplacements.addDeplacement(vecteur.getX(), vecteur.getY());
 		}
 
 		return deplacements;

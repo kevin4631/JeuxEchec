@@ -1,9 +1,7 @@
 package piece.pieceSpeciale;
 
-import java.util.Iterator;
-
 import echiquier.Echiquier;
-import piece.Deplacement;
+import piece.ListDeplacement;
 import piece.Piece;
 import piece.Vecteur;
 import piece.enumPackges.Couleur;
@@ -17,19 +15,17 @@ public class Tour extends Piece {
 	}
 
 	@Override
-	public Deplacement getDeplacement(Echiquier echiquier, int x, int y) {
-
-		Deplacement deplacements = new Deplacement();
-		Deplacement dDirection = new Deplacement();
+	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
+		ListDeplacement deplacements = new ListDeplacement();
+		ListDeplacement dDirection = new ListDeplacement();
 
 		dDirection.addDeplacement(Direction.UP.getVecteur());
 		dDirection.addDeplacement(Direction.DOWN.getVecteur());
 		dDirection.addDeplacement(Direction.LEFT.getVecteur());
 		dDirection.addDeplacement(Direction.RIGHT.getVecteur());
 
-		Iterator<Vecteur> iterator = dDirection.iterator();
-		while (iterator.hasNext()) {
-			Deplacement d = echiquier.getDeplacementsInDirection(echiquier.getCase(x, y), iterator.next());
+		for (Vecteur vecteur : dDirection.getListDeplacement()) {
+			ListDeplacement d = echiquier.getDeplacementsInDirection(echiquier.getCase(x, y), vecteur);
 			deplacements.addDeplacement(d);
 		}
 
