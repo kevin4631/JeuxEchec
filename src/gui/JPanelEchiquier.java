@@ -134,7 +134,7 @@ public class JPanelEchiquier extends JPanel {
 	}
 
 	private int convertPixelInCoordonnee(int pixel) {
-		return pixel / (getHeight() / Main.nbCaseLongeur);
+		return 7 - pixel / (getHeight() / Main.nbCaseLongeur);
 	}
 
 }
