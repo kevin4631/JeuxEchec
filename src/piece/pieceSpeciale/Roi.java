@@ -1,9 +1,10 @@
 package piece.pieceSpeciale;
 
+import echiquier.Case;
 import echiquier.Echiquier;
+import echiquier.ICoordonee;
 import piece.ListDeplacement;
 import piece.Piece;
-import piece.Vecteur;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.Direction;
 import piece.enumPackges.NomPiece;
@@ -15,25 +16,27 @@ public class Roi extends Piece {
 	}
 
 	@Override
-	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
-		ListDeplacement deplacements = new ListDeplacement();
-		ListDeplacement dDirection = new ListDeplacement();
+	public ListDeplacement getDeplacement(Echiquier echiquier, int origineX, int origineY) {
+		ListDeplacement listeCase = new ListDeplacement();
+		ListDeplacement listVecteur = new ListDeplacement();
 
-		dDirection.addDeplacement(Direction.UP.getVecteur());
-		dDirection.addDeplacement(Direction.DOWN.getVecteur());
-		dDirection.addDeplacement(Direction.LEFT.getVecteur());
-		dDirection.addDeplacement(Direction.RIGHT.getVecteur());
-		dDirection.addDeplacement(Direction.LEFT_UP.getVecteur());
-		dDirection.addDeplacement(Direction.LEFT_DOWN.getVecteur());
-		dDirection.addDeplacement(Direction.RIGHT_UP.getVecteur());
-		dDirection.addDeplacement(Direction.RIGHT_DOWN.getVecteur());
+		listVecteur.add(Direction.UP);
+		listVecteur.add(Direction.DOWN);
+		listVecteur.add(Direction.LEFT);
+		listVecteur.add(Direction.RIGHT);
+		listVecteur.add(Direction.LEFT_UP);
+		listVecteur.add(Direction.LEFT_DOWN);
+		listVecteur.add(Direction.RIGHT_UP);
+		listVecteur.add(Direction.RIGHT_DOWN);
 
-		for (Vecteur vecteur : dDirection.getListDeplacement()) {
-			if (echiquier.inEchiquier(x + vecteur.getX(), y + vecteur.getY())
-					&& echiquier.getCouleurPiece(x + vecteur.getX(), y + vecteur.getY()) != this.getCouleur())
-				deplacements.addDeplacement(vecteur.getX(), vecteur.getY());
+		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+			int destinationX = origineX + vecteur.getX();
+			int destinationY = origineY + vecteur.getY();
+			if (echiquier.inEchiquier(destinationX, destinationY)
+					&& echiquier.getCouleurPiece(destinationX, destinationY) != this.getCouleur())
+				listeCase.add(new Case(destinationX, destinationY));
 		}
 
-		return deplacements;
+		return listeCase;
 	}
 }

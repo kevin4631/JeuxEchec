@@ -5,8 +5,8 @@ import java.util.List;
 
 import piece.ListDeplacement;
 import piece.Piece;
-import piece.Vecteur;
 import piece.enumPackges.Couleur;
+import piece.enumPackges.Direction;
 import piece.pieceSpeciale.Pion;
 
 public class Echiquier {
@@ -59,23 +59,20 @@ public class Echiquier {
 		return getCase(x, y).getCouleurPiece();
 	}
 
-	public ListDeplacement getDeplacementsInDirection(Case casePiece, Vecteur vecteur) {
+	public ListDeplacement caseDestinationInDirection(int x, int y, Direction vecteur) {
 		ListDeplacement deplacements = new ListDeplacement();
-
-		int x = casePiece.getX();
-		int y = casePiece.getY();
 
 		int vx = vecteur.getX();
 		int vy = vecteur.getY();
 
 		while (inEchiquier(x + vx, y + vy) && isCaseVide(x + vx, y + vy)) {
-			deplacements.addDeplacement(vx, vy);
+			deplacements.add(new Case(x + vx, y + vy));
 			vy += vecteur.getY();
 			vx += vecteur.getX();
 		}
 
-		if (inEchiquier(x + vx, y + vy) && getCouleurPiece(x + vx, y + vy) != casePiece.getCouleurPiece()) {
-			deplacements.addDeplacement(vx, vy);
+		if (inEchiquier(x + vx, y + vy) && getCouleurPiece(x + vx, y + vy) != getCase(x, y).getCouleurPiece()) {
+			deplacements.add(new Case(x + vx, y + vy));
 		}
 
 		return deplacements;

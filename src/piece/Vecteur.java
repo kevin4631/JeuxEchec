@@ -1,6 +1,8 @@
 package piece;
 
-public class Vecteur {
+import echiquier.ICoordonee;
+
+public class Vecteur implements ICoordonee {
 	private int x;
 	private int y;
 
@@ -9,10 +11,12 @@ public class Vecteur {
 		this.y = y;
 	}
 
+	@Override
 	public int getX() {
 		return x;
 	}
 
+	@Override
 	public int getY() {
 		return y;
 	}

@@ -10,8 +10,8 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import echiquier.Case;
+import echiquier.ICoordonee;
 import piece.ListDeplacement;
-import piece.Vecteur;
 
 public class JPanelEchiquier extends JPanel {
 
@@ -24,7 +24,7 @@ public class JPanelEchiquier extends JPanel {
 
 	private boolean actionEnCours = false;
 	private JPanelCase JPanelcaseSelection;
-	private ListDeplacement deplacementPossible;
+	private ListDeplacement caseDestinationPossible;
 
 	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase) {
 
@@ -99,8 +99,8 @@ public class JPanelEchiquier extends JPanel {
 		if (!caseSelection.isVide()) {
 			JPanelcaseSelection = listJPanelCase.get(y).get(x);
 
-			deplacementPossible = caseSelection.getDeplacementPiece(Main.echiquier);
-			paintBackgroundCases(deplacementPossible, x, y, true);
+			caseDestinationPossible = caseSelection.getDeplacementPiece(Main.echiquier);
+			paintBackgroundCases(true);
 		} else {
 			actionEnCours = false;
 		}
@@ -112,23 +112,22 @@ public class JPanelEchiquier extends JPanel {
 
 		Case caseDestination = Main.echiquier.getCase(x, y);
 
-		if (deplacementPossible.contientDestination(caseSelection, caseDestination)) {
+		if (caseDestinationPossible.contientCaseDestination(caseDestination)) {
 			Main.echiquier.move(caseSelection, caseDestination);
 		}
 
-		paintBackgroundCases(deplacementPossible, JPanelcaseSelection.getJPanelCaseX(),
-				JPanelcaseSelection.getJPanelCaseY(), false);
+		paintBackgroundCases(false);
 		actionEnCours = false;
 		JPanelcaseSelection = null;
-		deplacementPossible = null;
+		caseDestinationPossible = null;
 	}
 
-	private void paintBackgroundCases(ListDeplacement deplacementPossible, int x, int y, Boolean paint) {
+	private void paintBackgroundCases(Boolean paint) {
 
 		JPanelcaseSelection.paintBackground(paint);
 
-		for (Vecteur vecteur : deplacementPossible.getListDeplacement()) {
-			JPanelCase c = listJPanelCase.get(y + vecteur.getY()).get(x + vecteur.getX());
+		for (ICoordonee coordonee : caseDestinationPossible.getListDeplacement()) {
+			JPanelCase c = listJPanelCase.get(coordonee.getY()).get(coordonee.getX());
 			c.paintBackground(paint);
 		}
 

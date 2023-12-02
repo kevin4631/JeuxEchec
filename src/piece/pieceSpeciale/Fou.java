@@ -1,9 +1,9 @@
 package piece.pieceSpeciale;
 
 import echiquier.Echiquier;
+import echiquier.ICoordonee;
 import piece.ListDeplacement;
 import piece.Piece;
-import piece.Vecteur;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.Direction;
 import piece.enumPackges.NomPiece;
@@ -16,20 +16,20 @@ public class Fou extends Piece {
 
 	@Override
 	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
-		ListDeplacement deplacements = new ListDeplacement();
-		ListDeplacement dDirection = new ListDeplacement();
+		ListDeplacement listeCase = new ListDeplacement();
+		ListDeplacement listVecteur = new ListDeplacement();
 
-		dDirection.addDeplacement(Direction.LEFT_UP.getVecteur());
-		dDirection.addDeplacement(Direction.LEFT_DOWN.getVecteur());
-		dDirection.addDeplacement(Direction.RIGHT_UP.getVecteur());
-		dDirection.addDeplacement(Direction.RIGHT_DOWN.getVecteur());
+		listVecteur.add(Direction.LEFT_UP);
+		listVecteur.add(Direction.LEFT_DOWN);
+		listVecteur.add(Direction.RIGHT_UP);
+		listVecteur.add(Direction.RIGHT_DOWN);
 
-		for (Vecteur vecteur : dDirection.getListDeplacement()) {
-			ListDeplacement d = echiquier.getDeplacementsInDirection(echiquier.getCase(x, y), vecteur);
-			deplacements.addDeplacement(d);
+		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+			ListDeplacement c = echiquier.caseDestinationInDirection(x, y, (Direction) vecteur);
+			listeCase.add(c);
 		}
 
-		return deplacements;
+		return listeCase;
 	}
 
 }

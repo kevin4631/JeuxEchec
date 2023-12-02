@@ -3,12 +3,13 @@
  */
 package piece.enumPackges;
 
+import echiquier.ICoordonee;
 import piece.Vecteur;
 
 /**
  *
  */
-public enum Direction {
+public enum Direction implements ICoordonee {
 	UP        (new Vecteur(+0, +1)), 
 	DOWN      (new Vecteur( 0, -1)), 
 	LEFT      (new Vecteur(-1,  0)), 
@@ -26,5 +27,13 @@ public enum Direction {
 
 	public Vecteur getVecteur() {
 		return this.vecteur;
+	}
+
+	public int getX() {
+		return vecteur.getX();
+	}
+	
+	public int getY() {
+		return vecteur.getY();
 	}
 }

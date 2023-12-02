@@ -4,39 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import echiquier.Case;
+import echiquier.ICoordonee;
 
 public class ListDeplacement {
 
-	private List<Vecteur> listVecteur;
+	private List<ICoordonee> list;
 
 	public ListDeplacement() {
-		this.listVecteur = new ArrayList<>();
-		System.out.println();
+		this.list = new ArrayList<>();
 	}
 
-	public void addDeplacement(Vecteur v) {
-		listVecteur.add(v);
+	public void add(ICoordonee element) {
+		list.add(element);
 	}
 
-	public void addDeplacement(int x, int y) {
-		addDeplacement(new Vecteur(x, y));
-	}
-
-	public void addDeplacement(ListDeplacement deplacement) {
-		for (Vecteur vecteur : deplacement.getListDeplacement())
-			addDeplacement(vecteur);
+	public void add(ListDeplacement list) {
+		for (ICoordonee element : list.getListDeplacement())
+			add(element);
 	}
 
 	/**
 	 * @return the listDeplacement
 	 */
-	public List<Vecteur> getListDeplacement() {
-		return listVecteur;
+	public List<ICoordonee> getListDeplacement() {
+		return list;
 	}
 
-	public Boolean contientDestination(Case c1, Case c2) {
-		for (Vecteur vecteur : listVecteur) {
-			if (vecteur.getX() + c1.getX() == c2.getX() && vecteur.getY() + c1.getY() == c2.getY())
+	public Boolean contientCaseDestination(Case c2) {
+		for (ICoordonee element : list) {
+			if (element.getX() == c2.getX() && element.getY() == c2.getY())
 				return true;
 		}
 		return false;
@@ -46,8 +42,8 @@ public class ListDeplacement {
 	public String toString() {
 		StringBuilder string = new StringBuilder();
 
-		for (Vecteur vecteur : listVecteur)
-			string.append(vecteur.getX() + " " + vecteur.getY() + "\n");
+		for (ICoordonee element : list)
+			string.append(element.getX() + " " + element.getY() + "\n");
 
 		return string.toString();
 	}

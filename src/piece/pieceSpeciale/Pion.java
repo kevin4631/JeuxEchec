@@ -1,39 +1,49 @@
 package piece.pieceSpeciale;
 
+import echiquier.Case;
 import echiquier.Echiquier;
+import echiquier.ICoordonee;
 import piece.ListDeplacement;
 import piece.Piece;
 import piece.enumPackges.Couleur;
+import piece.enumPackges.Direction;
 import piece.enumPackges.NomPiece;
 
 public class Pion extends Piece {
 	private boolean premierTour = true;
-	private ListDeplacement deplacements;
 
 	public Pion(Couleur couleur) {
 		super(couleur, NomPiece.PION);
 	}
 
 	@Override
-	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
-		int vecteurY = this.getCouleur() == Couleur.BLANC ? +1 : -1;
+	public ListDeplacement getDeplacement(Echiquier echiquier, int origineX, int origineY) {
+		int vecteurY = this.getCouleur() == Couleur.BLANC ? Direction.UP.getY() : Direction.DOWN.getY();
 
-		deplacements = new ListDeplacement();
-		if (echiquier.inEchiquier(x, y + vecteurY) && echiquier.isCaseVide(x, y + vecteurY))
-			deplacements.addDeplacement(0, vecteurY);
+		ListDeplacement listeCase = new ListDeplacement();
+		ListDeplacement listVecteur = new ListDeplacement();
 
-		if (premierTour && echiquier.isCaseVide(x, y + vecteurY))
-			deplacements.addDeplacement(0, vecteurY * 2);
+		int destinationY = origineY + vecteurY;
+		int destinationX = origineX;
 
-		if (echiquier.inEchiquier(x - 1, y + vecteurY) && !echiquier.isCaseVide(x - 1, y + vecteurY)
-				&& echiquier.getCouleurPiece(x - 1, y + vecteurY) != this.getCouleur())
-			deplacements.addDeplacement(-1, vecteurY);
+		if (echiquier.inEchiquier(destinationX, destinationY) && echiquier.isCaseVide(destinationX, destinationY)) {
+			listeCase.add(new Case(destinationX, destinationY));
+			if (premierTour)
+				listeCase.add(new Case(destinationX, destinationY + vecteurY));
+		}
 
-		if (echiquier.inEchiquier(x + 1, y + vecteurY) && !echiquier.isCaseVide(x + 1, y + vecteurY)
-				&& echiquier.getCouleurPiece(x + 1, y + vecteurY) != this.getCouleur())
-			deplacements.addDeplacement(1, vecteurY);
+		listVecteur.add(Direction.LEFT_UP);
+		listVecteur.add(Direction.RIGHT_UP);
 
-		return deplacements;
+		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+			destinationX = origineX + vecteur.getX();
+			destinationY = origineY + vecteur.getY() * vecteurY;
+
+			if (echiquier.inEchiquier(destinationX, destinationY) && !echiquier.isCaseVide(destinationX, destinationY)
+					&& echiquier.getCouleurPiece(destinationX, destinationY) != this.getCouleur())
+				listeCase.add(new Case(destinationX, destinationY));
+		}
+		return listeCase;
 	}
 
 	public void premierTourFalse() {

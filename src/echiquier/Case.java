@@ -4,7 +4,7 @@ import piece.ListDeplacement;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 
-public class Case {
+public class Case implements ICoordonee {
 
 	private int x;
 	private int y;
@@ -38,10 +38,12 @@ public class Case {
 		return p;
 	}
 
+	@Override
 	public int getX() {
 		return x;
 	}
 
+	@Override
 	public int getY() {
 		return y;
 	}

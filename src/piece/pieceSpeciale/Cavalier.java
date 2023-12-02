@@ -1,6 +1,8 @@
 package piece.pieceSpeciale;
 
+import echiquier.Case;
 import echiquier.Echiquier;
+import echiquier.ICoordonee;
 import piece.ListDeplacement;
 import piece.Piece;
 import piece.Vecteur;
@@ -14,29 +16,30 @@ public class Cavalier extends Piece {
 	}
 
 	@Override
-	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
-		ListDeplacement deplacements = new ListDeplacement();
-		ListDeplacement dDirection = new ListDeplacement();
+	public ListDeplacement getDeplacement(Echiquier echiquier, int origineX, int origineY) {
+		ListDeplacement listeCase = new ListDeplacement();
+		ListDeplacement listVecteur = new ListDeplacement();
 
-		dDirection.addDeplacement(+2, +1);
-		dDirection.addDeplacement(+2, -1);
+		listVecteur.add(new Vecteur(+2, +1));
+		listVecteur.add(new Vecteur(+2, -1));
 
-		dDirection.addDeplacement(-2, +1);
-		dDirection.addDeplacement(-2, -1);
+		listVecteur.add(new Vecteur(-2, +1));
+		listVecteur.add(new Vecteur(-2, -1));
 
-		dDirection.addDeplacement(+1, +2);
-		dDirection.addDeplacement(+1, -2);
+		listVecteur.add(new Vecteur(+1, +2));
+		listVecteur.add(new Vecteur(+1, -2));
 
-		dDirection.addDeplacement(-1, +2);
-		dDirection.addDeplacement(-1, -2);
+		listVecteur.add(new Vecteur(-1, +2));
+		listVecteur.add(new Vecteur(-1, -2));
 
-		for (Vecteur vecteur : dDirection.getListDeplacement()) {
-			if (echiquier.inEchiquier(x + vecteur.getX(), y + vecteur.getY())
-					&& echiquier.getCouleurPiece(x + vecteur.getX(), y + vecteur.getY()) != this.getCouleur())
-				deplacements.addDeplacement(vecteur.getX(), vecteur.getY());
+		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+			int destinationX = origineX + vecteur.getX();
+			int destinationY = origineY + vecteur.getY();
+			if (echiquier.inEchiquier(destinationX, destinationY)
+					&& echiquier.getCouleurPiece(destinationX, destinationY) != this.getCouleur())
+				listeCase.add(new Case(destinationX, destinationY));
 		}
-
-		return deplacements;
+		return listeCase;
 	}
 
 }
