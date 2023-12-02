@@ -8,8 +8,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import echiquier.Echiquier;
-
 public class JFrameFenetre extends JFrame {
 
 	private JPanel panelPrincilpale;
@@ -39,16 +37,17 @@ public class JFrameFenetre extends JFrame {
 		addComponentListener();
 
 	}
-	
+
 	private void addComponentListener() {
 		addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
 			public void componentResized(java.awt.event.ComponentEvent evt) {
 
 				int height = panelPrincilpale.getHeight();
 				int width = panelPrincilpale.getWidth();
 				int sizeMin = width < height ? width : height;
 				int sizeCase = sizeMin / 8;
-				
+
 				panelEchiquier.setSize(sizeMin, sizeMin);
 
 				for (int y = 0; y < 8; y++) {
@@ -60,5 +59,5 @@ public class JFrameFenetre extends JFrame {
 			}
 		});
 	}
-	
+
 }

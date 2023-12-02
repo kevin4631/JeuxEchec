@@ -1,5 +1,6 @@
 package echiquier;
 
+import piece.Deplacement;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 
@@ -54,6 +55,10 @@ public class Case {
 	@Override
 	public String toString() {
 		return "x: " + getPossitionX() + "  y: " + getPossitionY() + "   " + getPiece();
+	}
+
+	public Deplacement getDeplacementPiece(Echiquier echiquier) {
+		return piece.getDeplacement(echiquier, possitionX, possitionY);
 	}
 
 }

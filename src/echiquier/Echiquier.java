@@ -37,13 +37,13 @@ public class Echiquier {
 		return tableuCase.get(y).get(x);
 	}
 
-	public void move(Case c, Case destination) {
-		if (c.getPiece().getClass() == Pion.class) {
-			Pion p = (Pion) c.getPiece();
+	public void move(Case selection, Case destination) {
+		if (selection.getPiece().getClass() == Pion.class) {
+			Pion p = (Pion) selection.getPiece();
 			p.premierTourFalse();
 		}
 
-		destination.assignerPiece(c.popPiece());
+		destination.assignerPiece(selection.popPiece());
 	}
 
 	public Boolean inEchiquier(int x, int y) {

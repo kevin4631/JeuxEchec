@@ -31,7 +31,7 @@ public class JPanelEchiquier extends JPanel {
 
 		this.listJPanelCase = listJPanelCase;
 
-		setLayout(new GridLayout(8, 8));
+		setLayout(new GridLayout(Main.nbCaseLongeur, Main.nbCaseLongeur));
 
 		initialisationJPanelCase();
 		addMouseListener();
@@ -46,7 +46,9 @@ public class JPanelEchiquier extends JPanel {
 			for (int x = 0; x < 8; x++) {
 				couleur = !couleur;
 				listJPanelCase.get(y).add(new JPanelCase(couleur ? couleurBlanc : couleurNoir,
-						couleur ? couleurSelectionBlanc : couleurSelectionNoir, x, y));
+														 couleur ? couleurSelectionBlanc : couleurSelectionNoir,
+														 x,
+														 y));
 				add(listJPanelCase.get(y).get(x));
 			}
 		}
@@ -68,30 +70,9 @@ public class JPanelEchiquier extends JPanel {
 				int y = convertPixelInCoordonnee(e.getY());
 
 				if (!actionEnCours) {
-					actionEnCours = true;
-					Case caseSelection = Main.echiquier.getCase(x, y);
-					if (!caseSelection.isVide()) {
-						JPanelcaseSelection = listJPanelCase.get(y).get(x);
-
-						deplacementPossible = caseSelection.getPiece().getDeplacement(Main.echiquier, x, y);
-
-						paintCasesSelection(deplacementPossible, x, y, true);
-					} else {
-						actionEnCours = false;
-					}
-
+					actionSelectionPion(x, y);
 				} else {
-					Case caseSelection = Main.echiquier.getCase(JPanelcaseSelection.getJPanelCaseX(),
-							JPanelcaseSelection.getJPanelCaseY());
-
-					Case caseDestination = Main.echiquier.getCase(x, y);
-
-					if (deplacementPossible.contientDestination(caseSelection, caseDestination)) {
-						Main.echiquier.move(caseSelection, caseDestination);
-					}
-
-					paintCasesSelection(deplacementPossible, x, y, false);
-					actionEnCours = false;
+					actionSelectionCaseDestination(x, y);
 				}
 			}
 
@@ -113,26 +94,48 @@ public class JPanelEchiquier extends JPanel {
 
 	}
 
-	private void paintCasesSelection(Deplacement deplacementPossible, int x, int y, Boolean paint) {
+	private void actionSelectionPion(int x, int y) {
+		actionEnCours = true;
+
+		Case caseSelection = Main.echiquier.getCase(x, y);
+
+		if (!caseSelection.isVide()) {
+			JPanelcaseSelection = listJPanelCase.get(y).get(x);
+
+			deplacementPossible = caseSelection.getDeplacementPiece(Main.echiquier);
+			paintBackgroundCases(deplacementPossible, x, y, true);
+		} else {
+			actionEnCours = false;
+		}
+	}
+
+	private void actionSelectionCaseDestination(int x, int y) {
+		Case caseSelection = Main.echiquier.getCase(JPanelcaseSelection.getJPanelCaseX(),
+				JPanelcaseSelection.getJPanelCaseY());
+
+		Case caseDestination = Main.echiquier.getCase(x, y);
+
+		if (deplacementPossible.contientDestination(caseSelection, caseDestination)) {
+			Main.echiquier.move(caseSelection, caseDestination);
+		}
+
+		paintBackgroundCases(deplacementPossible, JPanelcaseSelection.getJPanelCaseX(),
+				JPanelcaseSelection.getJPanelCaseY(), false);
+		actionEnCours = false;
+		JPanelcaseSelection = null;
+		deplacementPossible = null;
+	}
+
+	private void paintBackgroundCases(Deplacement deplacementPossible, int x, int y, Boolean paint) {
 		Iterator<Vecteur> iterator = deplacementPossible.iterator();
 
-		if (paint)
-			JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleurSelection());
-		else
-			JPanelcaseSelection.setBackground(JPanelcaseSelection.getCouleur());
+		JPanelcaseSelection.paintBackground(paint);
 
 		while (iterator.hasNext()) {
 			Vecteur v = iterator.next();
 
-			if (paint) {
-				JPanelCase c = listJPanelCase.get(y + v.getY()).get(x + v.getX());
-				c.setBackground(c.getCouleurSelection());
-
-			} else {
-				JPanelCase c = listJPanelCase.get(JPanelcaseSelection.getJPanelCaseY() + v.getY())
-						.get(JPanelcaseSelection.getJPanelCaseX() + v.getX());
-				c.setBackground(c.getCouleur());
-			}
+			JPanelCase c = listJPanelCase.get(y + v.getY()).get(x + v.getX());
+			c.paintBackground(paint);
 		}
 
 	}

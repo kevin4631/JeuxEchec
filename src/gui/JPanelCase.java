@@ -2,11 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import piece.Piece;
@@ -24,26 +20,25 @@ public class JPanelCase extends JPanel {
 		this.JPanelCaseY = y;
 		this.couleur = couleur;
 		this.couleurSelection = couleurSelection;
-		setBackground(couleur);				
+		setBackground(couleur);
 	}
 
-	  @Override
-	  protected void paintComponent(Graphics g) { 
-		  // pour afficher le Background
-		  super.paintComponent(g); 
-		  
-		  Piece piece = Main.echiquier.getCase(JPanelCaseX, JPanelCaseY).getPiece();
-	  
-		  if (piece != null)
-			  g.drawImage(piece.getImage(), 0, 0, getHeight(), getHeight(), this); 
-	  }
+	@Override
+	protected void paintComponent(Graphics g) {
+		// pour afficher le Background
+		super.paintComponent(g);
 
-	public Color getCouleur() {
-		return couleur;
+		Piece piece = Main.echiquier.getCase(JPanelCaseX, JPanelCaseY).getPiece();
+
+		if (piece != null)
+			g.drawImage(piece.getImage(), 0, 0, getHeight(), getHeight(), this);
 	}
 
-	public Color getCouleurSelection() {
-		return couleurSelection;
+	public void paintBackground(Boolean paint) {
+		if (paint)
+			setBackground(couleurSelection);
+		else
+			setBackground(couleur);
 	}
 
 	public int getJPanelCaseX() {

@@ -7,6 +7,7 @@ import piece.Deplacement;
 import piece.Piece;
 import piece.Vecteur;
 import piece.enumPackges.Couleur;
+import piece.enumPackges.Direction;
 import piece.enumPackges.NomPiece;
 
 public class Roi extends Piece {
@@ -20,20 +21,18 @@ public class Roi extends Piece {
 
 		Deplacement deplacements = new Deplacement();
 
-		Deplacement d = new Deplacement();
+		Deplacement dDirection = new Deplacement();
 
-		d.addDeplacement(+1, +1);
-		d.addDeplacement(+1, 0);
-		d.addDeplacement(+1, -1);
+		dDirection.addDeplacement(Direction.UP.getVecteur());
+		dDirection.addDeplacement(Direction.DOWN.getVecteur());
+		dDirection.addDeplacement(Direction.LEFT.getVecteur());
+		dDirection.addDeplacement(Direction.RIGHT.getVecteur());
+		dDirection.addDeplacement(Direction.LEFT_UP.getVecteur());
+		dDirection.addDeplacement(Direction.LEFT_DOWN.getVecteur());
+		dDirection.addDeplacement(Direction.RIGHT_UP.getVecteur());
+		dDirection.addDeplacement(Direction.RIGHT_DOWN.getVecteur());
 
-		d.addDeplacement(-1, +1);
-		d.addDeplacement(-1, 0);
-		d.addDeplacement(-1, -1);
-
-		d.addDeplacement(0, +1);
-		d.addDeplacement(0, -1);
-
-		Iterator<Vecteur> iterator = d.iterator();
+		Iterator<Vecteur> iterator = dDirection.iterator();
 		while (iterator.hasNext()) {
 			Vecteur v = iterator.next();
 			if (echiquier.inEchiquier(x + v.getX(), y + v.getY())
