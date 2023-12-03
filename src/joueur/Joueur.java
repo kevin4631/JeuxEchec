@@ -25,6 +25,10 @@ public abstract class Joueur {
 		initialiserRoi();
 	}
 
+	public void jouer() {
+
+	}
+
 	private void initialiserPion() {
 		int y = couleur == Couleur.BLANC ? 1 : 6;
 

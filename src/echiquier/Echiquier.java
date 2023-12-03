@@ -3,6 +3,7 @@ package echiquier;
 import java.util.ArrayList;
 import java.util.List;
 
+import joueur.Joueur;
 import piece.ListDeplacement;
 import piece.Piece;
 import piece.enumPackges.Couleur;
@@ -12,6 +13,9 @@ import piece.pieceSpeciale.Pion;
 public class Echiquier {
 
 	private List<List<Case>> tableuCase;
+
+	private List<Piece> piecesBlancDead = new ArrayList<>();
+	private List<Piece> piecesNoirDead = new ArrayList<>();
 
 	public Echiquier() {
 		this.tableuCase = new ArrayList<>();
@@ -43,8 +47,17 @@ public class Echiquier {
 			p.premierTourFalse();
 		}
 
+		if (!destination.isVide()) {
+			Piece piece = destination.getPiece();
+			if (piece.getCouleur() == Couleur.BLANC)
+				piecesBlancDead.add(piece);
+			else
+				piecesNoirDead.add(piece);
+		}
+
 		destination.assignerPiece(selection.popPiece());
 	}
+
 
 	public Boolean inEchiquier(int x, int y) {
 		return !(x < 0 || x > 7 || y < 0 || y > 7);
@@ -59,6 +72,10 @@ public class Echiquier {
 		return getCase(x, y).getCouleurPiece();
 	}
 
+	public Boolean inEchecEtMat(Joueur joeur) {
+		// TODO a faire
+		return false;
+	}
 	public ListDeplacement caseDestinationInDirection(int x, int y, Direction vecteur) {
 		ListDeplacement deplacements = new ListDeplacement();
 
@@ -76,6 +93,14 @@ public class Echiquier {
 		}
 
 		return deplacements;
+	}
+
+	public List<Piece> getPiecesBlancDead() {
+		return piecesBlancDead;
+	}
+
+	public List<Piece> getPiecesNoirDead() {
+		return piecesNoirDead;
 	}
 
 }

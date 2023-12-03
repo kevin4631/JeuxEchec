@@ -10,10 +10,16 @@ public class Main {
 	static int nbCaseLongeur = 8;
 
 	public static void main(String[] args) {
-		JoueurBlanc jB = new JoueurBlanc(echiquier);
-		JoueurNoir jN = new JoueurNoir(echiquier);
+		JoueurBlanc joueurBlanc = new JoueurBlanc(echiquier);
+		JoueurNoir joueurNoir = new JoueurNoir(echiquier);
 
 		JFrameFenetre gui = new JFrameFenetre();
 		gui.setVisible(true);
+
+		while (!echiquier.inEchecEtMat(joueurBlanc) && !echiquier.inEchecEtMat(joueurNoir)) {
+			joueurBlanc.jouer();
+			joueurBlanc.jouer();
+		}
+
 	}
 }

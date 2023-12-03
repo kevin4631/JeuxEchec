@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
@@ -25,6 +27,10 @@ public class JPanelCase extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
 		// pour afficher le Background
 		super.paintComponent(g);
 

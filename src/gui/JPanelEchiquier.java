@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import echiquier.Case;
 import echiquier.ICoordonee;
 import piece.ListDeplacement;
+import piece.enumPackges.Couleur;
 
 public class JPanelEchiquier extends JPanel {
 
@@ -25,6 +26,7 @@ public class JPanelEchiquier extends JPanel {
 	private boolean actionEnCours = false;
 	private JPanelCase JPanelcaseSelection;
 	private ListDeplacement caseDestinationPossible;
+	Boolean tourJoueurBlanc = true;
 
 	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase) {
 
@@ -51,7 +53,7 @@ public class JPanelEchiquier extends JPanel {
 		}
 	}
 
-	private void addMouseListener() {
+	public void addMouseListener() {
 
 		addMouseListener(new MouseListener() {
 
@@ -67,7 +69,7 @@ public class JPanelEchiquier extends JPanel {
 				int y = convertPixelInCoordonnee(e.getY());
 
 				if (!actionEnCours) {
-					actionSelectionPion(x, y);
+					actionSelectionPion(x, y, couleurJoueurEnCours(tourJoueurBlanc));
 				} else {
 					actionSelectionCaseDestination(x, y);
 				}
@@ -91,12 +93,12 @@ public class JPanelEchiquier extends JPanel {
 
 	}
 
-	private void actionSelectionPion(int x, int y) {
+	private void actionSelectionPion(int x, int y, Couleur CouleurJoueur) {
 		actionEnCours = true;
 
 		Case caseSelection = Main.echiquier.getCase(x, y);
 
-		if (!caseSelection.isVide()) {
+		if (!caseSelection.isVide() && caseSelection.getCouleurPiece() == CouleurJoueur) {
 			JPanelcaseSelection = listJPanelCase.get(y).get(x);
 
 			caseDestinationPossible = caseSelection.getDeplacementPiece(Main.echiquier);
@@ -114,6 +116,7 @@ public class JPanelEchiquier extends JPanel {
 
 		if (caseDestinationPossible.contientCaseDestination(caseDestination)) {
 			Main.echiquier.move(caseSelection, caseDestination);
+			tourJoueurBlanc = !tourJoueurBlanc;
 		}
 
 		paintBackgroundCases(false);
@@ -135,6 +138,10 @@ public class JPanelEchiquier extends JPanel {
 
 	private int convertPixelInCoordonnee(int pixel) {
 		return 7 - pixel / (getHeight() / Main.nbCaseLongeur);
+	}
+
+	private Couleur couleurJoueurEnCours(Boolean bool) {
+		return bool ? Couleur.BLANC : Couleur.NOIR;
 	}
 
 }
