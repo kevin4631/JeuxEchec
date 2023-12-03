@@ -30,7 +30,7 @@ public abstract class Piece {
 		}
 	}
 
-	public abstract ListDeplacement getDeplacement(Echiquier echiquier, int x, int y);
+	public abstract ListElementICoordonee getDeplacement(Echiquier echiquier, int x, int y);
 
 	public BufferedImage getImage() {
 		return image;

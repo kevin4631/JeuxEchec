@@ -2,7 +2,7 @@ package piece.pieceSpeciale;
 
 import echiquier.Echiquier;
 import echiquier.ICoordonee;
-import piece.ListDeplacement;
+import piece.ListElementICoordonee;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.Direction;
@@ -15,9 +15,9 @@ public class Tour extends Piece {
 	}
 
 	@Override
-	public ListDeplacement getDeplacement(Echiquier echiquier, int x, int y) {
-		ListDeplacement listeCase = new ListDeplacement();
-		ListDeplacement listVecteur = new ListDeplacement();
+	public ListElementICoordonee getDeplacement(Echiquier echiquier, int x, int y) {
+		ListElementICoordonee listeCase = new ListElementICoordonee();
+		ListElementICoordonee listVecteur = new ListElementICoordonee();
 
 		listVecteur.add(Direction.UP);
 		listVecteur.add(Direction.DOWN);
@@ -25,7 +25,7 @@ public class Tour extends Piece {
 		listVecteur.add(Direction.RIGHT);
 
 		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
-			ListDeplacement c = echiquier.caseDestinationInDirection(x, y, (Direction) vecteur);
+			ListElementICoordonee c = echiquier.caseDestinationInDirection(x, y, (Direction) vecteur);
 			listeCase.add(c);
 		}
 

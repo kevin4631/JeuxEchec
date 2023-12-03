@@ -1,6 +1,6 @@
 package echiquier;
 
-import piece.ListDeplacement;
+import piece.ListElementICoordonee;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 
@@ -59,7 +59,7 @@ public class Case implements ICoordonee {
 		return "x: " + x + "  y: " + y + "   " + getPiece();
 	}
 
-	public ListDeplacement getDeplacementPiece(Echiquier echiquier) {
+	public ListElementICoordonee getDeplacementPiece(Echiquier echiquier) {
 		return piece.getDeplacement(echiquier, x, y);
 	}
 

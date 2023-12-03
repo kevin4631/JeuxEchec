@@ -3,7 +3,7 @@ package piece.pieceSpeciale;
 import echiquier.Case;
 import echiquier.Echiquier;
 import echiquier.ICoordonee;
-import piece.ListDeplacement;
+import piece.ListElementICoordonee;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.Direction;
@@ -17,11 +17,11 @@ public class Pion extends Piece {
 	}
 
 	@Override
-	public ListDeplacement getDeplacement(Echiquier echiquier, int origineX, int origineY) {
+	public ListElementICoordonee getDeplacement(Echiquier echiquier, int origineX, int origineY) {
 		int vecteurY = this.getCouleur() == Couleur.BLANC ? Direction.UP.getY() : Direction.DOWN.getY();
 
-		ListDeplacement listeCase = new ListDeplacement();
-		ListDeplacement listVecteur = new ListDeplacement();
+		ListElementICoordonee listeCase = new ListElementICoordonee();
+		ListElementICoordonee listVecteur = new ListElementICoordonee();
 
 		int destinationY = origineY + vecteurY;
 		int destinationX = origineX;

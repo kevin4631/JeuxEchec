@@ -6,11 +6,12 @@ import java.util.List;
 import echiquier.Case;
 import echiquier.ICoordonee;
 
-public class ListDeplacement {
+public class ListElementICoordonee {
 
 	private List<ICoordonee> list;
 
-	public ListDeplacement() {
+	public ListElementICoordonee() {
+
 		this.list = new ArrayList<>();
 	}
 
@@ -18,7 +19,7 @@ public class ListDeplacement {
 		list.add(element);
 	}
 
-	public void add(ListDeplacement list) {
+	public void add(ListElementICoordonee list) {
 		for (ICoordonee element : list.getListDeplacement())
 			add(element);
 	}

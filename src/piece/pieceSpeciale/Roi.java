@@ -3,7 +3,7 @@ package piece.pieceSpeciale;
 import echiquier.Case;
 import echiquier.Echiquier;
 import echiquier.ICoordonee;
-import piece.ListDeplacement;
+import piece.ListElementICoordonee;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.Direction;
@@ -16,9 +16,9 @@ public class Roi extends Piece {
 	}
 
 	@Override
-	public ListDeplacement getDeplacement(Echiquier echiquier, int origineX, int origineY) {
-		ListDeplacement listeCase = new ListDeplacement();
-		ListDeplacement listVecteur = new ListDeplacement();
+	public ListElementICoordonee getDeplacement(Echiquier echiquier, int origineX, int origineY) {
+		ListElementICoordonee listeCase = new ListElementICoordonee();
+		ListElementICoordonee listVecteur = new ListElementICoordonee();
 
 		listVecteur.add(Direction.UP);
 		listVecteur.add(Direction.DOWN);
@@ -32,8 +32,9 @@ public class Roi extends Piece {
 		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
 			int destinationX = origineX + vecteur.getX();
 			int destinationY = origineY + vecteur.getY();
-			if (echiquier.inEchiquier(destinationX, destinationY)
-					&& echiquier.getCouleurPiece(destinationX, destinationY) != this.getCouleur())
+			
+			if (echiquier.inEchiquier(destinationX, destinationY) && echiquier.getCouleurPiece(destinationX, destinationY) != this.getCouleur())
+				
 				listeCase.add(new Case(destinationX, destinationY));
 		}
 

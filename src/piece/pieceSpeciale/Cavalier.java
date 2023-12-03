@@ -3,7 +3,7 @@ package piece.pieceSpeciale;
 import echiquier.Case;
 import echiquier.Echiquier;
 import echiquier.ICoordonee;
-import piece.ListDeplacement;
+import piece.ListElementICoordonee;
 import piece.Piece;
 import piece.Vecteur;
 import piece.enumPackges.Couleur;
@@ -16,9 +16,9 @@ public class Cavalier extends Piece {
 	}
 
 	@Override
-	public ListDeplacement getDeplacement(Echiquier echiquier, int origineX, int origineY) {
-		ListDeplacement listeCase = new ListDeplacement();
-		ListDeplacement listVecteur = new ListDeplacement();
+	public ListElementICoordonee getDeplacement(Echiquier echiquier, int origineX, int origineY) {
+		ListElementICoordonee listeCase = new ListElementICoordonee();
+		ListElementICoordonee listVecteur = new ListElementICoordonee();
 
 		listVecteur.add(new Vecteur(+2, +1));
 		listVecteur.add(new Vecteur(+2, -1));

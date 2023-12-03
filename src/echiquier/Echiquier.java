@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import joueur.Joueur;
-import piece.ListDeplacement;
+import piece.ListElementICoordonee;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.Direction;
@@ -76,8 +76,8 @@ public class Echiquier {
 		// TODO a faire
 		return false;
 	}
-	public ListDeplacement caseDestinationInDirection(int x, int y, Direction vecteur) {
-		ListDeplacement deplacements = new ListDeplacement();
+	public ListElementICoordonee caseDestinationInDirection(int x, int y, Direction vecteur) {
+		ListElementICoordonee deplacements = new ListElementICoordonee();
 
 		int vx = vecteur.getX();
 		int vy = vecteur.getY();

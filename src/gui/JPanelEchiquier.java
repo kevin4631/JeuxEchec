@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import echiquier.Case;
 import echiquier.ICoordonee;
-import piece.ListDeplacement;
+import piece.ListElementICoordonee;
 import piece.enumPackges.Couleur;
 
 public class JPanelEchiquier extends JPanel {
@@ -25,7 +25,7 @@ public class JPanelEchiquier extends JPanel {
 
 	private boolean actionEnCours = false;
 	private JPanelCase JPanelcaseSelection;
-	private ListDeplacement caseDestinationPossible;
+	private ListElementICoordonee caseDestinationPossible;
 	Boolean tourJoueurBlanc = true;
 
 	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase) {
