@@ -35,7 +35,7 @@ public class Pion extends Piece {
 		listVecteur.add(Direction.LEFT_UP);
 		listVecteur.add(Direction.RIGHT_UP);
 
-		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+		for (ICoordonee vecteur : listVecteur.getListElement()) {
 			destinationX = origineX + vecteur.getX();
 			destinationY = origineY + vecteur.getY() * vecteurY;
 

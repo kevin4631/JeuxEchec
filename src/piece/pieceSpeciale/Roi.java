@@ -29,12 +29,12 @@ public class Roi extends Piece {
 		listVecteur.add(Direction.RIGHT_UP);
 		listVecteur.add(Direction.RIGHT_DOWN);
 
-		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+		for (ICoordonee vecteur : listVecteur.getListElement()) {
 			int destinationX = origineX + vecteur.getX();
 			int destinationY = origineY + vecteur.getY();
-			
+
 			if (echiquier.inEchiquier(destinationX, destinationY) && echiquier.getCouleurPiece(destinationX, destinationY) != this.getCouleur())
-				
+
 				listeCase.add(new Case(destinationX, destinationY));
 		}
 

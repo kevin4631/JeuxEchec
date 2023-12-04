@@ -32,7 +32,7 @@ public class Cavalier extends Piece {
 		listVecteur.add(new Vecteur(-1, +2));
 		listVecteur.add(new Vecteur(-1, -2));
 
-		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+		for (ICoordonee vecteur : listVecteur.getListElement()) {
 			int destinationX = origineX + vecteur.getX();
 			int destinationY = origineY + vecteur.getY();
 			if (echiquier.inEchiquier(destinationX, destinationY)

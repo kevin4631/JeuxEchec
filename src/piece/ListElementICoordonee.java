@@ -3,7 +3,6 @@ package piece;
 import java.util.ArrayList;
 import java.util.List;
 
-import echiquier.Case;
 import echiquier.ICoordonee;
 
 public class ListElementICoordonee {
@@ -20,20 +19,20 @@ public class ListElementICoordonee {
 	}
 
 	public void add(ListElementICoordonee list) {
-		for (ICoordonee element : list.getListDeplacement())
+		for (ICoordonee element : list.getListElement())
 			add(element);
 	}
 
 	/**
 	 * @return the listDeplacement
 	 */
-	public List<ICoordonee> getListDeplacement() {
+	public List<ICoordonee> getListElement() {
 		return list;
 	}
 
-	public Boolean contientCaseDestination(Case c2) {
+	public Boolean contientCaseDestination(ICoordonee elem) {
 		for (ICoordonee element : list) {
-			if (element.getX() == c2.getX() && element.getY() == c2.getY())
+			if (element.getX() == elem.getX() && element.getY() == elem.getY())
 				return true;
 		}
 		return false;

@@ -16,10 +16,5 @@ public class Main {
 		JFrameFenetre gui = new JFrameFenetre();
 		gui.setVisible(true);
 
-		while (!echiquier.inEchecEtMat(joueurBlanc) && !echiquier.inEchecEtMat(joueurNoir)) {
-			joueurBlanc.jouer();
-			joueurBlanc.jouer();
-		}
-
 	}
 }

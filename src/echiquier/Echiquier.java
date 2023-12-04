@@ -3,11 +3,11 @@ package echiquier;
 import java.util.ArrayList;
 import java.util.List;
 
-import joueur.Joueur;
 import piece.ListElementICoordonee;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 import piece.enumPackges.Direction;
+import piece.enumPackges.NomPiece;
 import piece.pieceSpeciale.Pion;
 
 public class Echiquier {
@@ -56,6 +56,17 @@ public class Echiquier {
 		}
 
 		destination.assignerPiece(selection.popPiece());
+
+		if (inEchec(Couleur.BLANC)) {
+			System.out.println("roi blanc echec");
+			if (inEchecEtMat(Couleur.BLANC))
+				System.out.println("roi blanc echec et mat");
+		}
+		if (inEchec(Couleur.NOIR)) {
+			System.out.println("roi noir echec");
+			if (inEchecEtMat(Couleur.NOIR))
+				System.out.println("roi noir echec et mat");
+		}
 	}
 
 
@@ -72,10 +83,74 @@ public class Echiquier {
 		return getCase(x, y).getCouleurPiece();
 	}
 
-	public Boolean inEchecEtMat(Joueur joeur) {
-		// TODO a faire
+
+	public Boolean inEchec(Couleur couleur) {
+		List<Case> listCasePieceAdverse = new ArrayList<>();
+		ListElementICoordonee allCaseDestinationAdverse = new ListElementICoordonee();
+
+		for (List<Case> listCase : tableuCase) {
+			for (Case c : listCase) {
+				if (!c.isVide() && c.getCouleurPiece() != couleur) {
+					listCasePieceAdverse.add(c);
+				}
+			}
+		}
+
+		for (Case c : listCasePieceAdverse) {
+			allCaseDestinationAdverse.add(c.getDeplacementPiece(this));
+		}
+
+		Case roi = getCaseRoi(couleur);
+
+		for (ICoordonee c : allCaseDestinationAdverse.getListElement()) {
+			if (c.getX() == roi.getX() && c.getY() == roi.getY())
+				return true;
+		}
+
 		return false;
 	}
+
+	private Case getCaseRoi(Couleur Couleur) {
+		for (List<Case> listCase : tableuCase) {
+			for (Case c : listCase) {
+				if (!c.isVide() && c.getPiece().getNomPiece() == NomPiece.ROI && c.getPiece().getCouleur() == Couleur) {
+					return c;
+				}
+			}
+		}
+		return null;
+	}
+
+	public Boolean inEchecEtMat(Couleur couleur) {
+		if (inEchec(couleur)) {
+			List<Case> listCasePieceAdverse = new ArrayList<>();
+			ListElementICoordonee allCaseDestinationAdverse = new ListElementICoordonee();
+
+			for (List<Case> listCase : tableuCase) {
+				for (Case c : listCase) {
+					if (!c.isVide() && c.getCouleurPiece() != couleur) {
+						listCasePieceAdverse.add(c);
+					}
+				}
+			}
+
+			for (Case c : listCasePieceAdverse) {
+				allCaseDestinationAdverse.add(c.getDeplacementPiece(this));
+			}
+
+			Case roi = getCaseRoi(couleur);
+
+			ListElementICoordonee caseDestinationRoi = roi.getDeplacementPiece(this);
+
+			for (ICoordonee c : caseDestinationRoi.getListElement()) {
+				if (!allCaseDestinationAdverse.contientCaseDestination(c))
+					return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
 	public ListElementICoordonee caseDestinationInDirection(int x, int y, Direction vecteur) {
 		ListElementICoordonee deplacements = new ListElementICoordonee();
 

@@ -24,7 +24,7 @@ public class Tour extends Piece {
 		listVecteur.add(Direction.LEFT);
 		listVecteur.add(Direction.RIGHT);
 
-		for (ICoordonee vecteur : listVecteur.getListDeplacement()) {
+		for (ICoordonee vecteur : listVecteur.getListElement()) {
 			ListElementICoordonee c = echiquier.caseDestinationInDirection(x, y, (Direction) vecteur);
 			listeCase.add(c);
 		}

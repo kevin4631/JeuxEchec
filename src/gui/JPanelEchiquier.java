@@ -129,7 +129,7 @@ public class JPanelEchiquier extends JPanel {
 
 		JPanelcaseSelection.paintBackground(paint);
 
-		for (ICoordonee coordonee : caseDestinationPossible.getListDeplacement()) {
+		for (ICoordonee coordonee : caseDestinationPossible.getListElement()) {
 			JPanelCase c = listJPanelCase.get(coordonee.getY()).get(coordonee.getX());
 			c.paintBackground(paint);
 		}
@@ -142,6 +142,10 @@ public class JPanelEchiquier extends JPanel {
 
 	private Couleur couleurJoueurEnCours(Boolean bool) {
 		return bool ? Couleur.BLANC : Couleur.NOIR;
+	}
+
+	public void inEchec() {
+
 	}
 
 }
