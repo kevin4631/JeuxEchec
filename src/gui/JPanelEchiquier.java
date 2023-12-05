@@ -28,9 +28,12 @@ public class JPanelEchiquier extends JPanel {
 	private ListElementICoordonee caseDestinationPossible;
 	Boolean tourJoueurBlanc = true;
 
-	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase) {
+	JFrameFenetre frameFenetre;
+
+	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase, JFrameFenetre frameFenetre) {
 
 		this.listJPanelCase = listJPanelCase;
+		this.frameFenetre = frameFenetre;
 
 		setLayout(new GridLayout(Main.nbCaseLongeur, Main.nbCaseLongeur));
 
@@ -72,6 +75,7 @@ public class JPanelEchiquier extends JPanel {
 					actionSelectionPion(x, y, joueurEnCours(tourJoueurBlanc));
 				} else {
 					actionSelectionCaseDestination(x, y);
+					frameFenetre.updateListePieceBlancDead();
 				}
 			}
 
