@@ -75,21 +75,6 @@ public abstract class Joueur {
 		listPiece.add(roi);
 	}
 
-	public void move(Piece piece, int destinationX, int destinationY) {
-		if (piece.getClass() == Pion.class) {
-			((Pion) piece).premierTourFalse();
-		}
-
-		if (!echiquier.caseVide(destinationX, destinationY)) {
-			Piece p = echiquier.getPiece(destinationX, destinationY);
-			listPiece.remove(p);
-		}
-
-		echiquier.getTableuPiece().get(piece.getY()).set(piece.getX(), null);
-		piece.setXY(destinationX, destinationY);
-		echiquier.getTableuPiece().get(destinationY).set(destinationX, piece);
-	}
-
 	public Couleur getCouleur() {
 		return couleur;
 	}

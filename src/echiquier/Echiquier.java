@@ -8,6 +8,8 @@ import joueur.JoueurBlanc;
 import joueur.JoueurNoir;
 import piece.ListElementICoordonee;
 import piece.Piece;
+import piece.enumPackges.Couleur;
+import piece.pieceSpeciale.Pion;
 import piece.pieceSpeciale.Roi;
 
 public class Echiquier {
@@ -38,6 +40,24 @@ public class Echiquier {
 		for (Piece p : joueurNoir.getListPiece()) {
 			tableuPiece.get(p.getY()).set(p.getX(), p);
 		}
+	}
+
+	public void move(Piece piece, int destinationX, int destinationY) {
+		if (piece.getClass() == Pion.class) {
+			((Pion) piece).premierTourFalse();
+		}
+
+		if (!caseVide(destinationX, destinationY)) {
+			Piece p = getPiece(destinationX, destinationY);
+			if (piece.getCouleur() == Couleur.BLANC)
+				joueurBlanc.getListPiece().remove(p);
+			else
+				joueurNoir.getListPiece().remove(p);
+		}
+
+		getTableuPiece().get(piece.getY()).set(piece.getX(), null);
+		piece.setXY(destinationX, destinationY);
+		getTableuPiece().get(destinationY).set(destinationX, piece);
 	}
 
 	public Boolean inEchec(Joueur joueur) {

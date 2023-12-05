@@ -10,9 +10,9 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import echiquier.ICoordonee;
-import joueur.Joueur;
 import piece.ListElementICoordonee;
 import piece.Piece;
+import piece.enumPackges.Couleur;
 
 public class JPanelEchiquier extends JPanel {
 
@@ -71,7 +71,7 @@ public class JPanelEchiquier extends JPanel {
 				if (!actionEnCours) {
 					actionSelectionPion(x, y, joueurEnCours(tourJoueurBlanc));
 				} else {
-					actionSelectionCaseDestination(x, y, joueurEnCours(tourJoueurBlanc));
+					actionSelectionCaseDestination(x, y);
 				}
 			}
 
@@ -93,12 +93,12 @@ public class JPanelEchiquier extends JPanel {
 
 	}
 
-	private void actionSelectionPion(int x, int y, Joueur joueur) {
+	private void actionSelectionPion(int x, int y, Couleur couleur) {
 		actionEnCours = true;
 
 		Piece pieceSelection = Main.echiquier.getPiece(x, y);
 
-		if (pieceSelection != null && pieceSelection.getCouleur() == joueur.getCouleur()) {
+		if (pieceSelection != null && pieceSelection.getCouleur() == couleur) {
 			JPanelcaseSelection = listJPanelCase.get(y).get(x);
 			caseDestinationPossible = pieceSelection.getDeplacement(Main.echiquier);
 			paintBackgroundCases(true);
@@ -107,13 +107,13 @@ public class JPanelEchiquier extends JPanel {
 		}
 	}
 
-	private void actionSelectionCaseDestination(int x, int y, Joueur joueur) {
+	private void actionSelectionCaseDestination(int x, int y) {
 		Piece pieceSelection = Main.echiquier.getPiece(JPanelcaseSelection.getJPanelCaseX(),
 				JPanelcaseSelection.getJPanelCaseY());
 
 
 		if (caseDestinationPossible.contient(x, y)) {
-			joueur.move(pieceSelection, x, y);
+			Main.echiquier.move(pieceSelection, x, y);
 			tourJoueurBlanc = !tourJoueurBlanc;
 		}
 
@@ -138,8 +138,8 @@ public class JPanelEchiquier extends JPanel {
 		return pixel / (getHeight() / Main.nbCaseLongeur);
 	}
 
-	private Joueur joueurEnCours(Boolean bool) {
-		return bool ? Main.echiquier.getJoueurBlanc() : Main.echiquier.getJoueurNoir();
+	private Couleur joueurEnCours(Boolean bool) {
+		return bool ? Couleur.BLANC : Couleur.NOIR;
 	}
 
 	public void inEchec() {
