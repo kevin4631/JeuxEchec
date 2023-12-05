@@ -67,8 +67,7 @@ public class JFrameFenetre extends JFrame {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-				panelPrincilpale.add(panelEchiquier);
-				addComponentListener();
+				Main.echiquier.initialiserEchiquier();
 				panelEchiquier.repaint();
 
 			}

@@ -14,14 +14,20 @@ import piece.pieceSpeciale.Roi;
 
 public class Echiquier {
 
-	private List<List<Piece>> tableuPiece = new ArrayList<>();
+	private List<List<Piece>> tableuPiece;
 	private JoueurBlanc joueurBlanc;
 	private JoueurNoir joueurNoir;
 
 	public Echiquier() {
+
+		initialiserEchiquier();
+
+	}
+
+	public void initialiserEchiquier() {
+		tableuPiece = new ArrayList<>();
 		joueurBlanc = new JoueurBlanc(this);
 		joueurNoir = new JoueurNoir(this);
-
 		initialiserCase(joueurBlanc, joueurNoir);
 	}
 
