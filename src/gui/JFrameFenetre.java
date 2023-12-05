@@ -52,7 +52,7 @@ public class JFrameFenetre extends JFrame {
 
 				for (int y = 0; y < 8; y++) {
 					for (int x = 0; x < 8; x++) {
-						listCase.get(y).get(x).setBounds((7 - x) * sizeCase, (7 - y) * sizeCase, sizeCase, sizeCase);
+						listCase.get(y).get(x).setBounds(x * sizeCase, (7 - y) * sizeCase, sizeCase, sizeCase);
 					}
 				}
 

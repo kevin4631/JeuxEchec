@@ -30,9 +30,9 @@ public class ListElementICoordonee {
 		return list;
 	}
 
-	public Boolean contientCaseDestination(ICoordonee elem) {
+	public Boolean contient(int x, int y) {
 		for (ICoordonee element : list) {
-			if (element.getX() == elem.getX() && element.getY() == elem.getY())
+			if (element.getX() == x && element.getY() == y)
 				return true;
 		}
 		return false;

@@ -3,179 +3,96 @@ package echiquier;
 import java.util.ArrayList;
 import java.util.List;
 
+import joueur.Joueur;
+import joueur.JoueurBlanc;
+import joueur.JoueurNoir;
 import piece.ListElementICoordonee;
 import piece.Piece;
-import piece.enumPackges.Couleur;
-import piece.enumPackges.Direction;
-import piece.enumPackges.NomPiece;
-import piece.pieceSpeciale.Pion;
+import piece.pieceSpeciale.Roi;
 
 public class Echiquier {
 
-	private List<List<Case>> tableuCase;
-
-	private List<Piece> piecesBlancDead = new ArrayList<>();
-	private List<Piece> piecesNoirDead = new ArrayList<>();
+	private List<List<Piece>> tableuPiece = new ArrayList<>();
+	private JoueurBlanc joueurBlanc;
+	private JoueurNoir joueurNoir;
 
 	public Echiquier() {
-		this.tableuCase = new ArrayList<>();
-		initialiserCase();
+		joueurBlanc = new JoueurBlanc(this);
+		joueurNoir = new JoueurNoir(this);
+
+		initialiserCase(joueurBlanc, joueurNoir);
 	}
 
-	private void initialiserCase() {
+	private void initialiserCase(Joueur joueurBlanc, Joueur joueurNoir) {
 		for (int y = 0; y < 8; y++) {
-			tableuCase.add(new ArrayList<>());
+			tableuPiece.add(new ArrayList<>());
 			for (int x = 0; x < 8; x++) {
-				tableuCase.get(y).add(new Case(x, y));
-			}
-		}
-	}
-
-	public void ajouterPiece(int x, int y, Piece piece) {
-		tableuCase.get(y).get(x).assignerPiece(piece);
-	}
-
-	public Case getCase(int x, int y) {
-		if (!inEchiquier(x, y))
-			return null;
-		return tableuCase.get(y).get(x);
-	}
-
-	public void move(Case selection, Case destination) {
-		if (selection.getPiece().getClass() == Pion.class) {
-			Pion p = (Pion) selection.getPiece();
-			p.premierTourFalse();
-		}
-
-		if (!destination.isVide()) {
-			Piece piece = destination.getPiece();
-			if (piece.getCouleur() == Couleur.BLANC)
-				piecesBlancDead.add(piece);
-			else
-				piecesNoirDead.add(piece);
-		}
-
-		destination.assignerPiece(selection.popPiece());
-
-		if (inEchec(Couleur.BLANC)) {
-			System.out.println("roi blanc echec");
-			if (inEchecEtMat(Couleur.BLANC))
-				System.out.println("roi blanc echec et mat");
-		}
-		if (inEchec(Couleur.NOIR)) {
-			System.out.println("roi noir echec");
-			if (inEchecEtMat(Couleur.NOIR))
-				System.out.println("roi noir echec et mat");
-		}
-	}
-
-
-	public Boolean inEchiquier(int x, int y) {
-		return !(x < 0 || x > 7 || y < 0 || y > 7);
-
-	}
-
-	public Boolean isCaseVide(int x, int y) {
-		return getCase(x, y).isVide();
-	}
-
-	public Couleur getCouleurPiece(int x, int y) {
-		return getCase(x, y).getCouleurPiece();
-	}
-
-
-	public Boolean inEchec(Couleur couleur) {
-		List<Case> listCasePieceAdverse = new ArrayList<>();
-		ListElementICoordonee allCaseDestinationAdverse = new ListElementICoordonee();
-
-		for (List<Case> listCase : tableuCase) {
-			for (Case c : listCase) {
-				if (!c.isVide() && c.getCouleurPiece() != couleur) {
-					listCasePieceAdverse.add(c);
-				}
+				tableuPiece.get(y).add(null);
 			}
 		}
 
-		for (Case c : listCasePieceAdverse) {
-			allCaseDestinationAdverse.add(c.getDeplacementPiece(this));
+		for (Piece p : joueurBlanc.getListPiece()) {
+			tableuPiece.get(p.getY()).set(p.getX(), p);
 		}
 
-		Case roi = getCaseRoi(couleur);
+		for (Piece p : joueurNoir.getListPiece()) {
+			tableuPiece.get(p.getY()).set(p.getX(), p);
+		}
+	}
 
-		for (ICoordonee c : allCaseDestinationAdverse.getListElement()) {
+	public Boolean inEchec(Joueur joueur) {
+		ListElementICoordonee casesControleAdverse = new ListElementICoordonee();
+		Roi roi = joueur.getRoi();
+
+		for (Piece p : joueur.piecesEnVie()) {
+			casesControleAdverse.add(p.getDeplacement(this));
+		}
+
+		for (ICoordonee c : casesControleAdverse.getListElement()) {
 			if (c.getX() == roi.getX() && c.getY() == roi.getY())
 				return true;
 		}
-
 		return false;
 	}
 
-	private Case getCaseRoi(Couleur Couleur) {
-		for (List<Case> listCase : tableuCase) {
-			for (Case c : listCase) {
-				if (!c.isVide() && c.getPiece().getNomPiece() == NomPiece.ROI && c.getPiece().getCouleur() == Couleur) {
-					return c;
-				}
+	public Boolean inEchiquier(int x, int y) {
+		return !(x < 0 || x > 7 || y < 0 || y > 7);
+	}
+
+	public Piece getPiece(int x, int y) {
+		if (!inEchiquier(x, y))
+			return null;
+		return tableuPiece.get(y).get(x);
+	}
+
+	public Boolean caseVide(int x, int y) {
+		return getPiece(x, y) == null;
+	}
+
+	public List<List<Piece>> getTableuPiece() {
+		return tableuPiece;
+	}
+
+	public JoueurBlanc getJoueurBlanc() {
+		return joueurBlanc;
+	}
+
+	public JoueurNoir getJoueurNoir() {
+		return joueurNoir;
+	}
+
+	public void afficher() {
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				Piece piece = tableuPiece.get(y).get(x);
+				if (piece == null)
+					System.out.print(" |");
+				else
+					System.out.print(piece.getNomPiece().diminutif() + "|");
 			}
+			System.out.println("");
 		}
-		return null;
 	}
 
-	public Boolean inEchecEtMat(Couleur couleur) {
-		if (inEchec(couleur)) {
-			List<Case> listCasePieceAdverse = new ArrayList<>();
-			ListElementICoordonee allCaseDestinationAdverse = new ListElementICoordonee();
-
-			for (List<Case> listCase : tableuCase) {
-				for (Case c : listCase) {
-					if (!c.isVide() && c.getCouleurPiece() != couleur) {
-						listCasePieceAdverse.add(c);
-					}
-				}
-			}
-
-			for (Case c : listCasePieceAdverse) {
-				allCaseDestinationAdverse.add(c.getDeplacementPiece(this));
-			}
-
-			Case roi = getCaseRoi(couleur);
-
-			ListElementICoordonee caseDestinationRoi = roi.getDeplacementPiece(this);
-
-			for (ICoordonee c : caseDestinationRoi.getListElement()) {
-				if (!allCaseDestinationAdverse.contientCaseDestination(c))
-					return false;
-			}
-			return true;
-		}
-		return false;
-	}
-
-	public ListElementICoordonee caseDestinationInDirection(int x, int y, Direction vecteur) {
-		ListElementICoordonee deplacements = new ListElementICoordonee();
-
-		int vx = vecteur.getX();
-		int vy = vecteur.getY();
-
-		while (inEchiquier(x + vx, y + vy) && isCaseVide(x + vx, y + vy)) {
-			deplacements.add(new Case(x + vx, y + vy));
-			vy += vecteur.getY();
-			vx += vecteur.getX();
-		}
-
-		if (inEchiquier(x + vx, y + vy) && getCouleurPiece(x + vx, y + vy) != getCase(x, y).getCouleurPiece()) {
-			deplacements.add(new Case(x + vx, y + vy));
-		}
-
-		return deplacements;
-	}
-
-	public List<Piece> getPiecesBlancDead() {
-		return piecesBlancDead;
-	}
-
-	public List<Piece> getPiecesNoirDead() {
-		return piecesNoirDead;
-	}
 
 }

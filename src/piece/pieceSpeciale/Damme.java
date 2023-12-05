@@ -10,13 +10,13 @@ import piece.enumPackges.NomPiece;
 
 public class Damme extends Piece {
 
-	public Damme(Couleur couleur) {
-		super(couleur, NomPiece.DAMME);
+	public Damme(int x, int y, Couleur couleur) {
+		super(x, y, couleur, NomPiece.DAMME);
 	}
 
 	@Override
-	public ListElementICoordonee getDeplacement(Echiquier echiquier, int x, int y) {
-		ListElementICoordonee listeCase = new ListElementICoordonee();
+	public ListElementICoordonee getDeplacement(Echiquier echiquier) {
+		ListElementICoordonee listeCoordonee = new ListElementICoordonee();
 		ListElementICoordonee listVecteur = new ListElementICoordonee();
 
 		listVecteur.add(Direction.UP);
@@ -29,11 +29,11 @@ public class Damme extends Piece {
 		listVecteur.add(Direction.RIGHT_DOWN);
 
 		for (ICoordonee vecteur : listVecteur.getListElement()) {
-			ListElementICoordonee c = echiquier.caseDestinationInDirection(x, y, (Direction) vecteur);
-			listeCase.add(c);
+			ListElementICoordonee c = caseDestinationInDirection(echiquier, (Direction) vecteur);
+			listeCoordonee.add(c);
 		}
 
-		return listeCase;
+		return listeCoordonee;
 	}
 
 }
