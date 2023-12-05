@@ -49,7 +49,7 @@ public class Echiquier {
 
 		if (!caseVide(destinationX, destinationY)) {
 			Piece p = getPiece(destinationX, destinationY);
-			if (piece.getCouleur() == Couleur.BLANC)
+			if (p.getCouleur() == Couleur.BLANC)
 				joueurBlanc.getListPiece().remove(p);
 			else
 				joueurNoir.getListPiece().remove(p);
@@ -64,7 +64,7 @@ public class Echiquier {
 		ListElementICoordonee casesControleAdverse = new ListElementICoordonee();
 		Roi roi = joueur.getRoi();
 
-		for (Piece p : joueur.piecesEnVie()) {
+		for (Piece p : joueur.getListPiece()) {
 			casesControleAdverse.add(p.getDeplacement(this));
 		}
 

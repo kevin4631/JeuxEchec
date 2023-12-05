@@ -83,10 +83,6 @@ public abstract class Joueur {
 		return listPiece;
 	}
 
-	public List<Piece> piecesEnVie() {
-		return listPiece;
-	}
-
 	public Roi getRoi() {
 		return roi;
 	}
