@@ -49,10 +49,14 @@ public class Echiquier {
 
 		if (!caseVide(destinationX, destinationY)) {
 			Piece p = getPiece(destinationX, destinationY);
-			if (p.getCouleur() == Couleur.BLANC)
+			if (p.getCouleur() == Couleur.BLANC) {
 				joueurBlanc.getListPiece().remove(p);
-			else
+				joueurBlanc.getPiecesMorte().add(p);
+			} else {
 				joueurNoir.getListPiece().remove(p);
+				joueurNoir.getPiecesMorte().add(p);
+			}
+
 		}
 
 		getTableuPiece().get(piece.getY()).set(piece.getX(), null);

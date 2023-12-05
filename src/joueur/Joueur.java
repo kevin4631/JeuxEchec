@@ -19,6 +19,7 @@ public abstract class Joueur {
 	private Echiquier echiquier;
 	private Roi roi;
 	private List<Piece> listPiece = new ArrayList<>();
+	private List<Piece> piecesMorte = new ArrayList<>();
 
 	protected Joueur(Couleur couleur, Echiquier echiquier) {
 		this.couleur = couleur;
@@ -85,5 +86,9 @@ public abstract class Joueur {
 
 	public Roi getRoi() {
 		return roi;
+	}
+
+	public List<Piece> getPiecesMorte() {
+		return piecesMorte;
 	}
 }
