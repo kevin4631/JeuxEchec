@@ -1,6 +1,6 @@
 package gui;
 
-import echiquier.Echiquier;
+import backEnd.echiquier.Echiquier;
 
 public class Main {
 

@@ -7,8 +7,8 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+import backEnd.piece.Piece;
 import gui.Main;
-import piece.Piece;
 
 public class JPanelCase extends JPanel {
 

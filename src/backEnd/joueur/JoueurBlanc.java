@@ -1,7 +1,7 @@
-package joueur;
+package backEnd.joueur;
 
-import echiquier.Echiquier;
-import piece.enumPackges.Couleur;
+import backEnd.echiquier.Echiquier;
+import backEnd.piece.enumPackges.Couleur;
 
 public class JoueurBlanc extends Joueur {
 

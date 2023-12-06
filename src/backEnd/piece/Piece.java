@@ -1,4 +1,4 @@
-package piece;
+package backEnd.piece;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,22 +6,22 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import echiquier.Coordonee;
-import echiquier.Echiquier;
-import echiquier.ICoordonee;
-import piece.enumPackges.Couleur;
-import piece.enumPackges.Direction;
-import piece.enumPackges.NomPiece;
+import backEnd.ICoordonee;
+import backEnd.ListElementICoordonee;
+import backEnd.echiquier.Coordonee;
+import backEnd.echiquier.Echiquier;
+import backEnd.piece.enumPackges.Couleur;
+import backEnd.piece.enumPackges.Direction;
+import backEnd.piece.enumPackges.NomPiece;
 
 public abstract class Piece implements ICoordonee {
 
 	private int x;
 	private int y;
-	private boolean enVie = true;
 	private Couleur couleur;
 	private NomPiece nomPiece;
 	private String path;
-	BufferedImage image = null;
+	private BufferedImage image = null;
 
 	protected Piece(int x, int y, Couleur couleur, NomPiece nomPiece) {
 		super();
@@ -29,7 +29,7 @@ public abstract class Piece implements ICoordonee {
 		this.y = y;
 		this.couleur = couleur;
 		this.nomPiece = nomPiece;
-		path = "src/piece/img/" + nomPiece + "_" + couleur + ".png";
+		path = "img/" + nomPiece + "_" + couleur + ".png";
 
 		try {
 			image = ImageIO.read(new File(path));
@@ -84,14 +84,6 @@ public abstract class Piece implements ICoordonee {
 	@Override
 	public int getY() {
 		return y;
-	}
-
-	public void mort() {
-		enVie = false;
-	}
-
-	public Boolean enVie() {
-		return enVie;
 	}
 
 	@Override

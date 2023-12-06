@@ -9,11 +9,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import echiquier.ICoordonee;
+import backEnd.ICoordonee;
+import backEnd.ListElementICoordonee;
+import backEnd.piece.Piece;
 import gui.JFrameFenetre;
 import gui.Main;
-import piece.ListElementICoordonee;
-import piece.Piece;
 
 public class JPanelEchiquier extends JPanel {
 

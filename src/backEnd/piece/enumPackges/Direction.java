@@ -1,10 +1,10 @@
 /**
  *
  */
-package piece.enumPackges;
+package backEnd.piece.enumPackges;
 
-import echiquier.ICoordonee;
-import piece.Vecteur;
+import backEnd.ICoordonee;
+import backEnd.piece.Vecteur;
 
 /**
  *

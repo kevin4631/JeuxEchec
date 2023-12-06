@@ -12,10 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import backEnd.piece.enumPackges.Couleur;
 import gui.panelsEchiquier.JPanelCase;
 import gui.panelsEchiquier.JPanelEchiquier;
 import gui.panelsPieceDead.JPanelPieceDead;
-import piece.enumPackges.Couleur;
 
 public class JFrameFenetre extends JFrame {
 

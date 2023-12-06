@@ -1,12 +1,12 @@
-package piece.pieceSpeciale;
+package backEnd.piece.allPiece;
 
-import echiquier.Echiquier;
-import echiquier.ICoordonee;
-import piece.ListElementICoordonee;
-import piece.Piece;
-import piece.enumPackges.Couleur;
-import piece.enumPackges.Direction;
-import piece.enumPackges.NomPiece;
+import backEnd.ICoordonee;
+import backEnd.ListElementICoordonee;
+import backEnd.echiquier.Echiquier;
+import backEnd.piece.Piece;
+import backEnd.piece.enumPackges.Couleur;
+import backEnd.piece.enumPackges.Direction;
+import backEnd.piece.enumPackges.NomPiece;
 
 public class Fou extends Piece {
 

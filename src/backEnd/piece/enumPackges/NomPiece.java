@@ -1,4 +1,4 @@
-package piece.enumPackges;
+package backEnd.piece.enumPackges;
 
 public enum NomPiece {
 	PION("P"), TOUR("T"), CAVALIER("C"), FOU("F"), DAMME("D"), ROI("R");

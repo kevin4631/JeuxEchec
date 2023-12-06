@@ -7,9 +7,9 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import backEnd.piece.Piece;
+import backEnd.piece.enumPackges.Couleur;
 import gui.Main;
-import piece.Piece;
-import piece.enumPackges.Couleur;
 
 public class JPanelIcon extends JPanel {
 

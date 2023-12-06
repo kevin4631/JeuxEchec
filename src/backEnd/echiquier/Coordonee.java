@@ -1,4 +1,6 @@
-package echiquier;
+package backEnd.echiquier;
+
+import backEnd.ICoordonee;
 
 public class Coordonee implements ICoordonee {
 

@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import piece.enumPackges.Couleur;
+import backEnd.piece.enumPackges.Couleur;
 
 public class JPanelPieceDead extends JPanel {
 

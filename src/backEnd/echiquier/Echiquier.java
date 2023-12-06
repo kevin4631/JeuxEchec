@@ -1,16 +1,18 @@
-package echiquier;
+package backEnd.echiquier;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import joueur.Joueur;
-import joueur.JoueurBlanc;
-import joueur.JoueurNoir;
-import piece.ListElementICoordonee;
-import piece.Piece;
-import piece.enumPackges.Couleur;
-import piece.pieceSpeciale.Pion;
-import piece.pieceSpeciale.Roi;
+import backEnd.ICoordonee;
+import backEnd.ListElementICoordonee;
+import backEnd.joueur.Joueur;
+import backEnd.joueur.JoueurBlanc;
+import backEnd.joueur.JoueurNoir;
+import backEnd.piece.Piece;
+import backEnd.piece.allPiece.Damme;
+import backEnd.piece.allPiece.Pion;
+import backEnd.piece.allPiece.Roi;
+import backEnd.piece.enumPackges.Couleur;
 
 public class Echiquier {
 
@@ -70,6 +72,21 @@ public class Echiquier {
 		getTableuPiece().get(piece.getY()).set(piece.getX(), null);
 		piece.setXY(destinationX, destinationY);
 		getTableuPiece().get(destinationY).set(destinationX, piece);
+
+		promotionEnReine(piece, destinationX, destinationY);
+	}
+
+	private void promotionEnReine(Piece piece, int destinationX, int destinationY) {
+		int y = piece.getCouleur() == Couleur.BLANC ? 7 : 0;
+		if (destinationY == y && piece.getClass() == Pion.class) {
+			Damme damme = new Damme(destinationX, destinationY, piece.getCouleur());
+
+			joueurEnCours.getListPiece().remove(piece);
+			joueurEnCours.getListPiece().add(damme);
+
+			getTableuPiece().get(destinationY).set(destinationX, damme);
+
+		}
 	}
 
 	public Boolean inEchec(Joueur joueur) {

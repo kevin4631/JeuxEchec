@@ -1,17 +1,17 @@
-package joueur;
+package backEnd.joueur;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import echiquier.Echiquier;
-import piece.Piece;
-import piece.enumPackges.Couleur;
-import piece.pieceSpeciale.Cavalier;
-import piece.pieceSpeciale.Damme;
-import piece.pieceSpeciale.Fou;
-import piece.pieceSpeciale.Pion;
-import piece.pieceSpeciale.Roi;
-import piece.pieceSpeciale.Tour;
+import backEnd.echiquier.Echiquier;
+import backEnd.piece.Piece;
+import backEnd.piece.allPiece.Cavalier;
+import backEnd.piece.allPiece.Damme;
+import backEnd.piece.allPiece.Fou;
+import backEnd.piece.allPiece.Pion;
+import backEnd.piece.allPiece.Roi;
+import backEnd.piece.allPiece.Tour;
+import backEnd.piece.enumPackges.Couleur;
 
 public abstract class Joueur {
 

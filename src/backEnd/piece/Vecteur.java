@@ -1,6 +1,6 @@
-package piece;
+package backEnd.piece;
 
-import echiquier.ICoordonee;
+import backEnd.ICoordonee;
 
 public class Vecteur implements ICoordonee {
 	private int x;

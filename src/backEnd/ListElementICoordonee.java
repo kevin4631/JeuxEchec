@@ -1,9 +1,7 @@
-package piece;
+package backEnd;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import echiquier.ICoordonee;
 
 public class ListElementICoordonee {
 
