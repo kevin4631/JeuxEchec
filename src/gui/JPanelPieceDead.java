@@ -39,7 +39,7 @@ public class JPanelPieceDead extends JPanel {
 		}
 
 		for (int i = 0; i < 16; i++) {
-			JPanelIcon pi = new JPanelIcon(i, piecesMortes);
+			JPanelIcon pi = new JPanelIcon(i);
 			pi.setSize(10, 10);
 			add(pi);
 		}

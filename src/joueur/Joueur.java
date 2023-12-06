@@ -36,8 +36,6 @@ public abstract class Joueur {
 		for (int i = 0; i < 16; i++) {
 			piecesMorte.add(null);
 		}
-
-		ajouterPieceMorte(new Roi(1, 2, Couleur.NOIR));
 	}
 
 	private void initialiserPion() {
