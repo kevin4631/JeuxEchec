@@ -4,8 +4,8 @@ import echiquier.Echiquier;
 
 public class Main {
 
-	static Echiquier echiquier;
-	static int nbCaseLongeur = 8;
+	static public Echiquier echiquier;
+	static public int nbCaseLongeur = 8;
 
 	public static void main(String[] args) {
 

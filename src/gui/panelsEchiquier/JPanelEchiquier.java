@@ -1,4 +1,4 @@
-package gui;
+package gui.panelsEchiquier;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -10,6 +10,8 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import echiquier.ICoordonee;
+import gui.JFrameFenetre;
+import gui.Main;
 import piece.ListElementICoordonee;
 import piece.Piece;
 
@@ -73,6 +75,7 @@ public class JPanelEchiquier extends JPanel {
 					actionSelectionPion(x, y);
 				} else {
 					actionSelectionCaseDestination(x, y);
+					frameFenetre.repaintIconMort();
 				}
 			}
 

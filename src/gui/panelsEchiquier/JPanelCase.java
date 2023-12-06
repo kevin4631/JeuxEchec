@@ -1,4 +1,4 @@
-package gui;
+package gui.panelsEchiquier;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+import gui.Main;
 import piece.Piece;
 
 public class JPanelCase extends JPanel {

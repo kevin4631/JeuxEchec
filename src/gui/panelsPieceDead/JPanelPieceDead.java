@@ -1,6 +1,5 @@
-package gui;
+package gui.panelsPieceDead;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import gui.Main;
 import piece.Piece;
 import piece.enumPackges.Couleur;
 
@@ -30,19 +30,16 @@ public class JPanelPieceDead extends JPanel {
 		setPreferredSize(new Dimension(width, height));
 
 		if (couleur == Couleur.BLANC) {
-			setBackground(Color.blue);
 			piecesMortes = Main.echiquier.getJoueurBlanc().getPiecesMorte();
 		}
 		else {
-			setBackground(Color.black);
 			piecesMortes = Main.echiquier.getJoueurNoir().getPiecesMorte();
 		}
 
 		for (int i = 0; i < 16; i++) {
-			JPanelIcon pi = new JPanelIcon(i);
-			pi.setSize(10, 10);
-			add(pi);
+			add(new JPanelIcon(i, piecesMortes));
 		}
+
 	}
 
 

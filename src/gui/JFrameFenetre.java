@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,9 +12,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import gui.panelsEchiquier.JPanelCase;
+import gui.panelsEchiquier.JPanelEchiquier;
+import gui.panelsPieceDead.JPanelPieceDead;
 import piece.enumPackges.Couleur;
 
 public class JFrameFenetre extends JFrame {
+
 	private JPanelEchiquier panelEchiquier;
 	private JPanelPieceDead panelPiecesMortesBlanc;
 	private JPanelPieceDead panelPiecesMortesNoir;
@@ -27,6 +32,10 @@ public class JFrameFenetre extends JFrame {
 	}
 
 	private void initializeComponents() {
+
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setMinimumSize(new Dimension(400, 400));
+
 		// Panel pour l'échiquier
 		listCase = new ArrayList<>();
 		panelEchiquier = new JPanelEchiquier(listCase, this);
@@ -55,10 +64,12 @@ public class JFrameFenetre extends JFrame {
 
 		// Utilisation de BorderLayout pour organiser l'échiquier au centre et les boutons en
 		// haut à droite
-		setLayout(new BorderLayout());
-		add(panelEchiquier, BorderLayout.CENTER);
-		add(buttonsPanel, BorderLayout.NORTH);
-		add(panelFonctionnalites, BorderLayout.EAST);
+		panelPrincipal.setLayout(new BorderLayout());
+
+		panelFonctionnalites.add(buttonsPanel, BorderLayout.NORTH);
+
+		panelPrincipal.add(panelEchiquier, BorderLayout.CENTER);
+		panelPrincipal.add(panelFonctionnalites, BorderLayout.EAST);
 
 		relancerButton.addActionListener(new ActionListener() {
 			@Override
@@ -84,6 +95,12 @@ public class JFrameFenetre extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
+	public void repaintIconMort() {
+		panelPiecesMortesBlanc.repaint();
+		panelPiecesMortesNoir.repaint();
+	}
+
+
 
 	private void addComponentListener() {
 		addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -94,7 +111,8 @@ public class JFrameFenetre extends JFrame {
 				int sizeMin = width < height ? width : height;
 				int sizeCase = sizeMin / 8;
 
-				panelEchiquier.setSize(sizeMin, sizeMin);
+				if (sizeCase < 50)
+					sizeCase = 50;
 
 				for (int y = 0; y < 8; y++) {
 					for (int x = 0; x < 8; x++) {
