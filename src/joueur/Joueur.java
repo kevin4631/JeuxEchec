@@ -32,7 +32,10 @@ public abstract class Joueur {
 		initialiserFou();
 		initialiserDamme();
 		initialiserRoi();
+		initListPiecesMorte();
+	}
 
+	private void initListPiecesMorte() {
 		for (int i = 0; i < 16; i++) {
 			piecesMorte.add(null);
 		}

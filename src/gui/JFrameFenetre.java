@@ -33,9 +33,7 @@ public class JFrameFenetre extends JFrame {
 
 	private void initializeComponents() {
 
-		JPanel panelPrincipal = new JPanel();
-		panelPrincipal.setMinimumSize(new Dimension(400, 400));
-
+		setMinimumSize(new Dimension(400, 400));
 		// Panel pour l'échiquier
 		listCase = new ArrayList<>();
 		panelEchiquier = new JPanelEchiquier(listCase, this);
@@ -64,18 +62,17 @@ public class JFrameFenetre extends JFrame {
 
 		// Utilisation de BorderLayout pour organiser l'échiquier au centre et les boutons en
 		// haut à droite
-		panelPrincipal.setLayout(new BorderLayout());
-
-		panelFonctionnalites.add(buttonsPanel, BorderLayout.NORTH);
-
-		panelPrincipal.add(panelEchiquier, BorderLayout.CENTER);
-		panelPrincipal.add(panelFonctionnalites, BorderLayout.EAST);
+		setLayout(new BorderLayout());
+		add(panelEchiquier, BorderLayout.CENTER);
+		add(buttonsPanel, BorderLayout.NORTH);
+		add(panelFonctionnalites, BorderLayout.EAST);
 
 		relancerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Main.echiquier.initialiserEchiquier();
 				panelEchiquier.repaint();
+				panelFonctionnalites.repaint();
 			}
 		});
 
@@ -99,8 +96,6 @@ public class JFrameFenetre extends JFrame {
 		panelPiecesMortesBlanc.repaint();
 		panelPiecesMortesNoir.repaint();
 	}
-
-
 
 	private void addComponentListener() {
 		addComponentListener(new java.awt.event.ComponentAdapter() {
