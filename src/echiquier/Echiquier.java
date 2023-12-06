@@ -59,10 +59,10 @@ public class Echiquier {
 			Piece p = getPiece(destinationX, destinationY);
 			if (p.getCouleur() == Couleur.BLANC) {
 				joueurBlanc.getListPiece().remove(p);
-				joueurBlanc.getPiecesMorte().add(p);
+				joueurBlanc.ajouterPieceMorte(p);
 			} else {
 				joueurNoir.getListPiece().remove(p);
-				joueurNoir.getPiecesMorte().add(p);
+				joueurNoir.ajouterPieceMorte(p);
 			}
 
 		}
@@ -84,6 +84,11 @@ public class Echiquier {
 			if (c.getX() == roi.getX() && c.getY() == roi.getY())
 				return true;
 		}
+		return false;
+	}
+
+	public Boolean inMat(Joueur joueur) {
+
 		return false;
 	}
 

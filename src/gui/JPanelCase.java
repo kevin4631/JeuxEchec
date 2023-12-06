@@ -37,7 +37,7 @@ public class JPanelCase extends JPanel {
 		Piece piece = Main.echiquier.getPiece(x, y);
 
 		if (piece != null)
-			g.drawImage(piece.getImage(), 0, 0, getHeight(), getHeight(), this);
+			g.drawImage(piece.getImage(), 0, 0, getHeight(), getHeight(), null);
 	}
 
 	public void paintBackground(Boolean paint) {

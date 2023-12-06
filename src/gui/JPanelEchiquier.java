@@ -73,7 +73,6 @@ public class JPanelEchiquier extends JPanel {
 					actionSelectionPion(x, y);
 				} else {
 					actionSelectionCaseDestination(x, y);
-					frameFenetre.updateListePieceBlancDead();
 				}
 			}
 

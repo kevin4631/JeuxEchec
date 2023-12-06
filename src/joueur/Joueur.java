@@ -19,7 +19,8 @@ public abstract class Joueur {
 	private Echiquier echiquier;
 	private Roi roi;
 	private List<Piece> listPiece = new ArrayList<>();
-	private List<Piece> piecesMorte = new ArrayList<>();
+	private List<Piece> piecesMorte = new ArrayList<>(16);
+	private int indexPM = 0;
 
 	protected Joueur(Couleur couleur, Echiquier echiquier) {
 		this.couleur = couleur;
@@ -31,6 +32,12 @@ public abstract class Joueur {
 		initialiserFou();
 		initialiserDamme();
 		initialiserRoi();
+
+		for (int i = 0; i < 16; i++) {
+			piecesMorte.add(null);
+		}
+
+		ajouterPieceMorte(new Roi(1, 2, Couleur.NOIR));
 	}
 
 	private void initialiserPion() {
@@ -86,6 +93,10 @@ public abstract class Joueur {
 
 	public Roi getRoi() {
 		return roi;
+	}
+
+	public void ajouterPieceMorte(Piece p) {
+		piecesMorte.add(indexPM++, p);
 	}
 
 	public List<Piece> getPiecesMorte() {
