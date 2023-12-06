@@ -17,6 +17,7 @@ public class Echiquier {
 	private List<List<Piece>> tableuPiece;
 	private JoueurBlanc joueurBlanc;
 	private JoueurNoir joueurNoir;
+	private Joueur joueurEnCours;
 
 	public Echiquier() {
 
@@ -28,6 +29,7 @@ public class Echiquier {
 		tableuPiece = new ArrayList<>();
 		joueurBlanc = new JoueurBlanc(this);
 		joueurNoir = new JoueurNoir(this);
+		joueurEnCours = joueurBlanc;
 		initialiserCase(joueurBlanc, joueurNoir);
 	}
 
@@ -109,6 +111,18 @@ public class Echiquier {
 
 	public JoueurNoir getJoueurNoir() {
 		return joueurNoir;
+	}
+
+	public Joueur getJoueurEnCours() {
+		return joueurEnCours;
+	}
+
+	public void auJoueurSuivant() {
+		joueurEnCours = joueurEnCours == joueurBlanc ? joueurNoir : joueurBlanc;
+	}
+
+	public Boolean pieceAppartientJoeurEnCours(Piece piece) {
+		return piece != null && piece.getCouleur() == joueurEnCours.getCouleur();
 	}
 
 	public void afficher() {

@@ -69,7 +69,6 @@ public class JFrameFenetre extends JFrame {
 
 				Main.echiquier.initialiserEchiquier();
 				panelEchiquier.repaint();
-
 			}
 		});
 

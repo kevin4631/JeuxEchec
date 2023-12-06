@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import echiquier.ICoordonee;
 import piece.ListElementICoordonee;
 import piece.Piece;
-import piece.enumPackges.Couleur;
 
 public class JPanelEchiquier extends JPanel {
 
@@ -26,9 +25,8 @@ public class JPanelEchiquier extends JPanel {
 	private boolean actionEnCours = false;
 	private JPanelCase JPanelcaseSelection;
 	private ListElementICoordonee caseDestinationPossible;
-	Boolean tourJoueurBlanc = true;
 
-	JFrameFenetre frameFenetre;
+	private JFrameFenetre frameFenetre;
 
 	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase, JFrameFenetre frameFenetre) {
 
@@ -72,7 +70,7 @@ public class JPanelEchiquier extends JPanel {
 				int y = 7 - convertPixelInCoordonnee(e.getY());
 
 				if (!actionEnCours) {
-					actionSelectionPion(x, y, joueurEnCours(tourJoueurBlanc));
+					actionSelectionPion(x, y);
 				} else {
 					actionSelectionCaseDestination(x, y);
 					frameFenetre.updateListePieceBlancDead();
@@ -97,12 +95,12 @@ public class JPanelEchiquier extends JPanel {
 
 	}
 
-	private void actionSelectionPion(int x, int y, Couleur couleur) {
+	private void actionSelectionPion(int x, int y) {
 		actionEnCours = true;
 
 		Piece pieceSelection = Main.echiquier.getPiece(x, y);
 
-		if (pieceSelection != null && pieceSelection.getCouleur() == couleur) {
+		if (Main.echiquier.pieceAppartientJoeurEnCours(pieceSelection)) {
 			JPanelcaseSelection = listJPanelCase.get(y).get(x);
 			caseDestinationPossible = pieceSelection.getDeplacement(Main.echiquier);
 			paintBackgroundCases(true);
@@ -118,7 +116,7 @@ public class JPanelEchiquier extends JPanel {
 
 		if (caseDestinationPossible.contient(x, y)) {
 			Main.echiquier.move(pieceSelection, x, y);
-			tourJoueurBlanc = !tourJoueurBlanc;
+			Main.echiquier.auJoueurSuivant();
 		}
 
 		paintBackgroundCases(false);
@@ -135,19 +133,11 @@ public class JPanelEchiquier extends JPanel {
 			JPanelCase c = listJPanelCase.get(coo.getY()).get(coo.getX());
 			c.paintBackground(paint);
 		}
-
 	}
 
 	private int convertPixelInCoordonnee(int pixel) {
 		return pixel / (getHeight() / Main.nbCaseLongeur);
 	}
 
-	private Couleur joueurEnCours(Boolean bool) {
-		return bool ? Couleur.BLANC : Couleur.NOIR;
-	}
-
-	public void inEchec() {
-
-	}
 
 }
