@@ -9,4 +9,7 @@ public class JoueurNoir extends Joueur {
 		super(Couleur.NOIR, echiquier);
 	}
 
+	public JoueurNoir(Joueur joueur, Echiquier echiquier) {
+		super(joueur, echiquier);
+	}
 }

@@ -35,9 +35,29 @@ public abstract class Joueur {
 		initListPiecesMorte();
 	}
 
-	private void initListPiecesMorte() {
-		for (int i = 0; i < 16; i++) {
-			piecesMorte.add(null);
+	protected Joueur(Joueur ancienJour, Echiquier echiquier) {
+
+		this.echiquier = echiquier;
+
+		this.couleur = ancienJour.getCouleur() == Couleur.BLANC ? Couleur.BLANC : Couleur.NOIR;
+
+		for (Piece p : ancienJour.getListPiece()) {
+			Class<? extends Piece> typeClass = p.getClass();
+
+			if (typeClass == Pion.class) {
+				listPiece.add(new Pion(p.getX(), p.getY(), couleur));
+			} else if (typeClass == Tour.class) {
+				listPiece.add(new Tour(p.getX(), p.getY(), couleur));
+			} else if (typeClass == Cavalier.class) {
+				listPiece.add(new Cavalier(p.getX(), p.getY(), couleur));
+			} else if (typeClass == Fou.class) {
+				listPiece.add(new Fou(p.getX(), p.getY(), couleur));
+			} else if (typeClass == Damme.class) {
+				listPiece.add(new Damme(p.getX(), p.getY(), couleur));
+			} else if (typeClass == Roi.class) {
+				this.roi = new Roi(p.getX(), p.getY(), couleur);
+				listPiece.add(roi);
+			}
 		}
 	}
 
@@ -82,6 +102,12 @@ public abstract class Joueur {
 		roi = new Roi(4, y, couleur);
 
 		listPiece.add(roi);
+	}
+
+	private void initListPiecesMorte() {
+		for (int i = 0; i < 16; i++) {
+			piecesMorte.add(null);
+		}
 	}
 
 	public Couleur getCouleur() {

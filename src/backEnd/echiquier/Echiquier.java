@@ -25,9 +25,20 @@ public class Echiquier {
 	private Joueur joueurEnCours;
 
 	public Echiquier() {
-
 		initialiserEchiquier();
+	}
 
+	public Echiquier(Echiquier echiquier, ICoordonee origine, ICoordonee destination) {
+
+		this.joueurBlanc = new JoueurBlanc(echiquier.getJoueurBlanc(), this);
+		this.joueurNoir = new JoueurNoir(echiquier.getJoueurNoir(), this);
+
+		this.joueurEnCours = echiquier.getJoueurEnCours().getCouleur() == Couleur.BLANC ? this.joueurBlanc
+				: this.joueurNoir;
+
+		this.tableuPiece = new ArrayList<>();
+		initialiserCase(this.joueurBlanc, this.joueurNoir);
+		move2(getPiece(origine.getX(), origine.getY()), destination.getX(), destination.getY());
 	}
 
 	public void initialiserEchiquier() {
@@ -46,13 +57,35 @@ public class Echiquier {
 			}
 		}
 
-		for (Piece p : joueurBlanc.getListPiece()) {
-			tableuPiece.get(p.getY()).set(p.getX(), p);
+		for (Piece piece : joueurBlanc.getListPiece())
+			tableuPiece.get(piece.getY()).set(piece.getX(), piece);
+
+		for (Piece piece : joueurNoir.getListPiece())
+			tableuPiece.get(piece.getY()).set(piece.getX(), piece);
+	}
+
+	public void move2(Piece piece, int destinationX, int destinationY) {
+		if (piece.getClass() == Pion.class) {
+			((Pion) piece).premierTourFalse();
 		}
 
-		for (Piece p : joueurNoir.getListPiece()) {
-			tableuPiece.get(p.getY()).set(p.getX(), p);
+		if (!caseVide(destinationX, destinationY)) {
+			Piece p = getPiece(destinationX, destinationY);
+			if (p.getCouleur() == Couleur.BLANC) {
+				joueurBlanc.getListPiece().remove(p);
+				joueurBlanc.ajouterPieceMorte(p);
+			} else {
+				joueurNoir.getListPiece().remove(p);
+				joueurNoir.ajouterPieceMorte(p);
+			}
 		}
+
+		getTableuPiece().get(piece.getY()).set(piece.getX(), null);
+		piece.setXY(destinationX, destinationY);
+		getTableuPiece().get(destinationY).set(destinationX, piece);
+
+		promotionEnReine(piece, destinationX, destinationY);
+
 	}
 
 	public void move(Piece piece, int destinationX, int destinationY) {
@@ -77,17 +110,15 @@ public class Echiquier {
 
 		promotionEnReine(piece, destinationX, destinationY);
 
-		if (inEchec(joueurBlanc)) {
-			System.out.println("blanc echec");
-			JOptionPane.showMessageDialog(Main.gui, "Le roi est en échec!");
+		int opt = inEchecMat(joueurBlanc);
+		if (opt!=0) {
+			JOptionPane.showMessageDialog(Main.gui, opt);
 		}
-
-		System.out.println(inEchec(joueurNoir));
 	}
 
 	private void promotionEnReine(Piece piece, int destinationX, int destinationY) {
-		int y = piece.getCouleur() == Couleur.BLANC ? 7 : 0;
-		if (destinationY == y && piece.getClass() == Pion.class) {
+		int lastLigne = piece.getCouleur() == Couleur.BLANC ? 7 : 0;
+		if (destinationY == lastLigne && piece.getClass() == Pion.class) {
 			Damme damme = new Damme(destinationX, destinationY, piece.getCouleur());
 
 			joueurEnCours.getListPiece().remove(piece);
@@ -106,7 +137,47 @@ public class Echiquier {
 			casesControleAdverse.add(p.getDeplacement(this));
 		}
 
+		return roiInCasesControleAdverse(casesControleAdverse, roi);
+	}
 
+
+	public int inEchecMat(Joueur joueur) {
+		ListElementICoordonee casesControleAdverse = new ListElementICoordonee();
+		Roi roi = joueur.getRoi();
+		int para = 0;
+
+		for (Piece p : joueurAdverse(joueur).getListPiece()) {
+			casesControleAdverse.add(p.getDeplacement(this));
+		}
+
+		// en echec le roi ce trouve sur une case controler adverse
+		if (roiInCasesControleAdverse(casesControleAdverse, roi)) {
+			para = 1;
+
+			// chaque deplacement du roi ce trouve sur une case adverse
+			if (allDeplacementRoiInCasesControleAdverse(casesControleAdverse, roi)) {
+				para = 2;
+				if (!deplacementChangeEchec(joueur))
+					para = 3;
+			}
+		}
+
+		return para;
+	}
+
+	private Boolean deplacementChangeEchec(Joueur joueur) {
+		for (Piece p : joueur.getListPiece()) {
+			for (ICoordonee deplacement : p.getDeplacement(this).getListElement()) {
+				Echiquier echiquierVirtuel = new Echiquier(this, new Coordonee(p.getX(), p.getY()), deplacement);
+				if (echiquierVirtuel.inEchec(echiquierVirtuel.getJoueur(joueur.getCouleur())) == false) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private Boolean roiInCasesControleAdverse(ListElementICoordonee casesControleAdverse, Roi roi) {
 		for (ICoordonee c : casesControleAdverse.getListElement()) {
 			if (c.getX() == roi.getX() && c.getY() == roi.getY())
 				return true;
@@ -114,11 +185,12 @@ public class Echiquier {
 		return false;
 	}
 
-	public Boolean inMat(Joueur joueur) {
-
-
-
-		return false;
+	private Boolean allDeplacementRoiInCasesControleAdverse(ListElementICoordonee casesControleAdverse, Roi roi) {
+		for (ICoordonee deplacementRoi : roi.getDeplacement(this).getListElement()) {
+			if (!casesControleAdverse.contient(deplacementRoi.getX(), deplacementRoi.getY()))
+				return false;
+		}
+		return true;
 	}
 
 	public Boolean inEchiquier(int x, int y) {
@@ -145,6 +217,10 @@ public class Echiquier {
 
 	public JoueurNoir getJoueurNoir() {
 		return joueurNoir;
+	}
+
+	public Joueur getJoueur(Couleur couleur) {
+		return couleur == Couleur.BLANC ? joueurBlanc : joueurNoir;
 	}
 
 	public Joueur getJoueurEnCours() {
