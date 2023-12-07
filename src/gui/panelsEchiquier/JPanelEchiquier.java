@@ -119,9 +119,8 @@ public class JPanelEchiquier extends JPanel {
 	}
 
 	private void actionSelectionCaseDestination(int x, int y) {
-		Piece pieceSelection = Main.echiquier.getPiece(JPanelcaseSelection.getJPanelCaseX(),
-				JPanelcaseSelection.getJPanelCaseY());
-
+		Piece pieceSelection = Main.echiquier.getPiece(JPanelcaseSelection.getPositionX(),
+				JPanelcaseSelection.getPositionY());
 
 		if (caseDestinationPossible.contient(x, y)) {
 			Main.echiquier.move(pieceSelection, x, y);
@@ -135,7 +134,6 @@ public class JPanelEchiquier extends JPanel {
 	}
 
 	private void paintBackgroundCases(Boolean paint) {
-
 		JPanelcaseSelection.paintBackground(paint);
 
 		for (ICoordonee coo : caseDestinationPossible.getListElement()) {
@@ -149,7 +147,8 @@ public class JPanelEchiquier extends JPanel {
 	}
 
 	public void reinitialiser() {
-		paintBackgroundCases(false);
+		if (caseDestinationPossible != null)
+			paintBackgroundCases(false);
 		initParametre();
 		repaint();
 	}

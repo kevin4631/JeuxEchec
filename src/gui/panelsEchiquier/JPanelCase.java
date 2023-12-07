@@ -48,11 +48,11 @@ public class JPanelCase extends JPanel {
 			setBackground(couleur);
 	}
 
-	public int getJPanelCaseX() {
+	public int getPositionX() {
 		return x;
 	}
 
-	public int getJPanelCaseY() {
+	public int getPositionY() {
 		return y;
 	}
 
