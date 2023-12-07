@@ -3,12 +3,9 @@ package backEnd.echiquier;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
 import backEnd.enumPackges.ECouleur;
-import backEnd.enumPackges.EDirection;
 import backEnd.joueur.Joueur;
 import backEnd.joueur.JoueurBlanc;
 import backEnd.joueur.JoueurNoir;
@@ -16,7 +13,6 @@ import backEnd.piece.Piece;
 import backEnd.piece.allPiece.Damme;
 import backEnd.piece.allPiece.Pion;
 import backEnd.piece.allPiece.Roi;
-import gui.Main;
 
 public class Echiquier {
 
@@ -33,7 +29,7 @@ public class Echiquier {
 		initialiserCase(joueurBlanc, joueurNoir);
 	}
 
-	public Echiquier(Echiquier echiquier, ICoordonee origine, ICoordonee destination) {
+	private Echiquier(Echiquier echiquier, ICoordonee origine, ICoordonee destination) {
 
 		this.joueurBlanc = new JoueurBlanc(echiquier.getJoueurBlanc());
 		this.joueurNoir = new JoueurNoir(echiquier.getJoueurNoir());
@@ -43,7 +39,7 @@ public class Echiquier {
 
 		this.tableuPiece = new ArrayList<>();
 		initialiserCase(this.joueurBlanc, this.joueurNoir);
-		move2(getPiece(origine.getX(), origine.getY()), destination.getX(), destination.getY());
+		move(getPiece(origine.getX(), origine.getY()), destination.getX(), destination.getY());
 	}
 
 	private void initialiserCase(Joueur joueurBlanc, Joueur joueurNoir) {
@@ -61,7 +57,10 @@ public class Echiquier {
 			tableuPiece.get(piece.getY()).set(piece.getX(), piece);
 	}
 
-	public void move2(Piece piece, int destinationX, int destinationY) {
+
+	public Boolean move(Piece piece, int destinationX, int destinationY) {
+
+
 		if (piece.getClass() == Pion.class) {
 			((Pion) piece).premierTourFalse();
 		}
@@ -76,32 +75,11 @@ public class Echiquier {
 		piece.setXY(destinationX, destinationY);
 		getTableuPiece().get(destinationY).set(destinationX, piece);
 
+		// on regarde si un pion peut avoir une promotion
 		promotionEnReine(piece, destinationX, destinationY);
 
-	}
-
-	public void move(Piece piece, int destinationX, int destinationY) {
-		if (piece.getClass() == Pion.class) {
-			((Pion) piece).premierTourFalse();
-		}
-
-		if (!caseVide(destinationX, destinationY)) {
-			Piece p = getPiece(destinationX, destinationY);
-			joueurEnCours.removePiece(p);
-			joueurEnCours.ajouterPieceMorte(p);
-		}
-
-
-		getTableuPiece().get(piece.getY()).set(piece.getX(), null);
-		piece.setXY(destinationX, destinationY);
-		getTableuPiece().get(destinationY).set(destinationX, piece);
-
-		promotionEnReine(piece, destinationX, destinationY);
-
-		int opt = inEchecMat(joueurBlanc);
-		if (opt!=0) {
-			JOptionPane.showMessageDialog(Main.gui, opt);
-		}
+		auJoueurSuivant();
+		return true;
 	}
 
 	private void promotionEnReine(Piece piece, int destinationX, int destinationY) {
@@ -129,11 +107,10 @@ public class Echiquier {
 		return roiInCasesControleAdverse(casesControleAdverse, roi);
 	}
 
-
 	public int inEchecMat(Joueur joueur) {
 		ListElementICoordonee casesControleAdverse = new ListElementICoordonee();
 		Roi roi = joueur.getRoi();
-		int para = 0;
+		int verif = 0;
 
 		for (Piece p : joueurAdverse(joueur).getListPiece()) {
 			casesControleAdverse.add(p.getDeplacement(this));
@@ -141,17 +118,12 @@ public class Echiquier {
 
 		// en echec le roi ce trouve sur une case controler adverse
 		if (roiInCasesControleAdverse(casesControleAdverse, roi)) {
-			para = 1;
-
-			// chaque deplacement du roi ce trouve sur une case adverse
-			if (allDeplacementRoiInCasesControleAdverse(casesControleAdverse, roi)) {
-				para = 2;
-				if (!deplacementChangeEchec(joueur))
-					para = 3;
-			}
+			verif = 1;
+			// aucun deplacement du joueur n+1 ne change l'echec
+			if (allDeplacementRoiInCasesControleAdverse(casesControleAdverse, roi) && !deplacementChangeEchec(joueur))
+				verif = 2;
 		}
-
-		return para;
+		return verif;
 	}
 
 	private Boolean roiInCasesControleAdverse(ListElementICoordonee casesControleAdverse, Roi roi) {
@@ -180,29 +152,6 @@ public class Echiquier {
 			}
 		}
 		return false;
-	}
-
-	public ListElementICoordonee listCoordoneesInDirection(Piece piece, EDirection vecteur) {
-		ListElementICoordonee listCoordonee = new ListElementICoordonee();
-
-		int vx = vecteur.getX();
-		int vy = vecteur.getY();
-
-		int origineX = piece.getX();
-		int origineY = piece.getY();
-
-
-		while (inEchiquier(origineX + vx, origineY + vy) && caseVide(origineX + vx, origineY + vy)) {
-			listCoordonee.add(new Coordonee(origineX + vx, origineX + vy));
-			vy += vecteur.getY();
-			vx += vecteur.getX();
-		}
-
-		Piece pieceD = getPiece(origineX + vx, origineY + vy);
-		if (inEchiquier(origineX + vx, origineY + vy) && pieceD != null && pieceD.getCouleur() != piece.getCouleur())
-			listCoordonee.add(new Coordonee(origineX + vx, origineY + vy));
-
-		return listCoordonee;
 	}
 
 	public Boolean inEchiquier(int x, int y) {

@@ -37,12 +37,12 @@ public class JPanelEchiquier extends JPanel {
 
 		setLayout(new GridLayout(Main.nbCaseLongeur, Main.nbCaseLongeur));
 
-		initParametre();
+		initParametreSelection();
 		initialisationJPanelCase();
 		addMouseListener();
 	}
 
-	public void initParametre() {
+	public void initParametreSelection() {
 		actionEnCours = false;
 		JPanelcaseSelection = null;
 		listCoordonneePossible = null;
@@ -122,15 +122,12 @@ public class JPanelEchiquier extends JPanel {
 		Piece pieceSelection = Main.echiquier.getPiece(JPanelcaseSelection.getPositionX(),
 				JPanelcaseSelection.getPositionY());
 
-		if (listCoordonneePossible.contient(x, y)) {
-			Main.echiquier.move(pieceSelection, x, y);
-			Main.echiquier.auJoueurSuivant();
+		if (listCoordonneePossible.contient(x, y) && Main.echiquier.move(pieceSelection, x, y)) {
+			paintBackgroundCases(false);
+			initParametreSelection();
 		}
 
-		paintBackgroundCases(false);
-		actionEnCours = false;
-		JPanelcaseSelection = null;
-		listCoordonneePossible = null;
+
 	}
 
 	private void paintBackgroundCases(Boolean paint) {
@@ -149,7 +146,7 @@ public class JPanelEchiquier extends JPanel {
 	public void reinitialiser() {
 		if (listCoordonneePossible != null)
 			paintBackgroundCases(false);
-		initParametre();
+		initParametreSelection();
 		repaint();
 	}
 

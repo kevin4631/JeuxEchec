@@ -8,10 +8,9 @@ public class Main {
 
 	public static Echiquier echiquier;
 	public static JFrameFenetre gui;
-	static JoueurBlanc joueurBlanc;
-	static JoueurNoir joueurNoir;
-
-	static public int nbCaseLongeur = 8;
+	public static JoueurBlanc joueurBlanc;
+	public static JoueurNoir joueurNoir;
+	public static int nbCaseLongeur = 8;
 
 	public static void main(String[] args) {
 
@@ -19,7 +18,6 @@ public class Main {
 
 		gui = new JFrameFenetre();
 		gui.setVisible(true);
-
 	}
 
 	public static void lancerPartie() {

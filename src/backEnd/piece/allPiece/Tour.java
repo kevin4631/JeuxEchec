@@ -10,7 +10,7 @@ import backEnd.piece.Piece;
 
 public class Tour extends Piece {
 
-	public Tour( int x, int y, ECouleur couleur) {
+	public Tour(int x, int y, ECouleur couleur) {
 		super(x, y, couleur, ENomPiece.TOUR);
 	}
 
@@ -25,7 +25,7 @@ public class Tour extends Piece {
 		listVecteur.add(EDirection.RIGHT);
 
 		for (ICoordonee vecteur : listVecteur.getListElement()) {
-			ListElementICoordonee c = echiquier.listCoordoneesInDirection(this, (EDirection) vecteur);
+			ListElementICoordonee c = listCoordoneesInDirection(echiquier, (EDirection) vecteur);
 			listeCoordonee.add(c);
 		}
 

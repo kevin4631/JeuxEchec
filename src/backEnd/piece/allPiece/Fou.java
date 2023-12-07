@@ -25,7 +25,7 @@ public class Fou extends Piece {
 		listVecteur.add(EDirection.RIGHT_DOWN);
 
 		for (ICoordonee vecteur : listVecteur.getListElement()) {
-			ListElementICoordonee c = echiquier.listCoordoneesInDirection(this, (EDirection) vecteur);
+			ListElementICoordonee c = listCoordoneesInDirection(echiquier, (EDirection) vecteur);
 			listeCoordonee.add(c);
 		}
 
