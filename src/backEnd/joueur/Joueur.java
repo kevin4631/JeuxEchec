@@ -19,7 +19,7 @@ public abstract class Joueur {
 	private Echiquier echiquier;
 	private Roi roi;
 	private List<Piece> listPiece = new ArrayList<>();
-	private List<Piece> piecesMorte = new ArrayList<>(16);
+	private List<Piece> piecesMorte = new ArrayList<>();
 	private int indexPM = 0;
 
 	protected Joueur(Couleur couleur, Echiquier echiquier) {

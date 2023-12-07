@@ -21,9 +21,7 @@ public class ListElementICoordonee {
 			add(element);
 	}
 
-	/**
-	 * @return the listDeplacement
-	 */
+
 	public List<ICoordonee> getListElement() {
 		return list;
 	}

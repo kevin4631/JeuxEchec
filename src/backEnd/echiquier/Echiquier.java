@@ -3,6 +3,8 @@ package backEnd.echiquier;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
 import backEnd.joueur.Joueur;
@@ -13,6 +15,7 @@ import backEnd.piece.allPiece.Damme;
 import backEnd.piece.allPiece.Pion;
 import backEnd.piece.allPiece.Roi;
 import backEnd.piece.enumPackges.Couleur;
+import gui.Main;
 
 public class Echiquier {
 
@@ -66,7 +69,6 @@ public class Echiquier {
 				joueurNoir.getListPiece().remove(p);
 				joueurNoir.ajouterPieceMorte(p);
 			}
-
 		}
 
 		getTableuPiece().get(piece.getY()).set(piece.getX(), null);
@@ -74,6 +76,13 @@ public class Echiquier {
 		getTableuPiece().get(destinationY).set(destinationX, piece);
 
 		promotionEnReine(piece, destinationX, destinationY);
+
+		if (inEchec(joueurBlanc)) {
+			System.out.println("blanc echec");
+			JOptionPane.showMessageDialog(Main.gui, "Le roi est en échec!");
+		}
+
+		System.out.println(inEchec(joueurNoir));
 	}
 
 	private void promotionEnReine(Piece piece, int destinationX, int destinationY) {
@@ -93,9 +102,10 @@ public class Echiquier {
 		ListElementICoordonee casesControleAdverse = new ListElementICoordonee();
 		Roi roi = joueur.getRoi();
 
-		for (Piece p : joueur.getListPiece()) {
+		for (Piece p : joueurAdverse(joueur).getListPiece()) {
 			casesControleAdverse.add(p.getDeplacement(this));
 		}
+
 
 		for (ICoordonee c : casesControleAdverse.getListElement()) {
 			if (c.getX() == roi.getX() && c.getY() == roi.getY())
@@ -105,6 +115,8 @@ public class Echiquier {
 	}
 
 	public Boolean inMat(Joueur joueur) {
+
+
 
 		return false;
 	}
@@ -137,6 +149,12 @@ public class Echiquier {
 
 	public Joueur getJoueurEnCours() {
 		return joueurEnCours;
+	}
+
+	public Joueur joueurAdverse(Joueur joueur) {
+		if (joueur == joueurBlanc)
+			return joueurNoir;
+		return joueurBlanc;
 	}
 
 	public void auJoueurSuivant() {
