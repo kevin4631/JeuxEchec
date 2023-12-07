@@ -37,7 +37,7 @@ public class JPanelIcon extends JPanel {
 		Piece piece = list.get(index);
 
 		if (piece != null)
-			g2d.drawImage(piece.getImage(), 0, 0, getHeight(), getHeight(), null);
+			g2d.drawImage(piece.getImage(), 0, 0, getWidth(), getWidth(), null);
 	}
 
 }

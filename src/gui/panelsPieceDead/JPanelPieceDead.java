@@ -22,7 +22,7 @@ public class JPanelPieceDead extends JPanel {
 		this.couleur = couleur;
 
 		setBorder(BorderFactory.createTitledBorder(titre));
-		setLayout(new GridLayout(8, 2, 3, 3));
+		setLayout(new GridLayout(8, 2));
 		setPreferredSize(new Dimension(width, height));
 
 

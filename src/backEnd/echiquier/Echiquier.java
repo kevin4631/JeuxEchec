@@ -60,6 +60,9 @@ public class Echiquier {
 
 	public Boolean move(Piece piece, int destinationX, int destinationY) {
 
+		// if (echecTourSuivant(joueurEnCours, piece, new Coordonee(destinationX,
+		// destinationY)))
+		// return false;
 
 		if (piece.getClass() == Pion.class) {
 			((Pion) piece).premierTourFalse();
@@ -95,7 +98,7 @@ public class Echiquier {
 		}
 	}
 
-	public Boolean inEchec(Joueur joueur) {
+	private Boolean inEchec(Joueur joueur) {
 		ListElementICoordonee casesControleAdverse = new ListElementICoordonee();
 		Roi roi = joueur.getRoi();
 
@@ -112,8 +115,8 @@ public class Echiquier {
 		Roi roi = joueur.getRoi();
 		int verif = 0;
 
-		for (Piece p : joueurAdverse(joueur).getListPiece()) {
-			casesControleAdverse.add(p.getDeplacement(this));
+		for (Piece pieceAdverse : joueurAdverse(joueur).getListPiece()) {
+			casesControleAdverse.add(pieceAdverse.getDeplacement(this));
 		}
 
 		// en echec le roi ce trouve sur une case controler adverse
@@ -143,15 +146,18 @@ public class Echiquier {
 	}
 
 	private Boolean deplacementChangeEchec(Joueur joueur) {
-		for (Piece p : joueur.getListPiece()) {
-			for (ICoordonee deplacement : p.getDeplacement(this).getListElement()) {
-				Echiquier echiquierVirtuel = new Echiquier(this, new Coordonee(p.getX(), p.getY()), deplacement);
-				if (echiquierVirtuel.inEchec(echiquierVirtuel.getJoueur(joueur.getCouleur())) == false) {
+		for (Piece piece : joueur.getListPiece()) {
+			for (ICoordonee deplacement : piece.getDeplacement(this).getListElement()) {
+				if (!echecTourSuivant(joueur, piece, deplacement))
 					return true;
-				}
 			}
 		}
 		return false;
+	}
+
+	private Boolean echecTourSuivant(Joueur joueur, Piece piece, ICoordonee deplacement) {
+		Echiquier echiquierVirtuel = new Echiquier(this, new Coordonee(piece.getX(), piece.getY()), deplacement);
+		return echiquierVirtuel.inEchec(echiquierVirtuel.getJoueur(joueur.getCouleur()));
 	}
 
 	public Boolean inEchiquier(int x, int y) {

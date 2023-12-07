@@ -11,16 +11,20 @@ import javax.swing.JPanel;
 
 import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
+import backEnd.joueur.Joueur;
 import backEnd.piece.Piece;
 import gui.JFrameFenetre;
 import gui.Main;
+import gui.alerteEchecMate.AlerteRoiEchec;
+import gui.alerteEchecMate.AlerteRoiEchecMat;
 
 public class JPanelEchiquier extends JPanel {
 
 	private List<List<JPanelCase>> listJPanelCase;
 
-	private Color couleurBlanc = Color.decode("#FAFAFA");
-	private Color couleurNoir = Color.decode("#ABABAB");
+	private Color couleurBlanc = Color.PINK; //Color.decode("#FAFAFA");
+	private Color couleurNoir = Color.DARK_GRAY; // Color.decode("#ABABAB");
+
 	private Color couleurSelectionBlanc = Color.decode("#92E4FF");
 	private Color couleurSelectionNoir = Color.decode("#527E8D");
 
@@ -43,6 +47,8 @@ public class JPanelEchiquier extends JPanel {
 	}
 
 	public void initParametreSelection() {
+		if (listCoordonneePossible != null)
+			paintBackgroundCases(false);
 		actionEnCours = false;
 		JPanelcaseSelection = null;
 		listCoordonneePossible = null;
@@ -122,12 +128,28 @@ public class JPanelEchiquier extends JPanel {
 		Piece pieceSelection = Main.echiquier.getPiece(JPanelcaseSelection.getPositionX(),
 				JPanelcaseSelection.getPositionY());
 
-		if (listCoordonneePossible.contient(x, y) && Main.echiquier.move(pieceSelection, x, y)) {
-			paintBackgroundCases(false);
-			initParametreSelection();
+		Boolean deplacementValide = false;
+
+		if (listCoordonneePossible.contient(x, y))
+			deplacementValide = Main.echiquier.move(pieceSelection, x, y);
+
+		initParametreSelection();
+
+		if (deplacementValide) {
+			afficherPopUpEchecMat(Main.echiquier.getJoueurBlanc());
+			afficherPopUpEchecMat(Main.echiquier.getJoueurNoir());
 		}
+	}
 
-
+	private void afficherPopUpEchecMat(Joueur joueur) {
+		switch (Main.echiquier.inEchecMat(joueur)) {
+			case 1:
+				new AlerteRoiEchec(joueur.getCouleur());
+				break;
+			case 2:
+				new AlerteRoiEchecMat(joueur.getCouleur());
+				break;
+		}
 	}
 
 	private void paintBackgroundCases(Boolean paint) {
@@ -144,8 +166,6 @@ public class JPanelEchiquier extends JPanel {
 	}
 
 	public void reinitialiser() {
-		if (listCoordonneePossible != null)
-			paintBackgroundCases(false);
 		initParametreSelection();
 		repaint();
 	}

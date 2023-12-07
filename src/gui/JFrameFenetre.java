@@ -1,18 +1,20 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import backEnd.enumPackges.ECouleur;
+import gui.jboutons.JBoutonQuitter;
+import gui.jboutons.JBoutonRelancer;
 import gui.panelsEchiquier.JPanelCase;
 import gui.panelsEchiquier.JPanelEchiquier;
 import gui.panelsPieceDead.JPanelPieceDead;
@@ -25,6 +27,7 @@ public class JFrameFenetre extends JFrame {
 
 	private List<List<JPanelCase>> listCase;
 	private JPanel panelFonctionnalites;
+	private JPanel panelPrincipal;
 
 	public JFrameFenetre() {
 		initializeComponents();
@@ -33,55 +36,51 @@ public class JFrameFenetre extends JFrame {
 
 	private void initializeComponents() {
 
-		setMinimumSize(new Dimension(400, 400));
+		setMinimumSize(new Dimension(800, 500));
+		setTitle("Jeux d'échec RTAI");
+
+		// panel principal
+		panelPrincipal = new JPanel(new BorderLayout());
+
 		// Panel pour l'échiquier
 		listCase = new ArrayList<>();
 		panelEchiquier = new JPanelEchiquier(listCase, this);
 		addComponentListener();
 
-		// création boutons
-		JButton relancerButton = new JButton("Relancer");
-		JButton quitterButton = new JButton("Quitter");
+		// Panel contentat deux sous panels pour les pièces mortes
+		panelFonctionnalites = new JPanel(new GridLayout(1, 2));
+		panelFonctionnalites.setSize(new Dimension(400, getHeight()));
+		panelFonctionnalites.setBorder(BorderFactory.createLineBorder(new Color(89, 102, 115), 3));
+
+		// Panel Pieces Blanches Mortes
+		panelPiecesMortesBlanc = new JPanelPieceDead("Pieces blanches Mortes", 100, getHeight(), ECouleur.BLANC);
+		// Panel pour Pieces Noires Mortes
+		panelPiecesMortesNoir = new JPanelPieceDead("Pieces Noires Mortes", 100, getHeight(), ECouleur.NOIR);
+
+		// Ajouter les deux sous panels dans le panel panelFonctionalites
+		panelPiecesMortesBlanc.setBackground(new Color(255, 162, 162));
+		panelPiecesMortesNoir.setBackground(Color.gray.darker());
+
+		panelFonctionnalites.add(panelPiecesMortesBlanc);
+		panelFonctionnalites.add(panelPiecesMortesNoir);
+
+		// Ajouter panelEchiquier et panelFonctionnalites au panel principal
+		panelPrincipal.add(panelFonctionnalites, BorderLayout.WEST);
+		panelPrincipal.add(panelEchiquier, BorderLayout.CENTER);
+
+
+		// Utilisation de BorderLayout pour organiser le panel principal au centre
+		setLayout(new BorderLayout());
+		add(panelPrincipal, BorderLayout.CENTER);
 
 		// Panel contenant les boutons
 		JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonsPanel.add(relancerButton);
-		buttonsPanel.add(quitterButton);
+		buttonsPanel.add(new JBoutonRelancer(this));
+		buttonsPanel.add(new JBoutonQuitter(this));
 
-		// Panel pour les icônes des pièces mortes
-		panelFonctionnalites = new JPanel(new BorderLayout());
-
-		// Panel pour Blanc dead pieces
-		panelPiecesMortesBlanc = new JPanelPieceDead("Joueur blanc", 200, getHeight(), ECouleur.BLANC);
-
-		// Panel pour Noir dead pieces
-		panelPiecesMortesNoir = new JPanelPieceDead("Joueur noir", 200, getHeight(), ECouleur.NOIR);
-
-		panelFonctionnalites.add(panelPiecesMortesBlanc, BorderLayout.WEST);
-		panelFonctionnalites.add(panelPiecesMortesNoir, BorderLayout.EAST);
-
-		// Utilisation de BorderLayout pour organiser l'échiquier au centre et les boutons en
-		// haut à droite
-		setLayout(new BorderLayout());
-		add(panelEchiquier, BorderLayout.CENTER);
+		// Ajouter les boutons au panel principal
 		add(buttonsPanel, BorderLayout.NORTH);
-		add(panelFonctionnalites, BorderLayout.EAST);
 
-		relancerButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Main.lancerPartie();
-				panelEchiquier.reinitialiser();
-				panelFonctionnalites.repaint();
-			}
-		});
-
-		quitterButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
 	}
 
 	private void setupLayout() {
@@ -97,6 +96,13 @@ public class JFrameFenetre extends JFrame {
 		panelPiecesMortesNoir.repaint();
 	}
 
+	public JPanelEchiquier getpanelEchiquier() {
+		return panelEchiquier;
+	}
+
+	public JPanel getpanelFonctionnalites() {
+		return panelFonctionnalites;
+	}
 	private void addComponentListener() {
 		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
