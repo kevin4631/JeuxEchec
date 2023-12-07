@@ -24,7 +24,7 @@ public class JPanelEchiquier extends JPanel {
 	private Color couleurSelectionBlanc = Color.decode("#92E4FF");
 	private Color couleurSelectionNoir = Color.decode("#527E8D");
 
-	private boolean actionEnCours = false;
+	private boolean actionEnCours;
 	private JPanelCase JPanelcaseSelection;
 	private ListElementICoordonee caseDestinationPossible;
 
@@ -37,8 +37,15 @@ public class JPanelEchiquier extends JPanel {
 
 		setLayout(new GridLayout(Main.nbCaseLongeur, Main.nbCaseLongeur));
 
+		initParametre();
 		initialisationJPanelCase();
 		addMouseListener();
+	}
+
+	public void initParametre() {
+		actionEnCours = false;
+		JPanelCase JPanelcaseSelection = null;
+		ListElementICoordonee caseDestinationPossible = null;
 	}
 
 	private void initialisationJPanelCase() {
@@ -141,5 +148,10 @@ public class JPanelEchiquier extends JPanel {
 		return pixel / (getHeight() / Main.nbCaseLongeur);
 	}
 
+	public void reinitialiser() {
+		paintBackgroundCases(false);
+		initParametre();
+		repaint();
+	}
 
 }
