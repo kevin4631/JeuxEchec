@@ -4,15 +4,15 @@ import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
 import backEnd.echiquier.Coordonee;
 import backEnd.echiquier.Echiquier;
+import backEnd.echiquier.Vecteur;
+import backEnd.enumPackges.ECouleur;
+import backEnd.enumPackges.ENomPiece;
 import backEnd.piece.Piece;
-import backEnd.piece.Vecteur;
-import backEnd.piece.enumPackges.Couleur;
-import backEnd.piece.enumPackges.NomPiece;
 
 public class Cavalier extends Piece {
 
-	public Cavalier(int x, int y, Couleur couleur) {
-		super(x, y, couleur, NomPiece.CAVALIER);
+	public Cavalier(int x, int y, ECouleur couleur) {
+		super(x, y, couleur, ENomPiece.CAVALIER);
 	}
 
 	@Override

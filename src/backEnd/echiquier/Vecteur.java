@@ -1,4 +1,4 @@
-package backEnd.piece;
+package backEnd.echiquier;
 
 import backEnd.ICoordonee;
 
@@ -20,5 +20,4 @@ public class Vecteur implements ICoordonee {
 	public int getY() {
 		return y;
 	}
-
 }

@@ -1,15 +1,14 @@
 package backEnd.joueur;
 
-import backEnd.echiquier.Echiquier;
-import backEnd.piece.enumPackges.Couleur;
+import backEnd.enumPackges.ECouleur;
 
 public class JoueurBlanc extends Joueur {
 
-	public JoueurBlanc(Echiquier echiquier) {
-		super(Couleur.BLANC, echiquier);
+	public JoueurBlanc() {
+		super(ECouleur.BLANC);
 	}
 
-	public JoueurBlanc(Joueur joueur, Echiquier echiquier) {
-		super(joueur, echiquier);
+	public JoueurBlanc(Joueur joueur) {
+		super(joueur);
 	}
 }

@@ -3,15 +3,15 @@ package backEnd.piece.allPiece;
 import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
 import backEnd.echiquier.Echiquier;
+import backEnd.enumPackges.ECouleur;
+import backEnd.enumPackges.EDirection;
+import backEnd.enumPackges.ENomPiece;
 import backEnd.piece.Piece;
-import backEnd.piece.enumPackges.Couleur;
-import backEnd.piece.enumPackges.Direction;
-import backEnd.piece.enumPackges.NomPiece;
 
 public class Tour extends Piece {
 
-	public Tour(int x, int y, Couleur couleur) {
-		super(x, y, couleur, NomPiece.TOUR);
+	public Tour( int x, int y, ECouleur couleur) {
+		super(x, y, couleur, ENomPiece.TOUR);
 	}
 
 	@Override
@@ -19,13 +19,13 @@ public class Tour extends Piece {
 		ListElementICoordonee listeCoordonee = new ListElementICoordonee();
 		ListElementICoordonee listVecteur = new ListElementICoordonee();
 
-		listVecteur.add(Direction.UP);
-		listVecteur.add(Direction.DOWN);
-		listVecteur.add(Direction.LEFT);
-		listVecteur.add(Direction.RIGHT);
+		listVecteur.add(EDirection.UP);
+		listVecteur.add(EDirection.DOWN);
+		listVecteur.add(EDirection.LEFT);
+		listVecteur.add(EDirection.RIGHT);
 
 		for (ICoordonee vecteur : listVecteur.getListElement()) {
-			ListElementICoordonee c = caseDestinationInDirection(echiquier, (Direction) vecteur);
+			ListElementICoordonee c = echiquier.listCoordoneesInDirection(this, (EDirection) vecteur);
 			listeCoordonee.add(c);
 		}
 

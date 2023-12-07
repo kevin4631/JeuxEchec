@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import backEnd.piece.enumPackges.Couleur;
+import backEnd.enumPackges.ECouleur;
 import gui.panelsEchiquier.JPanelCase;
 import gui.panelsEchiquier.JPanelEchiquier;
 import gui.panelsPieceDead.JPanelPieceDead;
@@ -52,10 +52,10 @@ public class JFrameFenetre extends JFrame {
 		panelFonctionnalites = new JPanel(new BorderLayout());
 
 		// Panel pour Blanc dead pieces
-		panelPiecesMortesBlanc = new JPanelPieceDead("Joueur blanc", 200, getHeight(), Couleur.BLANC);
+		panelPiecesMortesBlanc = new JPanelPieceDead("Joueur blanc", 200, getHeight(), ECouleur.BLANC);
 
 		// Panel pour Noir dead pieces
-		panelPiecesMortesNoir = new JPanelPieceDead("Joueur noir", 200, getHeight(), Couleur.NOIR);
+		panelPiecesMortesNoir = new JPanelPieceDead("Joueur noir", 200, getHeight(), ECouleur.NOIR);
 
 		panelFonctionnalites.add(panelPiecesMortesBlanc, BorderLayout.WEST);
 		panelFonctionnalites.add(panelPiecesMortesNoir, BorderLayout.EAST);
@@ -70,7 +70,7 @@ public class JFrameFenetre extends JFrame {
 		relancerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Main.echiquier.initialiserEchiquier();
+				Main.lancerPartie();
 				panelEchiquier.reinitialiser();
 				panelFonctionnalites.repaint();
 			}

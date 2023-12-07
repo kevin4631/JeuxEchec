@@ -1,15 +1,12 @@
 /**
  *
  */
-package backEnd.piece.enumPackges;
+package backEnd.enumPackges;
 
 import backEnd.ICoordonee;
-import backEnd.piece.Vecteur;
+import backEnd.echiquier.Vecteur;
 
-/**
- *
- */
-public enum Direction implements ICoordonee {
+public enum EDirection implements ICoordonee {
 	UP        (new Vecteur(+0, +1)), 
 	DOWN      (new Vecteur( 0, -1)), 
 	LEFT      (new Vecteur(-1,  0)), 
@@ -21,7 +18,7 @@ public enum Direction implements ICoordonee {
 
 	private final Vecteur vecteur;
 
-	Direction(Vecteur vecteur) {
+	EDirection(Vecteur vecteur) {
 		this.vecteur = vecteur;
 	}
 
@@ -29,10 +26,12 @@ public enum Direction implements ICoordonee {
 		return this.vecteur;
 	}
 
+	@Override
 	public int getX() {
 		return vecteur.getX();
 	}
 	
+	@Override
 	public int getY() {
 		return vecteur.getY();
 	}

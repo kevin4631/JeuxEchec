@@ -1,11 +1,11 @@
-package backEnd.piece.enumPackges;
+package backEnd.enumPackges;
 
-public enum NomPiece {
+public enum ENomPiece {
 	PION("P"), TOUR("T"), CAVALIER("C"), FOU("F"), DAMME("D"), ROI("R");
 
 	private final String nom;
 
-	NomPiece(String nom) {
+	ENomPiece(String nom) {
 		this.nom = nom;
 	}
 

@@ -14,13 +14,12 @@ public class JPanelCase extends JPanel {
 
 	private Color couleur;
 	private Color couleurSelection;
-
-	private int x;
-	private int y;
+	private int positionX;
+	private int positionY;
 
 	public JPanelCase(Color couleur, Color couleurSelection, int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.positionX = x;
+		this.positionY = y;
 		this.couleur = couleur;
 		this.couleurSelection = couleurSelection;
 		setBackground(couleur);
@@ -35,7 +34,7 @@ public class JPanelCase extends JPanel {
 		// pour afficher le Background
 		super.paintComponent(g);
 
-		Piece piece = Main.echiquier.getPiece(x, y);
+		Piece piece = Main.echiquier.getPiece(positionX, positionY);
 
 		if (piece != null)
 			g.drawImage(piece.getImage(), 0, 0, getHeight(), getHeight(), null);
@@ -49,11 +48,11 @@ public class JPanelCase extends JPanel {
 	}
 
 	public int getPositionX() {
-		return x;
+		return positionX;
 	}
 
 	public int getPositionY() {
-		return y;
+		return positionY;
 	}
 
 }

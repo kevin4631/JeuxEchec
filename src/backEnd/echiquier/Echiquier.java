@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 
 import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
+import backEnd.enumPackges.ECouleur;
+import backEnd.enumPackges.EDirection;
 import backEnd.joueur.Joueur;
 import backEnd.joueur.JoueurBlanc;
 import backEnd.joueur.JoueurNoir;
@@ -14,7 +16,6 @@ import backEnd.piece.Piece;
 import backEnd.piece.allPiece.Damme;
 import backEnd.piece.allPiece.Pion;
 import backEnd.piece.allPiece.Roi;
-import backEnd.piece.enumPackges.Couleur;
 import gui.Main;
 
 public class Echiquier {
@@ -24,29 +25,25 @@ public class Echiquier {
 	private JoueurNoir joueurNoir;
 	private Joueur joueurEnCours;
 
-	public Echiquier() {
-		initialiserEchiquier();
+	public Echiquier(JoueurBlanc joueurBlanc, JoueurNoir joueurNoir) {
+		this.tableuPiece = new ArrayList<>();
+		this.joueurBlanc = joueurBlanc;
+		this.joueurNoir = joueurNoir;
+		this.joueurEnCours = joueurBlanc;
+		initialiserCase(joueurBlanc, joueurNoir);
 	}
 
 	public Echiquier(Echiquier echiquier, ICoordonee origine, ICoordonee destination) {
 
-		this.joueurBlanc = new JoueurBlanc(echiquier.getJoueurBlanc(), this);
-		this.joueurNoir = new JoueurNoir(echiquier.getJoueurNoir(), this);
+		this.joueurBlanc = new JoueurBlanc(echiquier.getJoueurBlanc());
+		this.joueurNoir = new JoueurNoir(echiquier.getJoueurNoir());
 
-		this.joueurEnCours = echiquier.getJoueurEnCours().getCouleur() == Couleur.BLANC ? this.joueurBlanc
+		this.joueurEnCours = echiquier.getJoueurEnCours().getCouleur() == ECouleur.BLANC ? this.joueurBlanc
 				: this.joueurNoir;
 
 		this.tableuPiece = new ArrayList<>();
 		initialiserCase(this.joueurBlanc, this.joueurNoir);
 		move2(getPiece(origine.getX(), origine.getY()), destination.getX(), destination.getY());
-	}
-
-	public void initialiserEchiquier() {
-		tableuPiece = new ArrayList<>();
-		joueurBlanc = new JoueurBlanc(this);
-		joueurNoir = new JoueurNoir(this);
-		joueurEnCours = joueurBlanc;
-		initialiserCase(joueurBlanc, joueurNoir);
 	}
 
 	private void initialiserCase(Joueur joueurBlanc, Joueur joueurNoir) {
@@ -71,13 +68,8 @@ public class Echiquier {
 
 		if (!caseVide(destinationX, destinationY)) {
 			Piece p = getPiece(destinationX, destinationY);
-			if (p.getCouleur() == Couleur.BLANC) {
-				joueurBlanc.getListPiece().remove(p);
-				joueurBlanc.ajouterPieceMorte(p);
-			} else {
-				joueurNoir.getListPiece().remove(p);
-				joueurNoir.ajouterPieceMorte(p);
-			}
+			joueurEnCours.removePiece(p);
+			joueurEnCours.ajouterPieceMorte(p);
 		}
 
 		getTableuPiece().get(piece.getY()).set(piece.getX(), null);
@@ -95,14 +87,10 @@ public class Echiquier {
 
 		if (!caseVide(destinationX, destinationY)) {
 			Piece p = getPiece(destinationX, destinationY);
-			if (p.getCouleur() == Couleur.BLANC) {
-				joueurBlanc.getListPiece().remove(p);
-				joueurBlanc.ajouterPieceMorte(p);
-			} else {
-				joueurNoir.getListPiece().remove(p);
-				joueurNoir.ajouterPieceMorte(p);
-			}
+			joueurEnCours.removePiece(p);
+			joueurEnCours.ajouterPieceMorte(p);
 		}
+
 
 		getTableuPiece().get(piece.getY()).set(piece.getX(), null);
 		piece.setXY(destinationX, destinationY);
@@ -117,15 +105,15 @@ public class Echiquier {
 	}
 
 	private void promotionEnReine(Piece piece, int destinationX, int destinationY) {
-		int lastLigne = piece.getCouleur() == Couleur.BLANC ? 7 : 0;
+		int lastLigne = piece.getCouleur() == ECouleur.BLANC ? 7 : 0;
+
 		if (destinationY == lastLigne && piece.getClass() == Pion.class) {
 			Damme damme = new Damme(destinationX, destinationY, piece.getCouleur());
 
-			joueurEnCours.getListPiece().remove(piece);
-			joueurEnCours.getListPiece().add(damme);
+			joueurEnCours.removePiece(piece);
+			joueurEnCours.addPiece(damme);
 
 			getTableuPiece().get(destinationY).set(destinationX, damme);
-
 		}
 	}
 
@@ -137,6 +125,7 @@ public class Echiquier {
 			casesControleAdverse.add(p.getDeplacement(this));
 		}
 
+		// en echec le roi ce trouve sur une case controler adverse
 		return roiInCasesControleAdverse(casesControleAdverse, roi);
 	}
 
@@ -165,18 +154,6 @@ public class Echiquier {
 		return para;
 	}
 
-	private Boolean deplacementChangeEchec(Joueur joueur) {
-		for (Piece p : joueur.getListPiece()) {
-			for (ICoordonee deplacement : p.getDeplacement(this).getListElement()) {
-				Echiquier echiquierVirtuel = new Echiquier(this, new Coordonee(p.getX(), p.getY()), deplacement);
-				if (echiquierVirtuel.inEchec(echiquierVirtuel.getJoueur(joueur.getCouleur())) == false) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	private Boolean roiInCasesControleAdverse(ListElementICoordonee casesControleAdverse, Roi roi) {
 		for (ICoordonee c : casesControleAdverse.getListElement()) {
 			if (c.getX() == roi.getX() && c.getY() == roi.getY())
@@ -191,6 +168,41 @@ public class Echiquier {
 				return false;
 		}
 		return true;
+	}
+
+	private Boolean deplacementChangeEchec(Joueur joueur) {
+		for (Piece p : joueur.getListPiece()) {
+			for (ICoordonee deplacement : p.getDeplacement(this).getListElement()) {
+				Echiquier echiquierVirtuel = new Echiquier(this, new Coordonee(p.getX(), p.getY()), deplacement);
+				if (echiquierVirtuel.inEchec(echiquierVirtuel.getJoueur(joueur.getCouleur())) == false) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public ListElementICoordonee listCoordoneesInDirection(Piece piece, EDirection vecteur) {
+		ListElementICoordonee listCoordonee = new ListElementICoordonee();
+
+		int vx = vecteur.getX();
+		int vy = vecteur.getY();
+
+		int origineX = piece.getX();
+		int origineY = piece.getY();
+
+
+		while (inEchiquier(origineX + vx, origineY + vy) && caseVide(origineX + vx, origineY + vy)) {
+			listCoordonee.add(new Coordonee(origineX + vx, origineX + vy));
+			vy += vecteur.getY();
+			vx += vecteur.getX();
+		}
+
+		Piece pieceD = getPiece(origineX + vx, origineY + vy);
+		if (inEchiquier(origineX + vx, origineY + vy) && pieceD != null && pieceD.getCouleur() != piece.getCouleur())
+			listCoordonee.add(new Coordonee(origineX + vx, origineY + vy));
+
+		return listCoordonee;
 	}
 
 	public Boolean inEchiquier(int x, int y) {
@@ -219,8 +231,8 @@ public class Echiquier {
 		return joueurNoir;
 	}
 
-	public Joueur getJoueur(Couleur couleur) {
-		return couleur == Couleur.BLANC ? joueurBlanc : joueurNoir;
+	public Joueur getJoueur(ECouleur couleur) {
+		return couleur == ECouleur.BLANC ? joueurBlanc : joueurNoir;
 	}
 
 	public Joueur getJoueurEnCours() {

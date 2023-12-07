@@ -4,21 +4,21 @@ import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
 import backEnd.echiquier.Coordonee;
 import backEnd.echiquier.Echiquier;
+import backEnd.enumPackges.ECouleur;
+import backEnd.enumPackges.EDirection;
+import backEnd.enumPackges.ENomPiece;
 import backEnd.piece.Piece;
-import backEnd.piece.enumPackges.Couleur;
-import backEnd.piece.enumPackges.Direction;
-import backEnd.piece.enumPackges.NomPiece;
 
 public class Pion extends Piece {
 	private boolean premierTour = true;
 
-	public Pion(int x, int y, Couleur couleur) {
-		super(x, y, couleur, NomPiece.PION);
+	public Pion(int x, int y, ECouleur couleur) {
+		super(x, y, couleur, ENomPiece.PION);
 	}
 
 	@Override
 	public ListElementICoordonee getDeplacement(Echiquier echiquier) {
-		int vecteurY = this.getCouleur() == Couleur.BLANC ? Direction.UP.getY() : Direction.DOWN.getY();
+		int vecteurY = this.getCouleur() == ECouleur.BLANC ? EDirection.UP.getY() : EDirection.DOWN.getY();
 
 		ListElementICoordonee listeCoordonee = new ListElementICoordonee();
 		ListElementICoordonee listVecteur = new ListElementICoordonee();
@@ -32,8 +32,8 @@ public class Pion extends Piece {
 				listeCoordonee.add(new Coordonee(destinationX, destinationY + vecteurY));
 		}
 
-		listVecteur.add(Direction.LEFT_UP);
-		listVecteur.add(Direction.RIGHT_UP);
+		listVecteur.add(EDirection.LEFT_UP);
+		listVecteur.add(EDirection.RIGHT_UP);
 		for (ICoordonee vecteur : listVecteur.getListElement()) {
 			destinationX = getX() + vecteur.getX();
 			destinationY = getY() + vecteur.getY() * vecteurY;

@@ -6,16 +6,16 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import backEnd.piece.enumPackges.Couleur;
+import backEnd.enumPackges.ECouleur;
 
 public class JPanelPieceDead extends JPanel {
 
 	private String titre;
 	private int width;
 	private int height;
-	private Couleur couleur;
+	private ECouleur couleur;
 
-	public JPanelPieceDead(String titre, int width, int height, Couleur couleur) {
+	public JPanelPieceDead(String titre, int width, int height, ECouleur couleur) {
 		this.titre = titre;
 		this.width = width;
 		this.height = height;

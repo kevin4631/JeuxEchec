@@ -3,7 +3,7 @@ package backEnd.joueur;
 import java.util.ArrayList;
 import java.util.List;
 
-import backEnd.echiquier.Echiquier;
+import backEnd.enumPackges.ECouleur;
 import backEnd.piece.Piece;
 import backEnd.piece.allPiece.Cavalier;
 import backEnd.piece.allPiece.Damme;
@@ -11,21 +11,17 @@ import backEnd.piece.allPiece.Fou;
 import backEnd.piece.allPiece.Pion;
 import backEnd.piece.allPiece.Roi;
 import backEnd.piece.allPiece.Tour;
-import backEnd.piece.enumPackges.Couleur;
 
 public abstract class Joueur {
 
-	private Couleur couleur;
-	private Echiquier echiquier;
 	private Roi roi;
+	private ECouleur couleur;
 	private List<Piece> listPiece = new ArrayList<>();
-	private List<Piece> piecesMorte = new ArrayList<>();
-	private int indexPM = 0;
+	private List<Piece> listPieceMorte = new ArrayList<>();
+	private int indexPieceMorte = 0;
 
-	protected Joueur(Couleur couleur, Echiquier echiquier) {
+	protected Joueur(ECouleur couleur) {
 		this.couleur = couleur;
-		this.echiquier = echiquier;
-
 		initialiserPion();
 		initialiserTour();
 		initialiserCavalier();
@@ -35,26 +31,29 @@ public abstract class Joueur {
 		initListPiecesMorte();
 	}
 
-	protected Joueur(Joueur ancienJour, Echiquier echiquier) {
+	protected Joueur(Joueur ancienJour) {
 
-		this.echiquier = echiquier;
-
-		this.couleur = ancienJour.getCouleur() == Couleur.BLANC ? Couleur.BLANC : Couleur.NOIR;
+		this.couleur = ancienJour.getCouleur() == ECouleur.BLANC ? ECouleur.BLANC : ECouleur.NOIR;
 
 		for (Piece p : ancienJour.getListPiece()) {
 			Class<? extends Piece> typeClass = p.getClass();
 
 			if (typeClass == Pion.class) {
 				listPiece.add(new Pion(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Tour.class) {
+			}
+			else if (typeClass == Tour.class) {
 				listPiece.add(new Tour(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Cavalier.class) {
+			}
+			else if (typeClass == Cavalier.class) {
 				listPiece.add(new Cavalier(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Fou.class) {
+			}
+			else if (typeClass == Fou.class) {
 				listPiece.add(new Fou(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Damme.class) {
+			}
+			else if (typeClass == Damme.class) {
 				listPiece.add(new Damme(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Roi.class) {
+			}
+			else if (typeClass == Roi.class) {
 				this.roi = new Roi(p.getX(), p.getY(), couleur);
 				listPiece.add(roi);
 			}
@@ -62,7 +61,7 @@ public abstract class Joueur {
 	}
 
 	private void initialiserPion() {
-		int y = couleur == Couleur.BLANC ? 1 : 6;
+		int y = couleur == ECouleur.BLANC ? 1 : 6;
 
 		for (int x = 0; x < 8; x++) {
 			listPiece.add(new Pion(x, y, couleur));
@@ -70,34 +69,34 @@ public abstract class Joueur {
 	}
 
 	private void initialiserTour() {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
+		int y = couleur == ECouleur.BLANC ? 0 : 7;
 
 		listPiece.add(new Tour(0, y, couleur));
 		listPiece.add(new Tour(7, y, couleur));
 	}
 
 	private void initialiserCavalier() {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
+		int y = couleur == ECouleur.BLANC ? 0 : 7;
 
 		listPiece.add(new Cavalier(1, y, couleur));
 		listPiece.add(new Cavalier(6, y, couleur));
 	}
 
 	private void initialiserFou() {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
+		int y = couleur == ECouleur.BLANC ? 0 : 7;
 
 		listPiece.add(new Fou(2, y, couleur));
 		listPiece.add(new Fou(5, y, couleur));
 	}
 
 	private void initialiserDamme() {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
+		int y = couleur == ECouleur.BLANC ? 0 : 7;
 
 		listPiece.add(new Damme(3, y, couleur));
 	}
 
 	private void initialiserRoi() {
-		int y = couleur == Couleur.BLANC ? 0 : 7;
+		int y = couleur == ECouleur.BLANC ? 0 : 7;
 
 		roi = new Roi(4, y, couleur);
 
@@ -106,11 +105,19 @@ public abstract class Joueur {
 
 	private void initListPiecesMorte() {
 		for (int i = 0; i < 16; i++) {
-			piecesMorte.add(null);
+			listPieceMorte.add(null);
 		}
 	}
 
-	public Couleur getCouleur() {
+	public void addPiece(Piece piece) {
+		listPiece.add(piece);
+	}
+
+	public void removePiece(Piece piece) {
+		listPiece.remove(piece);
+	}
+
+	public ECouleur getCouleur() {
 		return couleur;
 	}
 
@@ -123,10 +130,10 @@ public abstract class Joueur {
 	}
 
 	public void ajouterPieceMorte(Piece p) {
-		piecesMorte.add(indexPM++, p);
+		listPieceMorte.add(indexPieceMorte++, p);
 	}
 
-	public List<Piece> getPiecesMorte() {
-		return piecesMorte;
+	public List<Piece> getlistPieceMorte() {
+		return listPieceMorte;
 	}
 }

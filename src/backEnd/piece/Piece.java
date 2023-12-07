@@ -6,30 +6,27 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
-import backEnd.echiquier.Coordonee;
 import backEnd.echiquier.Echiquier;
-import backEnd.piece.enumPackges.Couleur;
-import backEnd.piece.enumPackges.Direction;
-import backEnd.piece.enumPackges.NomPiece;
+import backEnd.enumPackges.ECouleur;
+import backEnd.enumPackges.ENomPiece;
 
-public abstract class Piece implements ICoordonee {
+public abstract class Piece {
 
 	private int x;
 	private int y;
-	private Couleur couleur;
-	private NomPiece nomPiece;
-	private String path;
+	private ECouleur couleur;
+	private ENomPiece nomPiece;
 	private BufferedImage image = null;
 
-	protected Piece(int x, int y, Couleur couleur, NomPiece nomPiece) {
+	protected Piece(int x, int y, ECouleur couleur, ENomPiece nomPiece) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.couleur = couleur;
 		this.nomPiece = nomPiece;
-		path = "img/" + nomPiece + "_" + couleur + ".png";
+
+		String path = "img/" + nomPiece + "_" + couleur + ".png";
 
 		try {
 			image = ImageIO.read(new File(path));
@@ -38,36 +35,17 @@ public abstract class Piece implements ICoordonee {
 		}
 	}
 
-	public ListElementICoordonee caseDestinationInDirection(Echiquier echiquier, Direction vecteur) {
-		ListElementICoordonee coordonees = new ListElementICoordonee();
-
-		int vx = vecteur.getX();
-		int vy = vecteur.getY();
-
-		while (echiquier.inEchiquier(x + vx, y + vy) && echiquier.caseVide(x + vx, y + vy)) {
-			coordonees.add(new Coordonee(x + vx, y + vy));
-			vy += vecteur.getY();
-			vx += vecteur.getX();
-		}
-
-		Piece p = echiquier.getPiece(x + vx, y + vy);
-		if (echiquier.inEchiquier(x + vx, y + vy) && p != null && p.getCouleur() != couleur)
-			coordonees.add(new Coordonee(x + vx, y + vy));
-
-		return coordonees;
-	}
-
 	public abstract ListElementICoordonee getDeplacement(Echiquier echiquier);
 
 	public BufferedImage getImage() {
 		return image;
 	}
 
-	public Couleur getCouleur() {
+	public ECouleur getCouleur() {
 		return couleur;
 	}
 
-	public NomPiece getNomPiece() {
+	public ENomPiece getNomPiece() {
 		return nomPiece;
 	}
 
@@ -76,12 +54,10 @@ public abstract class Piece implements ICoordonee {
 		this.y = y;
 	}
 
-	@Override
 	public int getX() {
 		return x;
 	}
 
-	@Override
 	public int getY() {
 		return y;
 	}
@@ -90,6 +66,5 @@ public abstract class Piece implements ICoordonee {
 	public String toString() {
 		return getNomPiece().toString();
 	}
-
 
 }

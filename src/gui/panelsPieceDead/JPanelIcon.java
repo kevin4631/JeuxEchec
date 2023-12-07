@@ -7,16 +7,16 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import backEnd.enumPackges.ECouleur;
 import backEnd.piece.Piece;
-import backEnd.piece.enumPackges.Couleur;
 import gui.Main;
 
 public class JPanelIcon extends JPanel {
 
 	private int index;
-	private Couleur couleur;
+	private ECouleur couleur;
 
-	public JPanelIcon(int index, Couleur couleur) {
+	public JPanelIcon(int index, ECouleur couleur) {
 		this.couleur = couleur;
 		this.index = index;
 	}
@@ -27,10 +27,10 @@ public class JPanelIcon extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 		List<Piece> list;
-		if (couleur == Couleur.BLANC) {
-			list = Main.echiquier.getJoueurBlanc().getPiecesMorte();
+		if (couleur == ECouleur.BLANC) {
+			list = Main.echiquier.getJoueurBlanc().getlistPieceMorte();
 		} else {
-			list = Main.echiquier.getJoueurNoir().getPiecesMorte();
+			list = Main.echiquier.getJoueurNoir().getlistPieceMorte();
 		}
 
 		super.paintComponent(g);

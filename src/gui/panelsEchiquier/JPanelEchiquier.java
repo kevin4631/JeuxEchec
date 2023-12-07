@@ -26,7 +26,7 @@ public class JPanelEchiquier extends JPanel {
 
 	private boolean actionEnCours;
 	private JPanelCase JPanelcaseSelection;
-	private ListElementICoordonee caseDestinationPossible;
+	private ListElementICoordonee listCoordonneePossible;
 
 	private JFrameFenetre frameFenetre;
 
@@ -44,8 +44,8 @@ public class JPanelEchiquier extends JPanel {
 
 	public void initParametre() {
 		actionEnCours = false;
-		JPanelCase JPanelcaseSelection = null;
-		ListElementICoordonee caseDestinationPossible = null;
+		JPanelcaseSelection = null;
+		listCoordonneePossible = null;
 	}
 
 	private void initialisationJPanelCase() {
@@ -111,7 +111,7 @@ public class JPanelEchiquier extends JPanel {
 
 		if (Main.echiquier.pieceAppartientJoeurEnCours(pieceSelection)) {
 			JPanelcaseSelection = listJPanelCase.get(y).get(x);
-			caseDestinationPossible = pieceSelection.getDeplacement(Main.echiquier);
+			listCoordonneePossible = pieceSelection.getDeplacement(Main.echiquier);
 			paintBackgroundCases(true);
 		} else {
 			actionEnCours = false;
@@ -122,7 +122,7 @@ public class JPanelEchiquier extends JPanel {
 		Piece pieceSelection = Main.echiquier.getPiece(JPanelcaseSelection.getPositionX(),
 				JPanelcaseSelection.getPositionY());
 
-		if (caseDestinationPossible.contient(x, y)) {
+		if (listCoordonneePossible.contient(x, y)) {
 			Main.echiquier.move(pieceSelection, x, y);
 			Main.echiquier.auJoueurSuivant();
 		}
@@ -130,13 +130,13 @@ public class JPanelEchiquier extends JPanel {
 		paintBackgroundCases(false);
 		actionEnCours = false;
 		JPanelcaseSelection = null;
-		caseDestinationPossible = null;
+		listCoordonneePossible = null;
 	}
 
 	private void paintBackgroundCases(Boolean paint) {
 		JPanelcaseSelection.paintBackground(paint);
 
-		for (ICoordonee coo : caseDestinationPossible.getListElement()) {
+		for (ICoordonee coo : listCoordonneePossible.getListElement()) {
 			JPanelCase c = listJPanelCase.get(coo.getY()).get(coo.getX());
 			c.paintBackground(paint);
 		}
@@ -147,7 +147,7 @@ public class JPanelEchiquier extends JPanel {
 	}
 
 	public void reinitialiser() {
-		if (caseDestinationPossible != null)
+		if (listCoordonneePossible != null)
 			paintBackgroundCases(false);
 		initParametre();
 		repaint();
