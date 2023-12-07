@@ -28,7 +28,7 @@ public class Pion extends Piece {
 
 		if (echiquier.inEchiquier(destinationX, destinationY) && echiquier.caseVide(destinationX, destinationY)) {
 			listeCoordonee.add(new Coordonee(destinationX, destinationY));
-			if (premierTour)
+			if (premierTour && echiquier.caseVide(destinationX, destinationY + vecteurY))
 				listeCoordonee.add(new Coordonee(destinationX, destinationY + vecteurY));
 		}
 
