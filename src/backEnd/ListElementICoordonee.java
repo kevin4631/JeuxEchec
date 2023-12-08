@@ -8,7 +8,6 @@ public class ListElementICoordonee {
 	private List<ICoordonee> list;
 
 	public ListElementICoordonee() {
-
 		this.list = new ArrayList<>();
 	}
 
@@ -21,17 +20,16 @@ public class ListElementICoordonee {
 			add(element);
 	}
 
-
-	public List<ICoordonee> getListElement() {
-		return list;
-	}
-
 	public Boolean contient(int x, int y) {
 		for (ICoordonee element : list) {
 			if (element.getX() == x && element.getY() == y)
 				return true;
 		}
 		return false;
+	}
+
+	public List<ICoordonee> getListElement() {
+		return list;
 	}
 
 	@Override

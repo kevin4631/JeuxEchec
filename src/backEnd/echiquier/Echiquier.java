@@ -62,7 +62,7 @@ public class Echiquier {
 
 	public Boolean move(Piece piece, int destinationX, int destinationY) {
 
-		// empeche un mouvement si echec a la decouverte
+		// empeche un mouvement qui met en echec
 		if (virtuel == false)
 			if (echecTourSuivant(joueurEnCours, piece, new Coordonee(destinationX, destinationY)))
 				return false;
@@ -85,6 +85,7 @@ public class Echiquier {
 		promotionEnReine(piece, destinationX, destinationY);
 
 		auJoueurSuivant();
+
 		return true;
 	}
 
@@ -109,7 +110,7 @@ public class Echiquier {
 			casesControleAdverse.add(p.getDeplacement(this));
 		}
 
-		// en echec le roi ce trouve sur une case controler adverse
+		// en echec le roi ce trouve sur une case controle adverse
 		return roiInCasesControleAdverse(casesControleAdverse, roi);
 	}
 
@@ -177,6 +178,20 @@ public class Echiquier {
 		return getPiece(x, y) == null;
 	}
 
+	public Joueur joueurAdverse(Joueur joueur) {
+		if (joueur == joueurBlanc)
+			return joueurNoir;
+		return joueurBlanc;
+	}
+
+	public void auJoueurSuivant() {
+		joueurEnCours = joueurEnCours == joueurBlanc ? joueurNoir : joueurBlanc;
+	}
+
+	public Boolean pieceAppartientJoeurEnCours(Piece piece) {
+		return piece != null && piece.getCouleur() == joueurEnCours.getCouleur();
+	}
+
 	public List<List<Piece>> getTableuPiece() {
 		return tableuPiece;
 	}
@@ -195,20 +210,6 @@ public class Echiquier {
 
 	public Joueur getJoueurEnCours() {
 		return joueurEnCours;
-	}
-
-	public Joueur joueurAdverse(Joueur joueur) {
-		if (joueur == joueurBlanc)
-			return joueurNoir;
-		return joueurBlanc;
-	}
-
-	public void auJoueurSuivant() {
-		joueurEnCours = joueurEnCours == joueurBlanc ? joueurNoir : joueurBlanc;
-	}
-
-	public Boolean pieceAppartientJoeurEnCours(Piece piece) {
-		return piece != null && piece.getCouleur() == joueurEnCours.getCouleur();
 	}
 
 	public void afficher() {

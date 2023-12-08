@@ -26,6 +26,7 @@ public class JPanelIcon extends JPanel {
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
 		List<Piece> list;
 		if (couleur == ECouleur.BLANC) {
 			list = Main.echiquier.getJoueurBlanc().getlistPieceMorte();

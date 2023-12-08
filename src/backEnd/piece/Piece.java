@@ -59,6 +59,11 @@ public abstract class Piece implements ICoordonee {
 
 	public abstract ListElementICoordonee getDeplacement(Echiquier echiquier);
 
+	public void setXY(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
 	public BufferedImage getImage() {
 		return image;
 	}
@@ -69,11 +74,6 @@ public abstract class Piece implements ICoordonee {
 
 	public ENomPiece getNomPiece() {
 		return nomPiece;
-	}
-
-	public void setXY(int x, int y) {
-		this.x = x;
-		this.y = y;
 	}
 
 	@Override

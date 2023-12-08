@@ -14,8 +14,8 @@ import backEnd.piece.allPiece.Tour;
 
 public abstract class Joueur {
 
-	private ECouleur couleur;
 	private Roi roi;
+	private ECouleur couleur;
 	private List<Piece> listPiece = new ArrayList<>();
 	private List<Piece> piecesMorte = new ArrayList<>();
 	private int indexPM = 0;
@@ -41,15 +41,20 @@ public abstract class Joueur {
 
 			if (typeClass == Pion.class) {
 				listPiece.add(new Pion(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Tour.class) {
+			}
+			else if (typeClass == Tour.class) {
 				listPiece.add(new Tour(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Cavalier.class) {
+			}
+			else if (typeClass == Cavalier.class) {
 				listPiece.add(new Cavalier(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Fou.class) {
+			}
+			else if (typeClass == Fou.class) {
 				listPiece.add(new Fou(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Damme.class) {
+			}
+			else if (typeClass == Damme.class) {
 				listPiece.add(new Damme(p.getX(), p.getY(), couleur));
-			} else if (typeClass == Roi.class) {
+			}
+			else if (typeClass == Roi.class) {
 				this.roi = new Roi(p.getX(), p.getY(), couleur);
 				listPiece.add(roi);
 			}
@@ -105,6 +110,10 @@ public abstract class Joueur {
 		}
 	}
 
+	public void ajouterPieceMorte(Piece p) {
+		piecesMorte.add(indexPM++, p);
+	}
+
 	public void addPiece(Piece piece) {
 		listPiece.add(piece);
 	}
@@ -123,10 +132,6 @@ public abstract class Joueur {
 
 	public Roi getRoi() {
 		return roi;
-	}
-
-	public void ajouterPieceMorte(Piece p) {
-		piecesMorte.add(indexPM++, p);
 	}
 
 	public List<Piece> getlistPieceMorte() {

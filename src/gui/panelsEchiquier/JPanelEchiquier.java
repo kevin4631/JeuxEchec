@@ -13,7 +13,6 @@ import backEnd.ICoordonee;
 import backEnd.ListElementICoordonee;
 import backEnd.joueur.Joueur;
 import backEnd.piece.Piece;
-import gui.JFrameFenetre;
 import gui.Main;
 import gui.alerteEchecMate.AlerteRoiEchec;
 import gui.alerteEchecMate.AlerteRoiEchecMat;
@@ -22,8 +21,8 @@ public class JPanelEchiquier extends JPanel {
 
 	private List<List<JPanelCase>> listJPanelCase;
 
-	private Color couleurBlanc = Color.PINK; //Color.decode("#FAFAFA");
-	private Color couleurNoir = Color.DARK_GRAY; // Color.decode("#ABABAB");
+	private Color couleurBlanc = Color.PINK;
+	private Color couleurNoir = Color.DARK_GRAY;
 
 	private Color couleurSelectionBlanc = Color.decode("#92E4FF");
 	private Color couleurSelectionNoir = Color.decode("#527E8D");
@@ -32,12 +31,10 @@ public class JPanelEchiquier extends JPanel {
 	private JPanelCase JPanelcaseSelection;
 	private ListElementICoordonee listCoordonneePossible;
 
-	private JFrameFenetre frameFenetre;
 
-	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase, JFrameFenetre frameFenetre) {
+	public JPanelEchiquier(List<List<JPanelCase>> listJPanelCase) {
 
 		this.listJPanelCase = listJPanelCase;
-		this.frameFenetre = frameFenetre;
 
 		setLayout(new GridLayout(Main.nbCaseLongeur, Main.nbCaseLongeur));
 
@@ -62,22 +59,23 @@ public class JPanelEchiquier extends JPanel {
 			couleur = !couleur;
 			for (int x = 0; x < 8; x++) {
 				couleur = !couleur;
-				listJPanelCase.get(y).add(new JPanelCase(couleur ? couleurBlanc : couleurNoir,
-						couleur ? couleurSelectionBlanc : couleurSelectionNoir, x, y));
-				add(listJPanelCase.get(y).get(x));
+				JPanelCase panelCase = new JPanelCase(
+						couleur ? couleurBlanc : couleurNoir,
+						couleur ? couleurSelectionBlanc : couleurSelectionNoir, 
+						x,
+						y);
+				listJPanelCase.get(y).add(panelCase);
+				add(panelCase);
 			}
 		}
 	}
 
 	public void addMouseListener() {
-
 		addMouseListener(new MouseListener() {
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
 
 			}
-
 			@Override
 			public void mousePressed(MouseEvent e) {
 
@@ -88,7 +86,6 @@ public class JPanelEchiquier extends JPanel {
 					actionSelectionPion(x, y);
 				} else {
 					actionSelectionCaseDestination(x, y);
-					frameFenetre.repaintIconMort();
 				}
 			}
 
@@ -96,12 +93,10 @@ public class JPanelEchiquier extends JPanel {
 			public void mouseExited(MouseEvent e) {
 
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent e) {
 
 			}
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
@@ -136,6 +131,7 @@ public class JPanelEchiquier extends JPanel {
 		initParametreSelection();
 
 		if (deplacementValide) {
+			Main.gui.repaintIconMort();
 			afficherPopUpEchecMat(Main.echiquier.getJoueurBlanc());
 			afficherPopUpEchecMat(Main.echiquier.getJoueurNoir());
 		}

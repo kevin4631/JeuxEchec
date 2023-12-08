@@ -44,7 +44,7 @@ public class JFrameFenetre extends JFrame {
 
 		// Panel pour l'échiquier
 		listCase = new ArrayList<>();
-		panelEchiquier = new JPanelEchiquier(listCase, this);
+		panelEchiquier = new JPanelEchiquier(listCase);
 		addComponentListener();
 
 		// Panel contentat deux sous panels pour les pièces mortes
