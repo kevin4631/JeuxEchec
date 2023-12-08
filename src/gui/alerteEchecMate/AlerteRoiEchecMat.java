@@ -13,7 +13,6 @@ public class AlerteRoiEchecMat extends JOptionPane {
 
 	public AlerteRoiEchecMat(ECouleur couleur) {
 
-		JOptionPane AlerteEchecetMat = new JOptionPane();
 		JBoutonRelancer RelancerPartie = new JBoutonRelancer(Main.gui);
 
 		RelancerPartie.addActionListener(e -> {

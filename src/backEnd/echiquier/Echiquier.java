@@ -20,6 +20,7 @@ public class Echiquier {
 	private JoueurBlanc joueurBlanc;
 	private JoueurNoir joueurNoir;
 	private Joueur joueurEnCours;
+	private Boolean virtuel = false;
 
 	public Echiquier(JoueurBlanc joueurBlanc, JoueurNoir joueurNoir) {
 		this.tableuPiece = new ArrayList<>();
@@ -39,6 +40,7 @@ public class Echiquier {
 
 		this.tableuPiece = new ArrayList<>();
 		initialiserCase(this.joueurBlanc, this.joueurNoir);
+		virtuel = true;
 		move(getPiece(origine.getX(), origine.getY()), destination.getX(), destination.getY());
 	}
 
@@ -60,9 +62,10 @@ public class Echiquier {
 
 	public Boolean move(Piece piece, int destinationX, int destinationY) {
 
-		// if (echecTourSuivant(joueurEnCours, piece, new Coordonee(destinationX,
-		// destinationY)))
-		// return false;
+		// empeche un mouvement si echec a la decouverte
+		if (virtuel == false)
+			if (echecTourSuivant(joueurEnCours, piece, new Coordonee(destinationX, destinationY)))
+				return false;
 
 		if (piece.getClass() == Pion.class) {
 			((Pion) piece).premierTourFalse();
@@ -155,7 +158,7 @@ public class Echiquier {
 		return false;
 	}
 
-	private Boolean echecTourSuivant(Joueur joueur, Piece piece, ICoordonee deplacement) {
+	public Boolean echecTourSuivant(Joueur joueur, Piece piece, ICoordonee deplacement) {
 		Echiquier echiquierVirtuel = new Echiquier(this, new Coordonee(piece.getX(), piece.getY()), deplacement);
 		return echiquierVirtuel.inEchec(echiquierVirtuel.getJoueur(joueur.getCouleur()));
 	}
