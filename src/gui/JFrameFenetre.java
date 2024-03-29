@@ -47,7 +47,7 @@ public class JFrameFenetre extends JFrame {
 		panelEchiquier = new JPanelEchiquier(listCase);
 		addComponentListener();
 
-		// Panel contentat deux sous panels pour les pièces mortes
+		// Panel contentat deux sous panels pour les pièces Mortes
 		panelFonctionnalites = new JPanel(new GridLayout(1, 2));
 		panelFonctionnalites.setSize(new Dimension(400, getHeight()));
 		panelFonctionnalites.setBorder(BorderFactory.createLineBorder(new Color(89, 102, 115), 3));
